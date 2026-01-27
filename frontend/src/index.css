@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* =========================
+   CSS RESET & BASE
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+
+/* =========================
+   CSS VARIABLES (DESIGN SYSTEM)
+========================= */
+:root {
+  /* Brand Colors */
+  --primary: #E11D48;     /* Strawberry Red */
+  --secondary: #F472B6;   /* Blush Pink */
+  --accent: #FBBF24;      /* Vanilla Gold */
+
+  /* Backgrounds */
+  --bg-main: #FFF7ED;     /* Cream */
+  --bg-card: #FFFFFF;
+
+  /* Text */
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
+
+  /* UI */
+  --border-light: #E5E7EB;
+  --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* =========================
+   LINKS & BUTTONS
+========================= */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* =========================
+   LAYOUT HELPERS
+========================= */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.card {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* =========================
+   UTILITIES
+========================= */
+.text-center {
+  text-align: center;
+}
+
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 2rem; }
+
+/* =========================
+   APP ROOT
+========================= */
+.app {
+  min-height: 100vh;
+}
