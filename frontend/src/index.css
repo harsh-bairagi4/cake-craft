@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 /* =========================
-   CSS RESET & BASE
+   RESET
 ========================= */
 * {
   margin: 0;
@@ -22,25 +22,20 @@ body {
 }
 
 /* =========================
-   CSS VARIABLES (DESIGN SYSTEM)
+   DARK CHOCOLATE DESIGN SYSTEM
 ========================= */
 :root {
-  /* Brand Colors */
-  --primary: #E11D48;     /* Strawberry Red */
-  --secondary: #F472B6;   /* Blush Pink */
-  --accent: #FBBF24;      /* Vanilla Gold */
+  --primary: #E11D48;
+  --accent: #FBBF24;
 
-  /* Backgrounds */
-  --bg-main: #FFF7ED;     /* Cream */
-  --bg-card: #FFFFFF;
+  --bg-main: #2B1B17;      /* Dark chocolate */
+  --bg-card: #3E2723;      /* Milk chocolate */
 
-  /* Text */
-  --text-primary: #1F2937;
-  --text-secondary: #6B7280;
+  --text-primary: #F9FAFB;
+  --text-secondary: #BCAAA4;
 
-  /* UI */
-  --border-light: #E5E7EB;
-  --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --border-dark: #3A2A25;
+  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* =========================
@@ -58,7 +53,7 @@ p {
 }
 
 /* =========================
-   LINKS & BUTTONS
+   COMMON ELEMENTS
 ========================= */
 a {
   text-decoration: none;
@@ -83,28 +78,10 @@ button {
 
 .card {
   background-color: var(--bg-card);
-  border-radius: 16px;
-  box-shadow: var(--shadow-soft);
+  border-radius: 18px;
   padding: 1.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: var(--shadow-soft);
 }
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-}
-
-/* =========================
-   UTILITIES
-========================= */
-.text-center {
-  text-align: center;
-}
-
-.mt-2 { margin-top: 0.5rem; }
-.mt-4 { margin-top: 1rem; }
-.mt-6 { margin-top: 1.5rem; }
-.mt-8 { margin-top: 2rem; }
 
 /* =========================
    APP ROOT

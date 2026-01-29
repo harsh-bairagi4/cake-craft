@@ -1,9 +1,9 @@
 import React from 'react'
 import Header from "../../components/Header/Header"
-const Home = () => {
+const Home = ({setShowLogin}) => {
   return (
     <div>
-      <Header/>
+      <Header setShowLogin={setShowLogin}/>
     </div>
   )
 }

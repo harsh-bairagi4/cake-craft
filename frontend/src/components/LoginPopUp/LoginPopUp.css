@@ -1,0 +1,87 @@
+/* OVERLAY */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+/* MODAL */
+.auth-modal {
+  background-color: #3E2723;
+  color: #F9FAFB;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+/* CLOSE */
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: transparent;
+  color: #BCAAA4;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* TITLE */
+.auth-modal h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* FORM */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.auth-form input {
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #3A2A25;
+  background-color: #2B1B17;
+  color: #F9FAFB;
+}
+
+.auth-form input::placeholder {
+  color: #BCAAA4;
+}
+
+/* BUTTON */
+.submit-btn {
+  margin-top: 0.5rem;
+  background-color: #E11D48;
+  color: white;
+  padding: 0.7rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.submit-btn:hover {
+  background-color: #be123c;
+}
+
+/* TOGGLE */
+.toggle-text {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #BCAAA4;
+  text-align: center;
+}
+
+.toggle-text span {
+  color: #FBBF24;
+  cursor: pointer;
+  font-weight: 500;
+}

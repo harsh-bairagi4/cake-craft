@@ -14,7 +14,7 @@ export const generateImage = async (req, res) => {
             return res.json({success: false, message: "No Credit Balance", creditBalance: user.creditBalance});
         }
         const formData = new FormData();
-        formData.append("prompt", `Generate a cake of ${prompt}`);
+        formData.append("prompt", prompt);
 
         const {data} = await axios.post('https://clipdrop-api.co/text-to-image/v1', formData, {
             headers: {

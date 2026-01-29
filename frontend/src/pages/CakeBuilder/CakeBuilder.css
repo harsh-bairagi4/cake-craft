@@ -1,0 +1,136 @@
+.cake-builder-page {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  gap: 2.5rem;
+  border: 2px solid blue;
+  padding: 3rem 5%;
+  min-height: calc(100vh - 80px);
+}
+
+/* RIGHT */
+.cake-builder-right {
+  border: 2px solid yellow;
+  display: flex;
+  justify-content: center;
+}
+
+/* PREVIEW BOX */
+.preview-box {
+  border: 2px solid white;
+  width: 100%;
+  max-width: 650px;
+  background-color: #2B1B17;
+  padding: 2rem;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+}
+
+.preview-box h3 {
+   font-size: 1.4rem;
+  border: 2px solid wheat;
+  color: #F9FAFB;
+  margin-top: -1px;
+  margin-bottom: 1.8rem;
+  letter-spacing: 0.5px;
+}
+
+/* IMAGE */
+.preview-image {
+  margin: 1rem 0 1.5rem;
+  min-height: 280px;
+  border: 2px solid blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-image img {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* LOADER */
+.image-loader {
+  color: #FBBF24;
+}
+
+/* BUTTONS */
+.preview-actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.preview-actions button {
+  flex: 1;
+}
+
+/* CAKE INFO CARD */
+.cake-info-card {
+  padding: 1.6rem;
+  border: 2px solid green;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #3E2723 0%, #2B1B17 100%);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55);
+  animation: fadeUp 0.4s ease;
+}
+
+.cake-info-card h4 {
+  margin-bottom: 1rem;
+  color: #F9FAFB;
+}
+
+.cake-info-card ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem 1rem;
+}
+
+.cake-info-card li {
+  background: rgba(0,0,0,0.25);
+  padding: 0.45rem 0.7rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+}
+
+.cake-info-card li strong {
+  color: #FBBF24;
+}
+
+/* PRICE */
+.cake-price {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(255,255,255,0.15);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.cake-price span {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #E11D48;
+}
+
+/* ANIMATION */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+  .cake-builder-page {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .cake-info-card ul {
+    grid-template-columns: 1fr;
+  }
+}
