@@ -22,21 +22,27 @@ body {
 }
 
 /* =========================
-   DARK CHOCOLATE DESIGN SYSTEM
+   CAKE / DESSERT DESIGN SYSTEM
 ========================= */
 :root {
-  --primary: #E11D48;
-  --accent: #FBBF24;
+  /* BRAND COLORS */
+  --primary: #E63946;        /* Strawberry red */
+  --accent: #C97C5D;         /* Caramel */
 
-  --bg-main: #2B1B17;      /* Dark chocolate */
-  --bg-card: #3E2723;      /* Milk chocolate */
+  /* BACKGROUNDS */
+  --bg-main: #FFF6EA;        /* Vanilla cream */
+  --bg-card: #FFFFFF;        /* Cake base white */
+  --bg-section: #FADADD;     /* Soft blush pink */
 
-  --text-primary: #F9FAFB;
-  --text-secondary: #BCAAA4;
+  /* TEXT */
+  --text-primary: #4A2C2A;   /* Chocolate brown */
+  --text-secondary: #7A4A3A; /* Soft cocoa */
 
-  --border-dark: #3A2A25;
-  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.4);
+  /* BORDERS & SHADOWS */
+  --border-light: #F1D5C9;
+  --shadow-soft: 0 12px 30px rgba(74, 44, 42, 0.15);
 }
+
 
 /* =========================
    TYPOGRAPHY

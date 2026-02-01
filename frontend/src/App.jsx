@@ -8,6 +8,7 @@ import CakeBuilder from './pages/CakeBuilder/CakeBuilder'
 import Cart from './pages/Cart/Cart'
 import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import MyOrders from './pages/MyOrders/MyOrders'
+import Footer from './components/Footer/Footer'
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/myorders" element={<MyOrders/>} />
       <Route path='/generate' element={<CakeBuilder/>}/>
     </Routes>
+    <Footer/>
     </div>
     </>
     
