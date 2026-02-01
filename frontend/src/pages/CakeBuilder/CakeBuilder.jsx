@@ -3,9 +3,10 @@ import "./CakeBuilder.css";
 import CakeSelector from "../../components/CakeSelector/CakeSelector";
 import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CakeBuilder = () => {
-  const { generateImage, labour} = useContext(Context);
+  const {url, generateImage, labour, addToCart} = useContext(Context);
   const navigate = useNavigate();
 
   /* =======================
@@ -25,7 +26,7 @@ const CakeBuilder = () => {
 
   const [imageUrl, setImageUrl] = useState("/cakepic.jpg");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [hasGenerated, setHasGenerated] = useState(true);
+  const [hasGenerated, setHasGenerated] = useState(false);
   
   /* =======================
      AUTH GUARD
@@ -167,6 +168,36 @@ Ultra realistic food photography, no people, no hands.
     setHasGenerated(false);
     setImageUrl("/cakepic.jpg");
   };
+ const handleAddToCart = async () => {
+  try {
+    const payload = {
+      name: `${capitalize(cakeData.flavor)} Cake`,
+      price: calculateCakePrice(),
+      image: imageUrl,
+      description: cakeData,
+    };
+
+    const response = await axios.post(url + "/api/cake/custom",
+      payload,
+       {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    );
+
+    if (response.data.success) {
+      alert("Cake added to cart successfully 🎉");
+      addToCart(response.data.cake._id)
+      navigate("/cart");
+    } else {
+      alert(response.data.message || "Failed to add cake");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Something went wrong while adding cake");
+  }
+};
 
   /* =======================
      JSX
@@ -245,7 +276,7 @@ Ultra realistic food photography, no people, no hands.
                 Total Price:
                 <span> ₹{calculateCakePrice()}</span>
               </div>
-               <button className="primary-btn">Add to Cart</button>
+               <button className="primary-btn" onClick={handleAddToCart}>Add to Cart</button>
             </div>
           )}
         </div>

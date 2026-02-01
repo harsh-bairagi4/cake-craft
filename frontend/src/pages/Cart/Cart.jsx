@@ -1,60 +1,92 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Cart.css";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../../context/Context";
 
 const Cart = () => {
   const navigate = useNavigate();
-  useEffect(()=>{
-    if(!localStorage.getItem("token")){
-      navigate("/")
+  const { cakeList, cartItems, getTotalCartAmount ,token} = useContext(Context);
+
+  useEffect(() => {
+    console.log(cartItems);
+    if (!localStorage.getItem("token")) {
+      
+      navigate("/");
     }
-  }, []);
+  }, [navigate]);
+
   return (
-    <section className="cart-page">
-      <h2>🛒 Your Cart</h2>
+    <section className="cart-studio">
+      <div className="cart-header">
+        <h2>🛒 Your Cake Studio Cart</h2>
+        <p>Review your handcrafted cake creations</p>
+      </div>
 
-      <div className="cart-container">
-        {/* CART ITEMS */}
-        <div className="cart-items">
-          <div className="cart-item">
-            <img src="/cakepic.jpg" alt="Cake" />
-            <div className="item-details">
-              <h4>Chocolate Truffle Cake</h4>
-              <p>1 Kg • Eggless • 2 Layers</p>
-            </div>
-            <span className="item-price">₹899</span>
-          </div>
+      <div className="cart-studio-layout">
+        {/* LEFT: CAKE CARDS */}
+        <div className="cart-cakes">
+          {cakeList.map((cake) => {
+            const qty = cartItems[cake._id] || 0;
+            if (qty > 0) {
+              return (
+                <div key={cake._id} className="cake-card">
+                  <div className="cake-image">
+                    <img src={cake.image} alt={cake.name} />
+                  </div>
 
-          <div className="cart-item">
-            <img src="/cakepic.jpg" alt="Cake" />
-            <div className="item-details">
-              <h4>Red Velvet Cake</h4>
-              <p>0.5 Kg • With Egg</p>
-            </div>
-            <span className="item-price">₹549</span>
-          </div>
+                  <div className="cake-info">
+                    <h4>{cake.name}</h4>
+
+                    <div className="cake-tags">
+                      <span>{cake.description.flavor}</span>
+                      <span>{cake.description.size}</span>
+                      <span>{cake.description.layers} Layers</span>
+                      <span>{cake.description.shape}</span>
+                      <span>{cake.description.eggType}</span>
+                    </div>
+
+                    <div className="cake-footer">
+                      <span className="cake-price">₹{cake.price}</span>
+                      <span className="cake-qty">
+                        Qty: {cartItems[cake._id]}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+            else{
+              <div>Your Harsh</div>
+            }
+            return null;
+          })}
         </div>
 
-        {/* SUMMARY */}
-        <div className="cart-summary">
+        {/* RIGHT: CHECKOUT PANEL */}
+        <div className="checkout-panel">
           <h3>Order Summary</h3>
 
-          <div className="summary-row">
+          <div className="bill-line">
             <span>Subtotal</span>
-            <span>₹1448</span>
+            <span>₹—{getTotalCartAmount()}</span>
           </div>
 
-          <div className="summary-row">
+          <div className="bill-line">
             <span>Delivery</span>
-            <span>₹50</span>
+            <span>₹{getTotalCartAmount() === 0 ? 0 : 50}</span>
           </div>
 
-          <div className="summary-row total">
+          <div className="bill-line total">
             <span>Total</span>
-            <span>₹1498</span>
+            <span>₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 50}</span>
           </div>
 
-          <button onClick={()=> navigate("/place-order")} className="checkout-btn">Proceed to Checkout</button>
+          <button
+            className="checkout-btn"
+            onClick={() => navigate("/place-order")}
+          >
+            Proceed to Checkout →
+          </button>
         </div>
       </div>
     </section>

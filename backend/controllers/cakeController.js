@@ -2,28 +2,37 @@ import cakeModel from "../models/cakeModel.js";
 import fs from 'fs'
 
 
-const addCake = async (req, res) =>{
-    let image_filename = `${req.file.filename}`;
+const addCustomCake = async (req, res) => {
+  try {
+    const { name, price, image, description, userId } = req.body;
+
+    if (!name || !price || !image || !description) {
+      return res.json({ success: false, message: "Missing fields" });
+    }
 
     const cake = new cakeModel({
-        name: req.body.name,
-        description: req.body.description,
-        price: req.body.price,
-        image: image_filename
+      name,
+      price,
+      image,            
+      description,      
+      isCustom: true,
+      createdBy: userId
     });
-    try {
-        await cake.save();
-        res.json({
-            success: true,
-            message: "Food Added"
-        })
-    } catch (error) {
-        console.log(error);
-        res.json({success: false,
-            message: "Error"
-        })
-    }
-}
+
+    await cake.save();
+
+    res.json({
+      success: true,
+      message: "Custom cake created successfully",
+      cake
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Server error" });
+  }
+};
+
 
 const listCake = async (req, res) =>{
     try {
@@ -53,4 +62,4 @@ const removeCake = async (req, res) =>{
     }
 }
 
-export {addCake, listCake, removeCake}
+export {listCake, removeCake, addCustomCake}

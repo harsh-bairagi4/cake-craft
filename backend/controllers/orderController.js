@@ -100,4 +100,4 @@ const updateStatus = async(req, res)=>{
     res.json({success: false, message: "Error"});
   }
 }
-
+export { placeOrder, verifyOrder ,userOrders, listOrders, updateStatus};

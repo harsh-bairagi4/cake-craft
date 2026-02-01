@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 const LoginPopUp = ({ setShowLogin}) => {
   const navigate = useNavigate();
-  const {url, setToken} = useContext(Context);
+  const {url,token, setToken} = useContext(Context);
   const [isLogin, setIsLogin] = useState(false);
 
   const [data, setData] = useState({
@@ -35,7 +35,9 @@ const LoginPopUp = ({ setShowLogin}) => {
     }
     const response = await axios.post(newUrl, data);
     if(response.data.success){
+      console.log(token);
       setToken(response.data.token);
+      console.log(token)
       localStorage.setItem("token", response.data.token);
       setShowLogin(false);
       navigate("/generate");

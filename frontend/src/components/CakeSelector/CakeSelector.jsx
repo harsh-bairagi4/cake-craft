@@ -4,12 +4,6 @@ import { Context } from "../../context/Context";
 
 const CakeSelector = ({ cakeData, setCakeData }) => {
 
-  
-  useEffect(()=>{
-    console.log(cakeData);
-  
-  },[cakeData]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCakeData((prev) => ({
