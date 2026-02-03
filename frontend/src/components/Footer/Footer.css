@@ -10,6 +10,17 @@
   color: var(--text-primary);
   padding-top: 4.5rem;
 }
+.logo{
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.logo span{
+  color: var(--primary);
+}
 
 /* CONTAINER */
 .footer-container {

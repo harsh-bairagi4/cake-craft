@@ -6,28 +6,28 @@ const cakes = [
     id: 1,
     name: "Chocolate Bloom",
     creator: "Harsh",
-    image: "/cake1.jpg",
+    image: "/cakepic.jpg",
     description: "Rich chocolate layers with floral frosting.",
   },
   {
     id: 2,
     name: "Vanilla Sky",
     creator: "Ananya",
-    image: "/cake2.jpg",
+    image: "/cakepic.jpg",
     description: "Soft vanilla cake with pastel buttercream.",
   },
   {
     id: 3,
     name: "Berry Bliss",
     creator: "Rahul",
-    image: "/cake3.jpg",
+    image: "/cakepic.jpg",
     description: "Fresh berries with whipped cream layers.",
   },
   {
     id: 4,
     name: "Golden Caramel",
     creator: "Sneha",
-    image: "/cake4.jpg",
+    image: "/cakepic.jpg",
     description: "Caramel glaze with crunchy nut layers.",
   },
 ];
@@ -42,7 +42,7 @@ const CakeShowcase = () => {
       <div className="cake-swiper">
         <div className="cake-track">
           {[...cakes, ...cakes].map((cake, index) => (
-            <div className="cake-card" key={index}>
+            <div className="card-cake" key={index}>
               <img src={cake.image} alt={cake.name} />
 
               <div className="cake-info">

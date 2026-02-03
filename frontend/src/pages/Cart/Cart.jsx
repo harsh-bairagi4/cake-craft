@@ -9,10 +9,10 @@ const Cart = () => {
 
   useEffect(() => {
     console.log(cartItems);
-    if (!localStorage.getItem("token")) {
+    // if (!localStorage.getItem("token")) {
       
-      navigate("/");
-    }
+    //   navigate("/");
+    // }
   }, [navigate]);
 
   return (

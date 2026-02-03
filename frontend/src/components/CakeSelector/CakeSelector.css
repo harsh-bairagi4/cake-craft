@@ -1,69 +1,84 @@
-/* ROOT WRAPPER */
+/* =========================
+   WRAPPER
+========================= */
 .cake-builder-left > div,
 .cake-selector {
-  background: linear-gradient(
-    180deg,
-    #3E2723 0%,
-    #2B1B17 100%
-  );
-  border: 2px solid purple;
+  background-color: var(--bg-card);
+  border-radius: 22px;
   padding: 2rem;
-  border-radius: 24px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-soft);
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  border: 1px solid var(--border-light);
 }
 
-/* TITLE */
+/* =========================
+   TITLE
+========================= */
 .cake-builder-left h3,
 .cake-selector h3 {
   font-size: 1.4rem;
-  border: 2px solid wheat;
-  color: #F9FAFB;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.5px;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+  position: relative;
 }
 
-/* SELECT DROPDOWNS */
+.cake-builder-left h3::after,
+.cake-selector h3::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 999px;
+  margin-top: 0.3rem;
+}
+
+/* =========================
+   SELECT DROPDOWNS
+========================= */
 .cake-builder-left select,
 .cake-selector select {
   width: 100%;
   padding: 0.75rem 1.1rem;
   border-radius: 999px;
-  background-color: #1F130F;
-  color: #F9FAFB;
-  border: 1px solid #3A2A25;
+  background-color: #fff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
   font-size: 0.9rem;
   appearance: none;
   cursor: pointer;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.25s ease;
 }
 
-/* OPTION */
+/* OPTIONS */
 .cake-builder-left option,
 .cake-selector option {
-  background-color: #2B1B17;
-  color: #F9FAFB;
+  background-color: #fff;
+  color: var(--text-primary);
 }
 
 /* FOCUS */
 .cake-builder-left select:focus,
 .cake-selector select:focus {
   outline: none;
-  border-color: #E11D48;
-  box-shadow: 0 0 0 2px rgba(225, 29, 72, 0.25);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(201, 124, 93, 0.25);
 }
 
-/* TOPPINGS SECTION */
+/* =========================
+   TOPPINGS SECTION
+========================= */
 .toppings {
-  margin-top: 0.8rem;
-  padding: 1rem;
-  background-color: #241511;
+  margin-top: 1rem;
+  padding: 1.2rem;
+  background-color: var(--bg-section);
   border-radius: 18px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0.6rem 1rem;
+  border: 1px dashed var(--border-light);
 }
 
 /* TOPPINGS TITLE */
@@ -71,43 +86,62 @@
   grid-column: span 2;
   font-size: 0.85rem;
   font-weight: 500;
-  color: #FBBF24;
-  margin-bottom: 0.3rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.4rem;
 }
 
 /* TOPPING LABEL */
 .toppings label {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.5rem;
   font-size: 0.85rem;
-  color: #F9FAFB;
+  color: var(--text-primary);
   cursor: pointer;
+  padding: 0.35rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.toppings label:hover {
+  background-color: rgba(230, 57, 70, 0.08);
 }
 
 /* CHECKBOX */
 .toppings input[type="checkbox"] {
-  accent-color: #E11D48;
+  accent-color: var(--primary);
   cursor: pointer;
 }
 
-/* HOVER EFFECT */
-.toppings label:hover {
-  color: #FBBF24;
-}
-
-/* MOBILE OPTIMIZATION */
-@media (max-width: 600px) {
+/* =========================
+   MOBILE POLISH
+========================= */
+@media (max-width: 768px) {
   .cake-builder-left > div,
   .cake-selector {
-    padding: 1.5rem;
+    padding: 1.4rem;
+  }
+
+  .cake-selector h3 {
+    font-size: 1.25rem;
+  }
+
+  .cake-selector select {
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
   }
 
   .toppings {
     grid-template-columns: 1fr;
   }
+}
 
-  .toppings p {
-    grid-column: span 1;
+@media (max-width: 480px) {
+  .cake-selector select {
+    font-size: 0.9rem;
+  }
+
+  .toppings label {
+    font-size: 0.85rem;
   }
 }

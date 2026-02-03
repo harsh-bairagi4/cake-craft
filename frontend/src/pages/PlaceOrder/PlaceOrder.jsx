@@ -95,13 +95,13 @@ const PlaceOrder = () => {
      AUTH + EMPTY CART GUARD
   ======================= */
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-    }
+    // if (!localStorage.getItem("token")) {
+    //   navigate("/");
+    // }
 
-    if (getTotalCartAmount() === 0) {
-      navigate("/cart");
-    }
+    // if (getTotalCartAmount() === 0) {
+    //   navigate("/cart");
+    // }
   }, []);
 
   /* =======================

@@ -4,13 +4,14 @@ import "./Pricing.css";
 const pricingPlans = [
   {
     title: "Basic",
-    price: "₹499",
+    price: "₹0",
     subtitle: "Perfect for small celebrations",
     features: [
       "AI-generated cake design",
       "Standard cake size",
       "Single delivery",
       "Creator name saved",
+      "Limited credits"
     ],
   },
   {
@@ -21,30 +22,18 @@ const pricingPlans = [
     features: [
       "Everything in Basic",
       "Premium cake size",
-      "Priority baking",
-      "Listed in public collection",
-      "Reorder anytime",
+      "Other categories to select",
+      "Unlimited credits",
+      "Free delivery",
     ],
-  },
-  {
-    title: "Premium",
-    price: "₹1299",
-    subtitle: "For parties & gifting",
-    features: [
-      "Everything in Creator",
-      "Luxury decoration",
-      "Custom message on cake",
-      "Premium packaging",
-      "Best for gifting",
-    ],
-  },
+  }
 ];
 
 const Pricing = () => {
   return (
     <section className="pricing">
       <h2 className="pricing-title">
-        Simple, Transparent Pricing
+       Simple, Transparent Pricing
       </h2>
 
       <div className="pricing-cards">

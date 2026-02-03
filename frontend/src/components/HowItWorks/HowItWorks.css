@@ -2,103 +2,41 @@
    HOW IT WORKS – CAKE THEME
 ========================= */
 .how {
-  padding: 6rem 0;
+  padding: 6.5rem 0;
   background: linear-gradient(
     135deg,
-    var(--bg-main) 0%,
-    var(--bg-section) 70%,
-    #FFEDE2 100%
+    var(--bg-main),
+    var(--bg-section)
   );
   text-align: center;
-  position: relative;
 }
 
-/* TITLE */
-.how-title {
-  font-size: 2.6rem;
-  color: var(--text-primary);
-  margin-bottom: 0.6rem;
-}
-
-.how-subtitle {
-  color: var(--text-secondary);
-  margin-bottom: 3.5rem;
-  font-size: 1rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* GRID */
-.how-grid {
-  width: 90%;
-  max-width: 1150px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
 
 /* CARD */
-.how-card {
-  background: var(--bg-card);
-  padding: 2.4rem 1.8rem;
-  border-radius: 22px;
-  box-shadow: var(--shadow-soft);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  color: var(--text-primary);
-  position: relative;
+/* =========================
+   BOUNCE CARDS AREA
+========================= */
+.how-bounce-wrapper {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  border: 2px solid red;
+  align-items: center;
 }
 
-/* SUBTLE TOP ACCENT (LIKE ICING) */
-.how-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 18%;
-  width: 64%;
-  height: 5px;
-  background: linear-gradient(
-    90deg,
-    var(--primary),
-    var(--accent)
-  );
-  border-radius: 999px;
+/* TUNE REACT BITS CARDS */
+.custom-bounceCards{
+  border: 2px solid purple;
 }
-
-/* HOVER */
-.how-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(74, 44, 42, 0.22);
-}
-
-/* ICON */
-.how-icon {
-  font-size: 2.6rem;
-  margin-bottom: 1.2rem;
-}
-
-/* TEXT */
-.how-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.6rem;
-  color: var(--text-primary);
-}
-
-.how-card p {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+.custom-bounceCards img {
+  border-radius: 18px;
+  box-shadow: 0 14px 35px rgba(74, 44, 42, 0.25);
+  background: #fff;
 }
 
 /* MOBILE */
 @media (max-width: 900px) {
-  .how-grid {
-    grid-template-columns: 1fr;
-    gap: 1.6rem;
-  }
-
-  .how-title {
-    font-size: 2.1rem;
-  }
+  .custom-bounceCards{
+  margin-left: 120px;
+}
 }

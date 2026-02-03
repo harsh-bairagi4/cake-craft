@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
-import "./LoginPopUp.css"
+import "./LoginPopUp.css";
 import { Context } from "../../context/Context";
-import axios from 'axios';
-import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const LoginPopUp = ({ setShowLogin}) => {
+const LoginPopUp = ({ setShowLogin }) => {
   const navigate = useNavigate();
-  const {url,token, setToken} = useContext(Context);
+  const { url, setToken } = useContext(Context);
   const [isLogin, setIsLogin] = useState(false);
 
   const [data, setData] = useState({
@@ -15,66 +15,88 @@ const LoginPopUp = ({ setShowLogin}) => {
     password: "",
   });
 
-  const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((data) => ({
-      ...data,
-      [name] : value,
-    }));
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onLogin = async (event) => {
-    event.preventDefault();
-    let newUrl = url;
-    if(isLogin == true){
-      newUrl += "/api/user/login"
-    }
-    else{
-      newUrl += "/api/user/register"
-    }
-    const response = await axios.post(newUrl, data);
-    if(response.data.success){
-      console.log(token);
+  const onLogin = async (e) => {
+    e.preventDefault();
+
+    const endpoint = isLogin
+      ? "/api/user/login"
+      : "/api/user/register";
+
+    const response = await axios.post(url + endpoint, data);
+
+    if (response.data.success) {
       setToken(response.data.token);
-      console.log(token)
       localStorage.setItem("token", response.data.token);
       setShowLogin(false);
       navigate("/generate");
-    }
-    else{
+    } else {
       alert(response.data.message);
     }
-
-
-  }
+  };
 
   return (
     <div className="auth-overlay">
       <div className="auth-modal">
-        <button className="close-btn" onClick={()=>setShowLogin(false)}>✕</button>
+        <button className="close-btn" onClick={() => setShowLogin(false)}>
+          ✕
+        </button>
 
-        <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
+        <div className="auth-header">
+          <span className="auth-badge"><span className="black">🍰 Cake</span>Craft</span>
+          <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
+          <p>
+            {isLogin
+              ? "Login to continue designing your cake"
+              : "Sign up to create and save custom cakes"}
+          </p>
+        </div>
 
-        <form onSubmit={onLogin} className="auth-form">
+        <form className="auth-form" onSubmit={onLogin}>
           {!isLogin && (
-            <input onChange={onChangeHandler} name="name" value={data.name} type="text" placeholder="Full Name" />
+            <input
+              type="text"
+              name="name"
+              placeholder="Full Name"
+              value={data.name}
+              onChange={onChangeHandler}
+              required
+            />
           )}
 
-          <input onChange={onChangeHandler} name="email" value={data.email} type="email" placeholder="Email Address" />
-          <input onChange={onChangeHandler} name="password" value={data.password} type="password"  placeholder="Password" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={data.email}
+            onChange={onChangeHandler}
+            required
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={data.password}
+            onChange={onChangeHandler}
+            required
+          />
 
           <button type="submit" className="submit-btn">
-            {isLogin ? "Login" : "Sign Up"}
+            {isLogin ? "Login" : "Create Account"}
           </button>
         </form>
 
-        <p className="toggle-text">
-          {isLogin ? "Don’t have an account?" : "Already have an account?"}
+        <div className="auth-footer">
+          {isLogin ? "New here?" : "Already have an account?"}
           <span onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? " Sign Up" : " Login"}
+            {isLogin ? " Sign up" : " Login"}
           </span>
-        </p>
+        </div>
       </div>
     </div>
   );

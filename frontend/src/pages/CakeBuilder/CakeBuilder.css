@@ -1,45 +1,72 @@
+/* =========================
+   PAGE LAYOUT
+========================= */
 .cake-builder-page {
+  width: 100%;
   display: grid;
   grid-template-columns: 40% 60%;
   gap: 2.5rem;
-  border: 2px solid blue;
   padding: 3rem 5%;
   min-height: calc(100vh - 80px);
+  background-color: var(--bg-main);
 }
 
-/* RIGHT */
+/* =========================
+   LEFT SIDE
+========================= */
+.cake-builder-left {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
 .cake-builder-right {
-  border: 2px solid yellow;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
-/* PREVIEW BOX */
+/* =========================
+   PREVIEW BOX
+========================= */
 .preview-box {
-  border: 2px solid white;
   width: 100%;
   max-width: 650px;
-  background-color: #2B1B17;
-  padding: 2rem;
-  border-radius: 24px;
+  background-color: var(--bg-card);
+  padding: 2.2rem;
+  border-radius: 26px;
   text-align: center;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-light);
 }
 
+/* TITLE */
 .preview-box h3 {
-   font-size: 1.4rem;
-  border: 2px solid wheat;
-  color: #F9FAFB;
-  margin-top: -1px;
+  font-size: 1.5rem;
   margin-bottom: 1.8rem;
-  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  position: relative;
 }
 
-/* IMAGE */
+.preview-box h3::after {
+  content: "";
+  width: 60px;
+  height: 3px;
+  background-color: var(--primary);
+  display: block;
+  margin: 0.5rem auto 0;
+  border-radius: 999px;
+}
+
+/* =========================
+   IMAGE
+========================= */
 .preview-image {
-  margin: 1rem 0 1.5rem;
+  margin: 1.2rem 0 1.8rem;
   min-height: 280px;
-  border: 2px solid blue;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,41 +74,61 @@
 
 .preview-image img {
   width: 100%;
-  border-radius: 18px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 18px 35px rgba(74, 44, 42, 0.25);
+  background-color: #fff;
 }
 
 /* LOADER */
 .image-loader {
-  color: #FBBF24;
+  color: var(--accent);
+  font-weight: 500;
 }
 
-/* BUTTONS */
+/* =========================
+   ACTION BUTTONS
+========================= */
 .preview-actions {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.6rem;
 }
 
 .preview-actions button {
   flex: 1;
+  padding: 0.75rem;
+  border-radius: 999px;
+  font-weight: 500;
 }
 
-/* CAKE INFO CARD */
+/* =========================
+   CAKE INFO CARD
+========================= */
 .cake-info-card {
+  margin-top: 1.5rem;
   padding: 1.6rem;
-  border: 2px solid green;
   border-radius: 22px;
-  background: linear-gradient(180deg, #3E2723 0%, #2B1B17 100%);
-  box-shadow: 0 25px 50px rgba(0,0,0,0.55);
+  background-color: var(--bg-section);
+  box-shadow: var(--shadow-soft);
   animation: fadeUp 0.4s ease;
 }
 
+/* CARD HEADINGS */
 .cake-info-card h4 {
-  margin-bottom: 1rem;
-  color: #F9FAFB;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.2rem;
 }
 
+.cake-info-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+/* DETAILS LIST */
 .cake-info-card ul {
   list-style: none;
   display: grid;
@@ -90,47 +137,129 @@
 }
 
 .cake-info-card li {
-  background: rgba(0,0,0,0.25);
-  padding: 0.45rem 0.7rem;
-  border-radius: 12px;
+  background-color: var(--bg-card);
+  padding: 0.5rem 0.75rem;
+  border-radius: 14px;
   font-size: 0.85rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
 }
 
 .cake-info-card li strong {
-  color: #FBBF24;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
-/* PRICE */
+/* =========================
+   PRICE
+========================= */
 .cake-price {
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   padding-top: 1rem;
-  border-top: 1px dashed rgba(255,255,255,0.15);
+  border-top: 1px dashed var(--border-light);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 0.95rem;
+  color: var(--text-secondary);
 }
 
 .cake-price span {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 600;
-  color: #E11D48;
+  color: var(--primary);
 }
 
-/* ANIMATION */
+/* ADD TO CART BUTTON */
+.cake-info-card .primary-btn {
+  margin-top: 1.2rem;
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 999px;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.cake-info-card .primary-btn:hover {
+  background-color: #cf2f3c;
+  transform: translateY(-2px);
+}
+
+/* =========================
+   ANIMATION
+========================= */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* MOBILE */
+/* =========================
+   RESPONSIVE FIX (CLEAN)
+========================= */
+
+/* Tablet & below */
 @media (max-width: 900px) {
   .cake-builder-page {
+    grid-template-columns: 1fr;
+    padding: 2rem 4%;
+  }
+
+  .cake-builder-left,
+  .cake-builder-right {
+    width: 100%;
+  }
+
+  .cake-builder-right {
+    margin-top: 2rem;
+  }
+
+  .preview-box {
+    max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .cake-builder-page {
+    padding: 1.5rem 1rem;
+  }
+
+  .preview-image {
+    min-height: 220px;
+  }
+
+  .preview-image img {
+    max-height: 260px;
+  }
+
+  .preview-actions {
+    flex-direction: column;
+  }
+
+  .cake-info-card ul {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 768px) {
-  .cake-info-card ul {
-    grid-template-columns: 1fr;
+/* Small phones */
+@media (max-width: 480px) {
+  .preview-box {
+    padding: 1.5rem;
+  }
+
+  .cake-info-card {
+    padding: 1.3rem;
+  }
+
+  .cake-price span {
+    font-size: 1.15rem;
   }
 }

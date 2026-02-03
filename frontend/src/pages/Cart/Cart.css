@@ -1,55 +1,71 @@
+/* =========================
+   PAGE
+========================= */
 .cart-studio {
   padding: 3rem 5%;
   min-height: calc(100vh - 80px);
+  background-color: var(--bg-main);
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 .cart-header {
   margin-bottom: 2.5rem;
 }
 
 .cart-header h2 {
-  color: #F9FAFB;
-  font-size: 1.8rem;
+  font-size: 1.9rem;
+  color: var(--text-primary);
 }
 
 .cart-header p {
-  color: #BCAAA4;
   font-size: 0.95rem;
+  color: var(--text-secondary);
 }
 
-/* LAYOUT */
+/* =========================
+   LAYOUT
+========================= */
 .cart-studio-layout {
   display: grid;
   grid-template-columns: 70% 30%;
   gap: 2.5rem;
 }
 
-/* LEFT SIDE – CAKES */
+/* =========================
+   LEFT – CAKE LIST
+========================= */
 .cart-cakes {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
 }
 
-/* CAKE CARD */
+/* =========================
+   CAKE CARD
+========================= */
 .cake-card {
   display: flex;
-  gap: 1.2rem;
-  background: linear-gradient(135deg, #3E2723, #2B1B17);
-  padding: 1.2rem;
+  gap: 1.3rem;
+  background-color: var(--bg-card);
+  padding: 1.4rem;
   border-radius: 22px;
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.55);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-light);
 }
 
+/* IMAGE */
 .cake-image img {
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   border-radius: 18px;
   object-fit: cover;
 }
 
-/* CAKE INFO */
+/* =========================
+   CAKE INFO
+========================= */
 .cake-info {
   flex: 1;
   display: flex;
@@ -58,8 +74,8 @@
 }
 
 .cake-info h4 {
-  color: #F9FAFB;
   font-size: 1.05rem;
+  color: var(--text-primary);
 }
 
 /* TAGS */
@@ -71,10 +87,11 @@
 
 .cake-tags span {
   font-size: 0.7rem;
-  padding: 0.25rem 0.6rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 999px;
-  background-color: rgba(0, 0, 0, 0.35);
-  color: #E5E7EB;
+  background-color: var(--bg-section);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
 }
 
 /* FOOTER */
@@ -88,28 +105,31 @@
 .cake-price {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #FBBF24;
+  color: var(--primary);
 }
 
 .cake-qty {
   font-size: 0.85rem;
-  color: #BCAAA4;
+  color: var(--text-secondary);
 }
 
-/* RIGHT SIDE – CHECKOUT */
+/* =========================
+   RIGHT – SUMMARY
+========================= */
 .checkout-panel {
-  background-color: #2B1B17;
+  background-color: var(--bg-card);
   padding: 2rem;
-  border-radius: 24px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  border-radius: 26px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-light);
   height: fit-content;
   position: sticky;
   top: 120px;
 }
 
 .checkout-panel h3 {
-  color: #F9FAFB;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.6rem;
+  color: var(--text-primary);
 }
 
 /* BILL */
@@ -117,14 +137,17 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.9rem;
-  color: #BCAAA4;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
 .bill-line.total {
-  margin-top: 1.2rem;
+  margin-top: 1.3rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-light);
   font-size: 1.1rem;
   font-weight: 600;
-  color: #F9FAFB;
+  color: var(--text-primary);
 }
 
 /* BUTTON */
@@ -133,18 +156,20 @@
   width: 100%;
   padding: 0.9rem;
   border-radius: 999px;
-  background-color: #E11D48;
-  color: white;
+  background-color: var(--primary);
+  color: #fff;
   font-weight: 500;
   transition: all 0.3s ease;
 }
 
 .checkout-btn:hover {
-  background-color: #be123c;
+  background-color: #cc2f3b;
   transform: translateY(-2px);
 }
 
-/* MOBILE */
+/* =========================
+   MOBILE
+========================= */
 @media (max-width: 900px) {
   .cart-studio-layout {
     grid-template-columns: 1fr;
@@ -152,14 +177,17 @@
 
   .checkout-panel {
     position: static;
+    margin-top: 2rem;
   }
+}
 
+@media (max-width: 600px) {
   .cake-card {
     flex-direction: column;
   }
 
   .cake-image img {
     width: 100%;
-    height: 180px;
+    height: 190px;
   }
 }

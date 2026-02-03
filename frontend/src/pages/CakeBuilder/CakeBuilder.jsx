@@ -26,15 +26,15 @@ const CakeBuilder = () => {
 
   const [imageUrl, setImageUrl] = useState("/cakepic.jpg");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [hasGenerated, setHasGenerated] = useState(false);
+  const [hasGenerated, setHasGenerated] = useState(true);
   
   /* =======================
      AUTH GUARD
   ======================= */
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-    }
+    // if (!localStorage.getItem("token")) {
+    //   navigate("/");
+    // }
   }, [navigate]);
 
   /* =======================

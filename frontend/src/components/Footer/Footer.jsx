@@ -1,13 +1,17 @@
 import React from "react";
 import "./Footer.css";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
   return (
     <footer className="footer">
       <div className="footer-container">
         {/* BRAND */}
         <div className="footer-brand">
-          <h3>🍰 AI Cake Studio</h3>
+           <div onClick={() => navigate("/")} className="logo">
+        🍰 Cake<span>Craft</span>
+      </div>
           <p>
             Design unique cakes using AI and turn celebrations
             into memorable moments.
@@ -49,7 +53,7 @@ const Footer = () => {
       {/* BOTTOM BAR */}
       <div className="footer-bottom">
         <p>
-          © {new Date().getFullYear()} AI Cake Studio. All rights reserved.
+          © {new Date().getFullYear()} CakeCraft. All rights reserved.
         </p>
         <p className="footer-tagline">
           Every cake has a creator.

@@ -1,21 +1,21 @@
-import React from 'react'
-import Header from "../../components/Header/Header"
-import CakeShowcase from '../../components/CakeShowcase/CakeShowcase'
-import Pricing from "../../components/Pricing/Pricing"
-import Faq from '../../components/Faq/Faq'
-import HowItWorks from '../../components/HowItWorks/HowItWorks'
-import DemoVideo from '../../components/DemoVideo/DemoVideo'
-const Home = ({setShowLogin}) => {
+import React from "react";
+import Header from "../../components/Header/Header";
+import CakeShowcase from "../../components/CakeShowcase/CakeShowcase";
+import Pricing from "../../components/Pricing/Pricing";
+import Faq from "../../components/Faq/Faq";
+import DemoVideo from "../../components/DemoVideo/DemoVideo";
+import HowItWorks from "../../components/HowItWorks/HowItWorks";
+const Home = ({ setShowLogin }) => {
   return (
     <div>
-      <Header setShowLogin={setShowLogin}/>
+      <Header setShowLogin={setShowLogin} />
+      <DemoVideo />
+      <CakeShowcase />
       <HowItWorks/>
-      <DemoVideo/>
-      <CakeShowcase/>
-      <Faq/>
-      <Pricing/>
+      <Faq />
+      <Pricing />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

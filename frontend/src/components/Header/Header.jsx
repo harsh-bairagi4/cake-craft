@@ -45,35 +45,33 @@ const Header = ({ setShowLogin }) => {
   }, []);
 
   return (
-    <section className="hero">
-      <div className="hero-glow" />
+    <div>
+      
 
-      <div className="hero-container center">
-        <div className="hero-text">
-          <span className="hero-badge">
-            {slides[current].badge}
-          </span>
+      <section className="hero">
+        <div className="hero-glow" />
 
-          <h1 className="hero-title">
-            {slides[current].title[0]} <br />
-            <span>{slides[current].title[1]}</span>
-          </h1>
+        <div className="hero-container center">
+          <div className="hero-text">
+            <span className="hero-badge">{slides[current].badge}</span>
 
-          <p className="hero-subtext">
-            {slides[current].text}
-          </p>
+            <h1 className="hero-title">
+              {slides[current].title[0]} <br />
+              <span>{slides[current].title[1]}</span>
+            </h1>
 
-          <div className="hero-actions">
-            <button className="primary-btn" onClick={showLogin}>
-              Start Designing
-            </button>
-            <button className="secondary-btn">
-              Explore Creations
-            </button>
+            <p className="hero-subtext">{slides[current].text}</p>
+
+            <div className="hero-actions">
+              <button className="primary-btn" onClick={showLogin}>
+                Start Designing
+              </button>
+              <button className="secondary-btn">Explore Creations</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

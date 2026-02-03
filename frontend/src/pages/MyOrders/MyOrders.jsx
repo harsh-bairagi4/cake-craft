@@ -7,9 +7,9 @@ const MyOrders = () => {
   const {token} = useContext(Context);
   const navigate = useNavigate();
   useEffect(()=>{
-    if(!localStorage.getItem("token")){
-      navigate("/")
-    }
+    // if(!localStorage.getItem("token")){
+    //   navigate("/")
+    // }
   }, []);
   return (
     <section className="orders-page">
