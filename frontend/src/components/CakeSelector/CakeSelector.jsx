@@ -31,7 +31,7 @@ const CakeSelector = ({ cakeData, setCakeData }) => {
   };
 
   return (
-    <div>
+    <div >
       <h3>🍰 Build Your Cake</h3>
       {/* Flavor */}
       <select name="flavor" value={cakeData.flavor} onChange={handleChange}>

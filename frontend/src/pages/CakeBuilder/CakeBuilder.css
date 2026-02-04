@@ -3,9 +3,9 @@
 ========================= */
 .cake-builder-page {
   width: 100%;
-  display: grid;
-  grid-template-columns: 40% 60%;
-  gap: 2.5rem;
+  
+  display: flex;
+  gap: 10%;
   padding: 3rem 5%;
   min-height: calc(100vh - 80px);
   background-color: var(--bg-main);
@@ -15,18 +15,18 @@
    LEFT SIDE
 ========================= */
 .cake-builder-left {
-  width: 100%;
+  width: 50%;
   display: flex;
-  align-items: flex-start;
 }
 
 /* =========================
    RIGHT SIDE
 ========================= */
 .cake-builder-right {
+
+  width: 60%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
 }
 
 /* =========================
@@ -36,7 +36,7 @@
   width: 100%;
   max-width: 650px;
   background-color: var(--bg-card);
-  padding: 2.2rem;
+  padding: 1.6rem;
   border-radius: 26px;
   text-align: center;
   box-shadow: var(--shadow-soft);
@@ -201,56 +201,30 @@
   }
 }
 
-/* =========================
-   RESPONSIVE FIX (CLEAN)
-========================= */
-
-/* Tablet & below */
-@media (max-width: 900px) {
-  .cake-builder-page {
-    grid-template-columns: 1fr;
-    padding: 2rem 4%;
-  }
-
-  .cake-builder-left,
-  .cake-builder-right {
-    width: 100%;
-  }
-
-  .cake-builder-right {
-    margin-top: 2rem;
-  }
-
-  .preview-box {
-    max-width: 100%;
-  }
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-  .cake-builder-page {
-    padding: 1.5rem 1rem;
-  }
-
-  .preview-image {
-    min-height: 220px;
-  }
-
-  .preview-image img {
-    max-height: 260px;
-  }
-
-  .preview-actions {
-    flex-direction: column;
-  }
-
-  .cake-info-card ul {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* Small phones */
-@media (max-width: 480px) {
+@media (max-width: 768px) {
+  .cake-builder-page {
+  flex-direction: column;
+  gap: 60px;
+  padding: 4rem 1rem;
+}
+/* =========================
+   LEFT SIDE
+========================= */
+.cake-builder-left {
+  width: 100%;
+  
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+.cake-builder-right {
+  width: 100%;
+}
+
+
   .preview-box {
     padding: 1.5rem;
   }

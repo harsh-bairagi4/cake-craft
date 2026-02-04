@@ -109,7 +109,7 @@ const PlaceOrder = () => {
   ======================= */
   return (
     <form className="order-page" onSubmit={placeOrder}>
-      <h2>📦 Place Your Order</h2>
+      <h2>🍰 Place Your Order</h2>
 
       <div className="order-container">
         {/* LEFT: DELIVERY DETAILS */}

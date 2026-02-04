@@ -18,7 +18,7 @@ const Cart = () => {
   return (
     <section className="cart-studio">
       <div className="cart-header">
-        <h2>🛒 Your Cake Studio Cart</h2>
+        <h2>🛒 Your Cake Cart</h2>
         <p>Review your handcrafted cake creations</p>
       </div>
 

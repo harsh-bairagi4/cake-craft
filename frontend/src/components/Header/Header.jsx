@@ -33,8 +33,9 @@ const Header = ({ setShowLogin }) => {
   const [current, setCurrent] = useState(0);
 
   const showLogin = () => {
-    if (!token) setShowLogin(true);
-    else navigate("/generate");
+    // if (!token) setShowLogin(true);
+    // else
+       navigate("/generate");
   };
 
   useEffect(() => {

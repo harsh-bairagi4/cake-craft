@@ -22,7 +22,7 @@ const Navbar = ({ setShowLogin }) => {
       </div>
 
       {/* RIGHT ACTION */}
-      {!token ? (
+      {token ? (
         <button className="nav-btn" onClick={() => setShowLogin(true)}>
           Sign In
         </button>
