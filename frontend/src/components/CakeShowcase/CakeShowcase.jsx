@@ -1,6 +1,5 @@
 import React from "react";
 import "./CakeShowcase.css";
-
 const cakes = [
   {
     id: 1,
@@ -35,22 +34,35 @@ const cakes = [
 const CakeShowcase = () => {
   return (
     <section className="cake-showcase">
-      <h2 className="section-title">
-        Cakes Created by Our Community
-      </h2>
+      {/* TITLE */}
+      <h2 className="section-title">Cakes Created by Our Community</h2>
 
+      {/* SWIPER */}
       <div className="cake-swiper">
-        <div className="cake-track">
+        <div
+          className="cake-track"
+        >
           {[...cakes, ...cakes].map((cake, index) => (
-            <div className="card-cake" key={index}>
+            <div
+              className="card-cake"
+              key={index}
+              variants={{
+                hidden: { opacity: 0, y: 30, scale: 0.95 },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                },
+              }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -6 }}
+            >
               <img src={cake.image} alt={cake.name} />
 
               <div className="cake-info">
                 <h3>{cake.name}</h3>
                 <p className="cake-desc">{cake.description}</p>
-                <span className="cake-creator">
-                  Designed by {cake.creator}
-                </span>
+                <span className="cake-creator">Designed by {cake.creator}</span>
               </div>
             </div>
           ))}

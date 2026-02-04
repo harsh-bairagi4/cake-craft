@@ -18,7 +18,7 @@ const placeNow = (el, slot, skew) =>
     x: slot.x,
     y: slot.y,
     z: slot.z,
-    xPercent: -50,
+    xPercent: -37,
     yPercent: -50,
     skewY: skew,
     transformOrigin: 'center center',

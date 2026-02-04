@@ -23,6 +23,7 @@ body {
   color: var(--text-primary);
   font-family: 'Poppins', sans-serif;
   line-height: 1.6;
+   padding-top: 70px;
 }
 
 

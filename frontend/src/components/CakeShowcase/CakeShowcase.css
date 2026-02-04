@@ -27,7 +27,7 @@
   background: rgb(252, 220, 225);
   gap: 2rem;
   width: max-content;
-  animation: scroll 18s linear infinite;
+  animation: scroll 9s linear infinite;
 }
 
 .cake-track:hover {
@@ -78,6 +78,8 @@
   color: var(--primary);
   font-weight: 500;
 }
+
+
 
 /* ANIMATION */
 @keyframes scroll {

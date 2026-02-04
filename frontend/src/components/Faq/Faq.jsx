@@ -1,5 +1,7 @@
+
 import React, { useState } from "react";
 import "./Faq.css";
+import { motion } from "framer-motion";
 
 const faqs = [
   {
@@ -37,23 +39,24 @@ const Faq = () => {
   };
 
   return (
-    <section className="faq">
+    <section
+      className="faq"
+     >
       <h2 className="faq-title">Frequently Asked Questions</h2>
 
-      <div className="faq-list">
+      <motion.div className="faq-list"  initial={{ opacity: 0, y: 70 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}>
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className={`faq-item ${
-              activeIndex === index ? "active" : ""
-            }`}
+            className={`faq-item ${activeIndex === index ? "active" : ""}`}
             onClick={() => toggleFaq(index)}
           >
             <div className="faq-question">
               <h4>{faq.question}</h4>
-              <span className="faq-icon">
-                {activeIndex === index ? "−" : "+"}
-              </span>
+              <span>{activeIndex === index ? "−" : "+"}</span>
             </div>
 
             {activeIndex === index && (
@@ -61,7 +64,7 @@ const Faq = () => {
             )}
           </div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

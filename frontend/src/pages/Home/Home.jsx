@@ -14,6 +14,7 @@ const Home = ({ setShowLogin }) => {
       <HowItWorks/>
       <Faq />
       <Pricing />
+        
     </div>
   );
 };

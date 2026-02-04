@@ -1,13 +1,9 @@
 import React from "react";
 import "./HowItWorks.css";
 import BounceCards from "../BounceCards/BounceCards";
+import { motion } from "framer-motion";
 
-const images = [
-  "works1.png",
-  "works2.png",
-  "works3.png",
-  "works4.png",
-];
+const images = ["works1.png", "works2.png", "works3.png", "works4.png"];
 
 const transformStyles = [
   "rotate(4deg) translate(-140px)",
@@ -20,10 +16,13 @@ const transformStyles = [
 const HowItWorks = () => {
   return (
     <section className="how">
-    
-
-      {/* BOUNCE CARDS VISUAL */}
-      <div className="how-bounce-wrapper">
+      <motion.div
+        initial={{ opacity: 0, y: 70 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="how-bounce-wrapper"
+      >
         <BounceCards
           className="custom-bounceCards"
           images={images}
@@ -35,7 +34,7 @@ const HowItWorks = () => {
           transformStyles={transformStyles}
           enableHover
         />
-      </div>
+      </motion.div>
     </section>
   );
 };
