@@ -22,37 +22,34 @@ const Navbar = ({ setShowLogin }) => {
       </div>
 
       {/* RIGHT ACTION */}
-      {token ? (
+      {!token ? (
         <button className="nav-btn" onClick={() => setShowLogin(true)}>
           Sign In
         </button>
       ) : (
         <div className="user-profile">
-        <div onClick={()=> navigate("/cart")} className="cart-img">
-          <img src="/cart.png" alt="" />
-        </div>
-        <div
-          className="profile-wrapper"
-          onMouseEnter={() => setOpenMenu(true)}
-          onMouseLeave={() => setOpenMenu(false)}
-        >
-          
-          <img
-            src="https://i.pravatar.cc/40"
-            alt="profile"
-            className="profile-img"
-          />
-
-          {openMenu && (
-            <div className="profile-dropdown">
-              <p onClick={() => navigate("/myorders")}>My Orders</p>
-              <p onClick={logoutHandler}>Logout</p>
+            <div onClick={() => navigate("/cart")} className="cart-img">
+              <img src="/cart.png" alt="" />
             </div>
-          )}
-          
-        </div>
-        </div>
+            <div
+              className="profile-wrapper"
+              onMouseEnter={() => setOpenMenu(true)}
+              onMouseLeave={() => setOpenMenu(false)}
+            >
+              <img
+                src="https://i.pravatar.cc/40"
+                alt="profile"
+                className="profile-img"
+              />
+              {openMenu && (
+              <div className="profile-dropdown">
+                <p onClick={() => navigate("/myorders")}>My Cakes</p>
+                <p onClick={logoutHandler}>Logout</p>
+              </div>
+            )}
+            </div>
         
+        </div>
       )}
     </nav>
   );

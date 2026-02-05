@@ -6,16 +6,17 @@ import Stripe from "stripe"
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 const placeOrder = async (req, res) => {
-    const frontend_url = process.env.FRONTEND_URL;
+
     try{
+         const {userId} = req.user;
         const newOrder = new orderModel({
-            userId: req.body.userId,
+            userId: userId,
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
         });
         await newOrder.save();
-        await userModel.findByIdAndUpdate(req.body.userId, {
+        await userModel.findByIdAndUpdate(userId, {
             cartData: {}});
          const line_items = req.body.items.map((item) => ({
       price_data: {
@@ -41,8 +42,8 @@ const placeOrder = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: line_items,
       mode: "payment",
-      success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-      cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
+      success_url: `${process.env.FRONTEND_URL}/verify?success=true&orderId=${newOrder._id}`,
+      cancel_url: `${process.env.FRONTEND_URL}/verify?success=false&orderId=${newOrder._id}`,
     });
     res.json({ success: true, session_url: session.url });
         
@@ -65,14 +66,15 @@ const verifyOrder = async (req, res)=>{
       res.json({success: false, message: "Not Paid" });
     }
   }catch(error){
-    console.log(error);
+    console.log(error.message);
     res.json({success: false, message: "Error"});
   }
 }
 
 const userOrders = async (req, res)=>{
     try{
-      const orders = await orderModel.find({userId: req.body.userId});
+      const {userId} = req.user;
+      const orders = await orderModel.findById(userId);
       res.json({success: true, data: orders});
     }catch(error){
       console.log(error);

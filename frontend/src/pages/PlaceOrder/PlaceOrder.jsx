@@ -13,6 +13,7 @@ const PlaceOrder = () => {
     cakeList,
     cartItems,
     url,
+    setCartItems
   } = useContext(Context);
 
   /* =======================
@@ -45,7 +46,7 @@ const PlaceOrder = () => {
   ======================= */
   const placeOrder = async (e) => {
     e.preventDefault();
-
+ 
     // Build ordered items array
     let orderItems = [];
 
@@ -82,8 +83,10 @@ const PlaceOrder = () => {
         const {session_url} = response.data;
         window.location.replace(session_url);
         alert("🎉 Order placed successfully!");
+        setCartItems({});
         navigate("/my-orders");
       } else {
+        console.log(response.data);
         alert(response.data.message || "Order failed");
       }
     } catch (error) {
@@ -94,15 +97,7 @@ const PlaceOrder = () => {
    /* =======================
      AUTH + EMPTY CART GUARD
   ======================= */
-  useEffect(() => {
-    // if (!localStorage.getItem("token")) {
-    //   navigate("/");
-    // }
 
-    // if (getTotalCartAmount() === 0) {
-    //   navigate("/cart");
-    // }
-  }, []);
 
   /* =======================
      JSX

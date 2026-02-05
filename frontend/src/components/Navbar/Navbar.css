@@ -51,21 +51,21 @@ top: 0;
 .user-profile {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 26px;
-}
+  gap: 20px;
 
+  
+}
+.profile-wrapper{
+  width: 50px;
+}
 .cart-img {
   cursor: pointer;
 }
 
 /* PROFILE IMAGE */
-.profile-wrapper {
-  position: relative;
-  cursor: pointer;
-}
 
 .profile-img {
+   cursor: pointer;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -73,15 +73,16 @@ top: 0;
   background: #fff;
 }
 
+
 /* DROPDOWN */
 .profile-dropdown {
   position: absolute;
-  top: 52px;
-  right: 0;
+  top: 60px;
+  right: 60px;
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-radius: 14px;
-  width: 150px;
+  width: 130px;
   box-shadow: var(--shadow-soft);
   overflow: hidden;
   z-index: 200;
@@ -107,4 +108,11 @@ top: 0;
   .navbar-menu {
     display: none;
   }
+}
+@media (max-width: 425px) {
+  .profile-dropdown {
+    font-size: 2rem;
+    width: 120px;
+  right: 30px;
+}
 }

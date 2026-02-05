@@ -5,15 +5,12 @@ import { Context } from "../../context/Context";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cakeList, cartItems, getTotalCartAmount ,token} = useContext(Context);
-
-  useEffect(() => {
+  const { cakeList, cartItems, getTotalCartAmount,fetchCakeList ,capitalize} = useContext(Context);
+  useEffect(()=>{
+    fetchCakeList();
+    console.log(cakeList);
     console.log(cartItems);
-    // if (!localStorage.getItem("token")) {
-      
-    //   navigate("/");
-    // }
-  }, [navigate]);
+  }, []);
 
   return (
     <section className="cart-studio">
@@ -38,11 +35,13 @@ const Cart = () => {
                     <h4>{cake.name}</h4>
 
                     <div className="cake-tags">
-                      <span>{cake.description.flavor}</span>
+                      <span>{capitalize(cake.description.flavor)}</span>
                       <span>{cake.description.size}</span>
+                      <span>{capitalize(cake.description.frosting)}</span>
                       <span>{cake.description.layers} Layers</span>
-                      <span>{cake.description.shape}</span>
-                      <span>{cake.description.eggType}</span>
+                      <span>{capitalize(cake.description.shape)}</span>
+                      <span>{capitalize(cake.description.eggType)}</span>
+                      <span>Sweetness- {capitalize(cake.description.sweetness)}</span>
                     </div>
 
                     <div className="cake-footer">

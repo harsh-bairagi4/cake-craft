@@ -46,16 +46,6 @@ const CakeShowcase = () => {
             <div
               className="card-cake"
               key={index}
-              variants={{
-                hidden: { opacity: 0, y: 30, scale: 0.95 },
-                show: {
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                },
-              }}
-              transition={{ duration: 0.5 }}
-              whileHover={{ y: -6 }}
             >
               <img src={cake.image} alt={cake.name} />
 

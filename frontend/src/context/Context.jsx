@@ -13,6 +13,13 @@ const ContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [cakeList, setCakeList] = useState([]);
 
+  /* =======================
+     HELPERS
+  ======================= */
+  const capitalize = (text) => {
+    if (!text) return "";
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
 
   /* ================= IMAGE GENERATION ================= */
   const generateImage = async (prompt) => {
@@ -33,48 +40,64 @@ const ContextProvider = (props) => {
       alert(error.message);
     }
   };
-/* ================= CART ACTIONS ================= */
+  /* ================= CART ACTIONS ================= */
   const addToCart = async (itemId, customData = null) => {
-     setCartItems((prev) => ({
+    setCartItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] || 0) + 1,
     }));
     if (token) {
-      await axios.post(
-        url + "/api/cart/add",
-        { itemId },
-        { headers: { token } },
-      );
+      try {
+        await axios.post(
+          url + "/api/cart/add",
+          { itemId },
+          { headers: { token } },
+        );
+      } catch (error) {
+        console.log(error);
+        alert(error.message);
+      }
     }
   };
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => {
-      const updated = {...prev};
-      if(updated[itemId] > 1){
+      const updated = { ...prev };
+      if (updated[itemId] > 1) {
         updated[itemId] -= 1;
-      }
-      else{
+      } else {
         delete updated[itemId];
       }
       return updated;
     });
     if (token) {
-      await axios.post(
-        url + "/api/cart/remove",
-        { itemId },
-        { headers: { token } },
-      );
+      try {
+        await axios.post(
+          url + "/api/cart/remove",
+          { itemId },
+          { headers: { token } },
+        );
+      } catch (error) {
+        console.log(error);
+        alert(error.message);
+      }
     }
   };
-    /* ================= FETCH CAKES ================= */
+  /* ================= FETCH CAKES ================= */
   const fetchCakeList = async () => {
-    const response = await axios.get(url + "/api/cake/list");
-    if (response.data.success) {
-      setCakeList(response.data.data);
+    try {
+      const response = await axios.get(url + "/api/cake/list");
+      if (response.data.success) {
+        setCakeList(response.data.data);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
     }
   };
-   /* ================= TOTAL ================= */
-   const getTotalCartAmount = () => {
+  /* ================= TOTAL ================= */
+  const getTotalCartAmount = () => {
     let total = 0;
 
     for (const id in cartItems) {
@@ -85,31 +108,43 @@ const ContextProvider = (props) => {
     }
     return total;
   };
-  
+
   /* ================= LOAD CART ================= */
   const loadCartData = async (token) => {
-    const response = await axios.post(
-      url + "/api/cart/get",
-      {},
-      { headers: { token } }
-    );
-    setCartItems(response.data.cartData || {});
-    
-  };
-  /* ================= INIT ================= */
-  useEffect(() => {
-    async function loadData() {
-      await fetchCakeList();
-      const savedToken = localStorage.getItem("token");
-      console.log(token);
-      if (savedToken) {
-        setToken(savedToken);
-        console.log(token);
-        await loadCartData(savedToken);
+    try {
+      const response = await axios.post(
+        url + "/api/cart/get",
+        {},
+        { headers: { token } },
+      );
+      console.log(response.data);
+      if (response.data.success) {
+        setCartItems(response.data.cartData);
       }
+    } catch (error) {
+      console.log(error);
+      alert(error.message);
     }
-    loadData();
+  };
+
+  /* ================= INIT ================= */
+   useEffect(()=>{
+      console.log(cakeList);
+      console.log(cartItems);
+    }, []);
+  useEffect(()=>{
+    fetchCakeList();
+    loadCartData(localStorage.getItem("token"));
   }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
+
+  
 
   const contextValue = {
     url,
@@ -122,8 +157,10 @@ const ContextProvider = (props) => {
     cakeList,
     cartItems,
     getTotalCartAmount,
+    fetchCakeList,
+    capitalize,
+    setCartItems
   };
-  
 
   return (
     <Context.Provider value={contextValue}>{props.children}</Context.Provider>

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CakeBuilder = () => {
-  const {url, generateImage, labour, addToCart} = useContext(Context);
+  const {url, generateImage, labour, addToCart,capitalize, token} = useContext(Context);
   const navigate = useNavigate();
 
   /* =======================
@@ -26,24 +26,11 @@ const CakeBuilder = () => {
 
   const [imageUrl, setImageUrl] = useState("/cakepic.jpg");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [hasGenerated, setHasGenerated] = useState(true);
+  const [hasGenerated, setHasGenerated] = useState(false);
   
-  /* =======================
-     AUTH GUARD
-  ======================= */
-  useEffect(() => {
-    // if (!localStorage.getItem("token")) {
-    //   navigate("/");
-    // }
-  }, [navigate]);
+  
 
-  /* =======================
-     HELPERS
-  ======================= */
-  const capitalize = (text) => {
-    if (!text) return "";
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  };
+  
 
   /* =======================
      VALIDATION
@@ -146,11 +133,15 @@ Ultra realistic food photography, no people, no hands.
   ======================= */
   const handleGenerate = async (e) => {
     e.preventDefault();
-
+    if(!token){
+      alert("Please signup first");
+      return;
+    }
     if (!isCakeDataValid()) {
       alert("Please select all required cake options 🍰");
       return;
     }
+    
 
     setIsGenerating(true);
     try {
@@ -165,10 +156,18 @@ Ultra realistic food photography, no people, no hands.
   };
 
   const handleGenerateAnother = () => {
+    if(!token){
+      alert("Please signup first");
+      return;
+    }
     setHasGenerated(false);
     setImageUrl("/cakepic.jpg");
   };
  const handleAddToCart = async () => {
+   if(!token){
+      alert("Please signup first");
+      return;
+    }
   try {
     const payload = {
       name: `${capitalize(cakeData.flavor)} Cake`,
@@ -199,6 +198,7 @@ Ultra realistic food photography, no people, no hands.
   }
 };
 
+  
   /* =======================
      JSX
   ======================= */

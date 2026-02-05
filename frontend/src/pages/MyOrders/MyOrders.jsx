@@ -6,11 +6,7 @@ import { useNavigate } from "react-router-dom";
 const MyOrders = () => {
   const {token} = useContext(Context);
   const navigate = useNavigate();
-  useEffect(()=>{
-    // if(!localStorage.getItem("token")){
-    //   navigate("/")
-    // }
-  }, []);
+
   return (
     <section className="orders-page">
       <h2>📦 My Orders</h2>

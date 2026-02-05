@@ -20,10 +20,11 @@ app.use(cors());
 
 connectDB();
 
-app.use('/api/cake', cakeRouter);
 app.use("/api/user", userRouter);
 app.use("/api/cart", cartRouter);
+app.use('/api/cake', cakeRouter);
 app.use("/api/image", imageRouter);
+
 app.use("/api/order", orderRouter);
 
 app.get("/", (req, res)=>{
@@ -31,3 +32,5 @@ app.get("/", (req, res)=>{
 });
 
 app.listen(port, ()=> console.log(`Server has started at http://localhost:${port}`))
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODMyNWQyNDEyMzhmN2M3MmM4NTFmYiIsImlhdCI6MTc3MDIwNzU1Nn0.Cxs4rWiIEyxe57nKfJ6Oh3A0JoKrmM8KUuP4FY5CvpM

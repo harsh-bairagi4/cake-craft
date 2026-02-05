@@ -1,10 +1,12 @@
 import cakeModel from "../models/cakeModel.js";
 import fs from 'fs'
+import userModel from "../models/userModel.js";
 
 
 const addCustomCake = async (req, res) => {
   try {
-    const { name, price, image, description, userId } = req.body;
+    const { name, price, image, description } = req.body;
+    const {userId} = req.user;
 
     if (!name || !price || !image || !description) {
       return res.json({ success: false, message: "Missing fields" });
