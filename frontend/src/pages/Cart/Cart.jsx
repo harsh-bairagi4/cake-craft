@@ -5,9 +5,10 @@ import { Context } from "../../context/Context";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cakeList, cartItems, getTotalCartAmount,fetchCakeList ,capitalize} = useContext(Context);
+  const { cakeList, cartItems, getTotalCartAmount,fetchCakeList ,capitalize, loadCartData} = useContext(Context);
   useEffect(()=>{
     fetchCakeList();
+    loadCartData(localStorage.getItem("token"));
     console.log(cakeList);
     console.log(cartItems);
   }, []);

@@ -1,63 +1,41 @@
-import React from "react";
+import { useContext } from "react";
+import { Context } from "../../context/Context";
 import "./CakeShowcase.css";
-const cakes = [
-  {
-    id: 1,
-    name: "Chocolate Bloom",
-    creator: "Harsh",
-    image: "/cakepic.jpg",
-    description: "Rich chocolate layers with floral frosting.",
-  },
-  {
-    id: 2,
-    name: "Vanilla Sky",
-    creator: "Ananya",
-    image: "/cakepic.jpg",
-    description: "Soft vanilla cake with pastel buttercream.",
-  },
-  {
-    id: 3,
-    name: "Berry Bliss",
-    creator: "Rahul",
-    image: "/cakepic.jpg",
-    description: "Fresh berries with whipped cream layers.",
-  },
-  {
-    id: 4,
-    name: "Golden Caramel",
-    creator: "Sneha",
-    image: "/cakepic.jpg",
-    description: "Caramel glaze with crunchy nut layers.",
-  },
-];
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
 
 const CakeShowcase = () => {
+  const { cakeList, capitalize } = useContext(Context);
+
   return (
     <section className="cake-showcase">
-      {/* TITLE */}
       <h2 className="section-title">Cakes Created by Our Community</h2>
 
-      {/* SWIPER */}
-      <div className="cake-swiper">
-        <div
-          className="cake-track"
-        >
-          {[...cakes, ...cakes].map((cake, index) => (
-            <div
-              className="card-cake"
-              key={index}
-            >
-              <img src={cake.image} alt={cake.name} />
-
-              <div className="cake-info">
-                <h3>{cake.name}</h3>
-                <p className="cake-desc">{cake.description}</p>
-                <span className="cake-creator">Designed by {cake.creator}</span>
-              </div>
+      <Swiper
+        modules={[Autoplay]}
+        spaceBetween={30}
+        loop={true} // 🔥 infinite loop
+        autoplay={{
+          delay: 0, // continuous scroll
+          disableOnInteraction: false,
+        }}
+        speed={5000} // smooth long movement
+        slidesPerView={1} // show as many as fit
+        grabCursor={true}
+        className="cake-swiper"
+      >
+        {cakeList.map((cake, index) => (
+          <SwiperSlide key={index} className="card-cake">
+            <img src={cake.image} alt={cake.name} />
+            <div className="cake-information">
+              <h3>{cake.name}</h3>
             </div>
-          ))}
-        </div>
-      </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 };

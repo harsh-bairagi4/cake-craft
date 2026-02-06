@@ -1,72 +1,91 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./MyOrders.css";
 import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const MyOrders = () => {
-  const {token} = useContext(Context);
+  const { token, url } = useContext(Context);
   const navigate = useNavigate();
+  const [orderData, setOrderData] = useState([]);
+
+  const loadOrderData = async () => {
+    try {
+      if (!token) return;
+
+      const response = await axios.post(
+        url + "/api/order/userorders",
+        {},
+        { headers: { token } }
+      );
+
+      if (response.data.success) {
+        let allOrders = [];
+
+        response.data.orders.forEach((order) => {
+          order.items.forEach((item) => {
+            allOrders.push({
+              ...item,
+              status: order.status,
+              payment: order.payment,
+              date: order.date,
+              orderId: order._id,
+            });
+          });
+        });
+
+        setOrderData(allOrders.reverse());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    loadOrderData();
+  }, [token]);
 
   return (
     <section className="orders-page">
       <h2>📦 My Orders</h2>
 
       <div className="orders-container">
-        
-        {/* ORDER CARD */}
-        <div className="order-card">
-          <div className="order-header">
-            <h4>Chocolate Truffle Cake</h4>
-            <span className="order-status delivered">Delivered</span>
-          </div>
+        {orderData.length === 0 && (
+          <p style={{ color: "var(--text-secondary)" }}>
+            No orders found 🍰
+          </p>
+        )}
 
-          <div className="order-body">
-            <p>1 Kg • Eggless • 2 Layers</p>
-            <p>Order ID: #CC10231</p>
-          </div>
+        {orderData.map((order, index) => (
+          <div className="order-card" key={index}>
+            <div className="order-header">
+              <h4>{order.name}</h4>
+              <span
+                className={`order-status ${
+                  order.status?.toLowerCase() || "pending"
+                }`}
+              >
+                {order.status}
+              </span>
+            </div>
 
-          <div className="order-footer">
-            <span className="order-price">₹899</span>
-            <button className="order-btn">View Details</button>
-          </div>
-        </div>
+            <div className="order-body">
+              <p>
+                {order.description?.size} •{" "}
+                {order.description?.eggType === "eggless"
+                  ? "Eggless"
+                  : "With Egg"}{" "}
+                • {order.description?.layers} Layers
+              </p>
+              <p>Order ID: #{order.orderId.slice(-6)}</p>
+            </div>
 
-        {/* ORDER CARD */}
-        <div className="order-card">
-          <div className="order-header">
-            <h4>Red Velvet Cake</h4>
-            <span className="order-status processing">Processing</span>
+            <div className="order-footer">
+              <span className="order-price">₹{order.price}</span>
+              <button className="order-btn">View Details</button>
+            </div>
           </div>
-
-          <div className="order-body">
-            <p>0.5 Kg • With Egg</p>
-            <p>Order ID: #CC10245</p>
-          </div>
-
-          <div className="order-footer">
-            <span className="order-price">₹549</span>
-            <button className="order-btn">View Details</button>
-          </div>
-        </div>
-
-        {/* ORDER CARD */}
-        <div className="order-card">
-          <div className="order-header">
-            <h4>Custom AI Cake</h4>
-            <span className="order-status pending">Pending</span>
-          </div>
-
-          <div className="order-body">
-            <p>Custom Design • 1 Kg</p>
-            <p>Order ID: #CC10258</p>
-          </div>
-
-          <div className="order-footer">
-            <span className="order-price">₹1199</span>
-            <button className="order-btn">View Details</button>
-          </div>
-        </div>
-
+        ))}
       </div>
     </section>
   );

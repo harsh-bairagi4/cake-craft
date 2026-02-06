@@ -134,7 +134,6 @@ const ContextProvider = (props) => {
     }, []);
   useEffect(()=>{
     fetchCakeList();
-    loadCartData(localStorage.getItem("token"));
   }, []);
 
   useEffect(() => {
@@ -159,7 +158,9 @@ const ContextProvider = (props) => {
     getTotalCartAmount,
     fetchCakeList,
     capitalize,
-    setCartItems
+    setCartItems,
+    loadCartData,
+    navigate
   };
 
   return (

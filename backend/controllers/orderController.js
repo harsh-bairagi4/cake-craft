@@ -71,16 +71,23 @@ const verifyOrder = async (req, res)=>{
   }
 }
 
-const userOrders = async (req, res)=>{
-    try{
-      const {userId} = req.user;
-      const orders = await orderModel.findById(userId);
-      res.json({success: true, data: orders});
-    }catch(error){
-      console.log(error);
-      res.json({success: false, message: "Error"})
-    }
-}
+const userOrders = async (req, res) => {
+  try {
+    const { userId } = req.user;
+
+    // ✅ find orders by userId field
+    const orders = await orderModel.find({ userId }).sort({ date: -1 });
+
+    res.json({
+      success: true,
+      orders,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error fetching orders" });
+  }
+};
+
 
 const listOrders = async (req, res) => {
   try{
