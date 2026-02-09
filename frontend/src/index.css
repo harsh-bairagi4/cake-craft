@@ -38,6 +38,45 @@ body {
 
   --border-light: #F1D5C9;
   --shadow-soft: 0 12px 30px rgba(74, 44, 42, 0.15);
+
+    --toast-bg: #fff7f1;
+  --toast-border: rgba(230, 57, 70, 0.25);
+  --toast-text: #4a2c2a;
+}
+
+/* =========================
+   SONNER – CAKE THEME (FIXED)
+========================= */
+
+/* Toast container */
+[data-sonner-toast] {
+  background: #fff7f1 !important;
+  border: 1px solid rgba(230, 57, 70, 0.25) !important;
+  color: #4a2c2a !important;
+  border-radius: 14px !important;
+  font-family: "Poppins", sans-serif !important;
+  box-shadow: 0 14px 35px rgba(74, 44, 42, 0.18) !important;
+}
+
+/* Toast title + description */
+[data-sonner-toast] [data-title],
+[data-sonner-toast] [data-description] {
+  color: #4a2c2a !important;
+}
+
+/* Success variant */
+[data-sonner-toast][data-type="success"] {
+  border-left: 4px solid #22c55e;
+}
+
+/* Error variant */
+[data-sonner-toast][data-type="error"] {
+  border-left: 4px solid #e11d48;
+}
+
+/* Close button */
+[data-sonner-toast] button {
+  color: #e11d48 !important;
 }
 
 h1, h2, h3, h4, h5, h6 {

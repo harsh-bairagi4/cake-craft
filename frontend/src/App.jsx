@@ -10,13 +10,21 @@ import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
 import MyOrders from "./pages/MyOrders/MyOrders";
 import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import {Toaster} from 'sonner';
+
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   return (
     <>
       {showLogin ? <LoginPopUp setShowLogin={setShowLogin} /> : <></>}
+      <Toaster
+        position="top-center"
+        richColors
+        duration={3500}
+      />
       <div className="app">
+         
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
           <Route path="/" element={<Home setShowLogin={setShowLogin} />} />

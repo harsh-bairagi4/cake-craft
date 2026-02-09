@@ -3,6 +3,7 @@ import "./LoginPopUp.css";
 import { Context } from "../../context/Context";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const LoginPopUp = ({ setShowLogin }) => {
   const navigate = useNavigate();
@@ -22,12 +23,12 @@ const LoginPopUp = ({ setShowLogin }) => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-
+    
     const endpoint = isLogin
       ? "/api/user/login"
       : "/api/user/register";
-
-    const response = await axios.post(url + endpoint, data);
+    try{
+ const response = await axios.post(url + endpoint, data);
 
     if (response.data.success) {
       setToken(response.data.token);
@@ -35,8 +36,13 @@ const LoginPopUp = ({ setShowLogin }) => {
       setShowLogin(false);
       navigate("/generate");
     } else {
-      alert(response.data.message);
+      toast(response.data.message);
     }
+    }
+    catch(error){
+      toast.error("Something went wrong");
+    }
+   
   };
 
   return (

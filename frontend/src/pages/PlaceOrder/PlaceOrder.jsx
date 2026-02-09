@@ -3,6 +3,7 @@ import "./PlaceOrder.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 import axios from "axios";
+import { toast } from "sonner";
 
 const PlaceOrder = () => {
   const navigate = useNavigate();
@@ -62,6 +63,9 @@ const PlaceOrder = () => {
           description: cake.description,
         });
       }
+      else{
+        toast("You don't have any item in cart");
+      }
     });
 
     const orderPayload = {
@@ -82,26 +86,19 @@ const PlaceOrder = () => {
       if (response.data.success) {
         const {session_url} = response.data;
         window.location.replace(session_url);
-        alert("🎉 Order placed successfully!");
+        toast("🎉 Order placed successfully!");
         setCartItems({});
         navigate("/my-orders");
       } else {
         console.log(response.data);
-        alert(response.data.message || "Order failed");
+        toast(response.data.message || "Order failed");
       }
     } catch (error) {
       console.error(error);
-      alert("Something went wrong while placing order");
+      toast.error("Something went wrong while placing order");
     }
   };
-   /* =======================
-     AUTH + EMPTY CART GUARD
-  ======================= */
-
-
-  /* =======================
-     JSX
-  ======================= */
+  
   return (
     <form className="order-page" onSubmit={placeOrder}>
       <h2>🍰 Place Your Order</h2>

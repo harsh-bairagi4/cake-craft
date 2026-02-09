@@ -4,6 +4,7 @@ import CakeSelector from "../../components/CakeSelector/CakeSelector";
 import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "sonner";
 
 const CakeBuilder = () => {
   const {url, generateImage, labour, addToCart,capitalize, token} = useContext(Context);
@@ -134,11 +135,11 @@ Ultra realistic food photography, no people, no hands.
   const handleGenerate = async (e) => {
     e.preventDefault();
     if(!token){
-      alert("Please signup first");
+      toast("Please signup first");
       return;
     }
     if (!isCakeDataValid()) {
-      alert("Please select all required cake options 🍰");
+      toast("Please select all required cake options 🍰");
       return;
     }
     
@@ -150,6 +151,7 @@ Ultra realistic food photography, no people, no hands.
       setHasGenerated(true);
     } catch (err) {
       console.error(err);
+      toast.error("Something went wrong");
     } finally {
       setIsGenerating(false);
     }
@@ -157,7 +159,7 @@ Ultra realistic food photography, no people, no hands.
 
   const handleGenerateAnother = () => {
     if(!token){
-      alert("Please signup first");
+      toast("Please signup first");
       return;
     }
     setHasGenerated(false);
@@ -165,7 +167,7 @@ Ultra realistic food photography, no people, no hands.
   };
  const handleAddToCart = async () => {
    if(!token){
-      alert("Please signup first");
+      toast("Please signup first");
       return;
     }
   try {
@@ -186,15 +188,15 @@ Ultra realistic food photography, no people, no hands.
     );
 
     if (response.data.success) {
-      alert("Cake added to cart successfully 🎉");
+      toast("Cake added to cart successfully 🎉");
       addToCart(response.data.cake._id)
       navigate("/cart");
     } else {
-      alert(response.data.message || "Failed to add cake");
+      toast(response.data.message || "Failed to add cake");
     }
   } catch (error) {
     console.error(error);
-    alert("Something went wrong while adding cake");
+    toast.error("Something went wrong while adding cake");
   }
 };
 

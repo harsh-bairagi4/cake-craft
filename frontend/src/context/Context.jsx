@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import {toast} from "sonner";
 
 export const Context = createContext(null);
 
@@ -33,11 +34,12 @@ const ContextProvider = (props) => {
         return data.resultImage;
       }
       if (data.creditBalance === 0) {
+        toast("You don't have enough credits");
         navigate("/buy");
       }
     } catch (error) {
       console.log(error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   /* ================= CART ACTIONS ================= */
@@ -55,7 +57,7 @@ const ContextProvider = (props) => {
         );
       } catch (error) {
         console.log(error);
-        alert(error.message);
+        toast.error(error.message);
       }
     }
   };
@@ -78,7 +80,7 @@ const ContextProvider = (props) => {
         );
       } catch (error) {
         console.log(error);
-        alert(error.message);
+        toast.error(error.message);
       }
     }
   };
@@ -89,11 +91,11 @@ const ContextProvider = (props) => {
       if (response.data.success) {
         setCakeList(response.data.data);
       } else {
-        alert(response.data.message);
+        toast(response.data.message);
       }
     } catch (error) {
       console.log(error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
   /* ================= TOTAL ================= */
@@ -123,7 +125,7 @@ const ContextProvider = (props) => {
       }
     } catch (error) {
       console.log(error);
-      alert(error.message);
+      toast.error(error.message);
     }
   };
 

@@ -3,6 +3,7 @@ import "./MyOrders.css";
 import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "sonner";
 
 const MyOrders = () => {
   const { token, url } = useContext(Context);
@@ -38,6 +39,7 @@ const MyOrders = () => {
       }
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
     }
   };
 
