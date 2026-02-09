@@ -17,13 +17,13 @@ const CakeShowcase = () => {
       <Swiper
         modules={[Autoplay]}
         spaceBetween={30}
-        loop={true} // 🔥 infinite loop
+        slidesPerView="auto" 
+        loop={true}
         autoplay={{
-          delay: 0, // continuous scroll
+          delay: 0,
           disableOnInteraction: false,
         }}
-        speed={5000} // smooth long movement
-        slidesPerView={1} // show as many as fit
+        speed={5000}
         grabCursor={true}
         className="cake-swiper"
       >
@@ -32,6 +32,7 @@ const CakeShowcase = () => {
             <img src={cake.image} alt={cake.name} />
             <div className="cake-information">
               <h3>{cake.name}</h3>
+              <h4>Designed By : <span className="creator">{cake.name}</span></h4>
             </div>
           </SwiperSlide>
         ))}

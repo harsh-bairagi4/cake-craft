@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* =========================
-   RESET
-========================= */
 * {
   margin: 0;
   padding: 0;
@@ -27,32 +24,22 @@ body {
 }
 
 
-/* =========================
-   CAKE / DESSERT DESIGN SYSTEM
-========================= */
 :root {
-  /* BRAND COLORS */
-  --primary: #E63946;        /* Strawberry red */
-  --accent: #C97C5D;         /* Caramel */
 
-  /* BACKGROUNDS */
-  --bg-main: #FFF6EA;        /* Vanilla cream */
-  --bg-card: #FFFFFF;        /* Cake base white */
-  --bg-section: #FADADD;     /* Soft blush pink */
+  --primary: #E63946;        
+  --accent: #C97C5D;         
 
-  /* TEXT */
-  --text-primary: #4A2C2A;   /* Chocolate brown */
-  --text-secondary: #7A4A3A; /* Soft cocoa */
+  --bg-main: #FFF6EA;       
+  --bg-card: #FFFFFF;        
+  --bg-section: #FADADD;     
 
-  /* BORDERS & SHADOWS */
+  --text-primary: #4A2C2A;  
+  --text-secondary: #7A4A3A; 
+
   --border-light: #F1D5C9;
   --shadow-soft: 0 12px 30px rgba(74, 44, 42, 0.15);
 }
 
-
-/* =========================
-   TYPOGRAPHY
-========================= */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
   color: var(--text-primary);
@@ -64,9 +51,6 @@ p {
   font-size: 0.95rem;
 }
 
-/* =========================
-   COMMON ELEMENTS
-========================= */
 a {
   text-decoration: none;
   color: inherit;
@@ -79,9 +63,6 @@ button {
   outline: none;
 }
 
-/* =========================
-   LAYOUT HELPERS
-========================= */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -95,9 +76,6 @@ button {
   box-shadow: var(--shadow-soft);
 }
 
-/* =========================
-   APP ROOT
-========================= */
 .app {
   min-height: 100vh;
 }

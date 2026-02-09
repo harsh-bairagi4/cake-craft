@@ -1,7 +1,7 @@
-import React from "react";
 import "./HowItWorks.css";
 import BounceCards from "../BounceCards/BounceCards";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import {useRef} from 'react';
 
 const images = ["works1.png", "works2.png", "works3.png", "works4.png"];
 
@@ -14,26 +14,33 @@ const transformStyles = [
 ];
 
 const HowItWorks = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    once: true,
+  });
+
   return (
     <section className="how">
       <motion.div
+        ref={ref}
         initial={{ opacity: 0, y: 70 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        animate ={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="how-bounce-wrapper"
       >
-        <BounceCards
-          className="custom-bounceCards"
-          images={images}
-          containerWidth={520}
-          containerHeight={260}
-          animationDelay={0.8}
-          animationStagger={0.07}
-          easeType="elastic.out(1, 0.5)"
-          transformStyles={transformStyles}
-          enableHover
-        />
+       {isInView && (
+          <BounceCards
+            className="custom-bounceCards"
+            images={images}
+            containerWidth={520}
+            containerHeight={260}
+            animationDelay={0.2}
+            animationStagger={0.07}
+            easeType="elastic.out(1, 0.5)"
+            transformStyles={transformStyles}
+            enableHover
+          />
+        )}
       </motion.div>
     </section>
   );

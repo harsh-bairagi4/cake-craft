@@ -1,6 +1,3 @@
-/* =========================
-   HOW IT WORKS – CAKE THEME
-========================= */
 .how {
   padding: 6.5rem 0;
   background: linear-gradient(
@@ -11,30 +8,19 @@
   text-align: center;
 }
 
-
-/* CARD */
-/* =========================
-   BOUNCE CARDS AREA
-========================= */
 .how-bounce-wrapper {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
-  /* border: 2px solid red; */
   align-items: center;
 }
 
-/* TUNE REACT BITS CARDS */
-.custom-bounceCards{
-  /* border: 2px solid purple; */
-}
 .custom-bounceCards img {
   border-radius: 18px;
   box-shadow: 0 14px 35px rgba(74, 44, 42, 0.25);
   background: #fff;
 }
 
-/* MOBILE */
 @media (max-width: 900px) {
   .custom-bounceCards{
   margin-left: 40px;

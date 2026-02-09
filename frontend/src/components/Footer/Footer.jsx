@@ -1,4 +1,3 @@
-import React from "react";
 import "./Footer.css";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +6,6 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* BRAND */}
         <div className="footer-brand">
            <div onClick={() => navigate("/")} className="logo">
         🍰 Cake<span>Craft</span>
@@ -18,7 +16,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* LINKS */}
         <div className="footer-links">
           <h4>Explore</h4>
           <ul>
@@ -39,7 +36,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* SOCIAL */}
         <div className="footer-social">
           <h4>Follow Us</h4>
           <div className="social-icons">
@@ -50,7 +46,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* BOTTOM BAR */}
+ 
       <div className="footer-bottom">
         <p>
           © {new Date().getFullYear()} CakeCraft. All rights reserved.
@@ -58,7 +54,9 @@ const Footer = () => {
         <p className="footer-tagline">
           Every cake has a creator.
         </p>
+        
       </div>
+      <h4 className="harsh">Built with ❤️ by Harsh</h4>
     </footer>
   );
 };
