@@ -12,7 +12,6 @@ import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import {Toaster} from 'sonner';
 
-
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   return (

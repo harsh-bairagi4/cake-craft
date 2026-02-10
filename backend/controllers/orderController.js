@@ -14,6 +14,7 @@ const placeOrder = async (req, res) => {
             items: req.body.items,
             amount: req.body.amount,
             address: req.body.address,
+            paymentMethod: "Stripe"
         });
         await newOrder.save();
         await userModel.findByIdAndUpdate(userId, {
@@ -34,7 +35,7 @@ const placeOrder = async (req, res) => {
         product_data: {
           name: "Delivery Charges",
         },
-        unit_amount: 20*100,
+        unit_amount: 50*100,
       },
       quantity: 1,
     });
@@ -52,6 +53,28 @@ const placeOrder = async (req, res) => {
     console.log(error);
     res.json({ success: false, message: "Error" });
   }
+}
+
+const placeOrderCod = async (req, res) =>{
+  try {
+      const {userId} = req.user;
+        const newOrder = new orderModel({
+            userId: userId,
+            items: req.body.items,
+            amount: req.body.amount,
+            address: req.body.address,
+            paymentMethod: "COD"
+        });
+        await newOrder.save();
+
+        await userModel.findByIdAndUpdate(userId, {
+            cartData: {}});
+        res.json({success: true, message: "Order Placed"});
+  } catch (error) {
+    console.log(error);
+    res.json({success: false, message: error.message});
+  }
+ 
 }
 
 const verifyOrder = async (req, res)=>{
@@ -109,4 +132,4 @@ const updateStatus = async(req, res)=>{
     res.json({success: false, message: "Error"});
   }
 }
-export { placeOrder, verifyOrder ,userOrders, listOrders, updateStatus};
+export { placeOrder,placeOrderCod, verifyOrder ,userOrders, listOrders, updateStatus};

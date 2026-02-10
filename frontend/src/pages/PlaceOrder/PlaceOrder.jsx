@@ -1,25 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./PlaceOrder.css";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 import axios from "axios";
 import { toast } from "sonner";
 
 const PlaceOrder = () => {
-  const navigate = useNavigate();
-
   const {
     getTotalCartAmount,
     token,
     cakeList,
     cartItems,
     url,
-    setCartItems
+    setCartItems,
+    navigate,
   } = useContext(Context);
 
-  /* =======================
-     FORM STATE
-  ======================= */
+  const [paymentMethod, setPaymentMethod] = useState("");
+
   const [data, setData] = useState({
     fullName: "",
     email: "",
@@ -31,156 +28,101 @@ const PlaceOrder = () => {
     instructions: "",
   });
 
-  /* =======================
-     HANDLE INPUT CHANGE
-  ======================= */
-  const onChangeHandler = (event) => {
-    const { name, value } = event.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /* =======================
-     PLACE ORDER HANDLER
-  ======================= */
-  const placeOrder = async (e) => {
-    e.preventDefault();
- 
-    // Build ordered items array
-    let orderItems = [];
+ const placeOrder = async (e) => {
+  e.preventDefault();
 
-    cakeList.forEach((cake) => {
-      const qty = cartItems[cake._id];
-      if (qty > 0) {
-        orderItems.push({
-          cakeId: cake._id,
-          name: cake.name,
-          price: cake.price,
-          quantity: qty,
-          image: cake.image,
-          description: cake.description,
-        });
-      }
-      else{
-        toast("You don't have any item in cart");
-      }
+  if (!paymentMethod) {
+    toast.error("Please select a payment method");
+    return;
+  }
+
+  let orderItems = [];
+
+  cakeList.forEach((cake) => {
+    const qty = cartItems[cake._id];
+    if (qty > 0) {
+      orderItems.push({
+        cakeId: cake._id,
+        name: cake.name,
+        price: cake.price,
+        quantity: qty,
+        image: cake.image,
+        description: cake.description,
+      });
+    }
+  });
+
+  if (orderItems.length === 0) {
+    toast.error("Your cart is empty");
+    return;
+  }
+
+  const payload = {
+    address: data,
+    items: orderItems,
+    amount: getTotalCartAmount() + 50,
+  };
+
+  try {
+    const endpoint =
+      paymentMethod === "stripe"
+        ? "/api/order/place"
+        : "/api/order/placecod";
+
+    const res = await axios.post(url + endpoint, payload, {
+      headers: { token },
     });
 
-    const orderPayload = {
-      address: data,
-      items: orderItems,
-      amount: getTotalCartAmount() + 50, // delivery charge
-    };
+    if (res.data.success) {
+      setCartItems({});
 
-    try {
-      const response = await axios.post(
-        url + "/api/order/place",
-        orderPayload,
-        {
-          headers: { token },
-        }
-      );
-
-      if (response.data.success) {
-        const {session_url} = response.data;
-        window.location.replace(session_url);
-        toast("🎉 Order placed successfully!");
-        setCartItems({});
-        navigate("/my-orders");
+      if (paymentMethod === "stripe") {
+        window.location.replace(res.data.session_url);
       } else {
-        console.log(response.data);
-        toast(response.data.message || "Order failed");
+        toast.success("🎉 Order placed (Cash on Delivery)");
+        navigate("/my-orders");
       }
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong while placing order");
+    } else {
+      toast.error(res.data.message || "Order failed");
     }
-  };
-  
+  } catch (err) {
+    console.log(err);
+    toast.error("Something went wrong");
+  }
+};
+
+
   return (
     <form className="order-page" onSubmit={placeOrder}>
       <h2>🍰 Place Your Order</h2>
 
       <div className="order-container">
-        {/* LEFT: DELIVERY DETAILS */}
+        {/* LEFT */}
         <div className="order-form">
           <h3>Delivery Details</h3>
 
-          <input
-            required
-            name="fullName"
-            value={data.fullName}
-            onChange={onChangeHandler}
-            type="text"
-            placeholder="Full Name"
-          />
-
-          <input
-            required
-            name="phone"
-            value={data.phone}
-            onChange={onChangeHandler}
-            type="text"
-            placeholder="Mobile Number"
-          />
-
-          <input
-            required
-            name="email"
-            value={data.email}
-            onChange={onChangeHandler}
-            type="email"
-            placeholder="Email Address"
-          />
-
-          <input
-            required
-            name="street"
-            value={data.street}
-            onChange={onChangeHandler}
-            type="text"
-            placeholder="Street Address"
-          />
-
-          <input
-            required
-            name="city"
-            value={data.city}
-            onChange={onChangeHandler}
-            type="text"
-            placeholder="City"
-          />
-
-          <input
-            required
-            name="state"
-            value={data.state}
-            onChange={onChangeHandler}
-            type="text"
-            placeholder="State"
-          />
-
-          <input
-            required
-            name="pincode"
-            value={data.pincode}
-            onChange={onChangeHandler}
-            type="text"
-            placeholder="Pincode"
-          />
+          <input name="fullName" required onChange={onChangeHandler} placeholder="Full Name" />
+          <input name="phone" required onChange={onChangeHandler} placeholder="Mobile Number" />
+          <input name="email" required onChange={onChangeHandler} placeholder="Email Address" />
+          <input name="street" required onChange={onChangeHandler} placeholder="Street Address" />
+          <input name="city" required onChange={onChangeHandler} placeholder="City" />
+          <input name="state" required onChange={onChangeHandler} placeholder="State" />
+          <input name="pincode" required onChange={onChangeHandler} placeholder="Pincode" />
 
           <textarea
             name="instructions"
-            value={data.instructions}
+            rows="3"
             onChange={onChangeHandler}
             placeholder="Delivery instructions (optional)"
-            rows="3"
           />
         </div>
 
-        {/* RIGHT: ORDER SUMMARY */}
+        {/* RIGHT */}
         <div className="order-summary">
           <h3>Order Summary</h3>
 
@@ -190,21 +132,40 @@ const PlaceOrder = () => {
           </div>
 
           <div className="summary-row">
-            <span>Delivery Charge</span>
-            <span>₹{getTotalCartAmount() === 0 ? 0 : 50}</span>
+            <span>Delivery</span>
+            <span>₹{getTotalCartAmount() ? 50 : 0}</span>
           </div>
 
           <div className="summary-row total">
-            <span>Total Payable</span>
-            <span>
-              ₹
-              {getTotalCartAmount() === 0
-                ? 0
-                : getTotalCartAmount() + 50}
-            </span>
+            <span>Total</span>
+            <span>₹{getTotalCartAmount() ? getTotalCartAmount() + 50 : 0}</span>
           </div>
 
-          <button type="submit" className="place-order-btn">
+          {/* PAYMENT */}
+          <div className="payment-methods">
+            <label className={paymentMethod === "stripe" ? "active" : ""}>
+              <input
+                type="radio"
+                name="payment"
+                onChange={() => setPaymentMethod("stripe")}
+              />
+              Pay Online (Stripe)
+            </label>
+
+            <label className={paymentMethod === "cod" ? "active" : ""}>
+              <input
+                type="radio"
+                name="payment"
+                onChange={() => setPaymentMethod("cod")}
+              />
+              Cash on Delivery
+            </label>
+          </div>
+
+          <button
+            className="place-order-btn"
+            disabled={!paymentMethod || getTotalCartAmount() === 0}
+          >
             Place Order
           </button>
         </div>

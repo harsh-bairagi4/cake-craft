@@ -21,6 +21,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         default: "Food Processing"
     },
+    paymentMethod: {
+        type: String,
+        required: true
+    },
     date: {
         type: Date,
         default: Date.now()
