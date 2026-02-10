@@ -38,7 +38,8 @@ const addCustomCake = async (req, res) => {
 
 const listCake = async (req, res) =>{
     try {
-        const cakes = await cakeModel.find({});
+        const cakes = await cakeModel
+      .find({}).populate("createdBy", "name");
         res.json({
             success: true,
             data: cakes

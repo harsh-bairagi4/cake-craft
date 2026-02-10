@@ -32,7 +32,9 @@ const CakeShowcase = () => {
             <img src={cake.image} alt={cake.name} />
             <div className="cake-information">
               <h3>{cake.name}</h3>
-              <h4>Designed By : <span className="creator">{cake.name}</span></h4>
+              <h4>Designed By : <span className="creator">  {cake.createdBy?.name
+    ? capitalize(cake.createdBy.name)
+    : "Community Member"}</span></h4>
             </div>
           </SwiperSlide>
         ))}
