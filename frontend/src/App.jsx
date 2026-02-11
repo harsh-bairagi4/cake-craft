@@ -12,6 +12,7 @@ import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import {Toaster} from 'sonner';
 import Subscription from "./components/Subscription/Subscription";
+import Help from "./components/Help/Help";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -64,6 +65,12 @@ const App = () => {
             path="/subscription"
             element={   
                 <Subscription />
+            }
+          />
+          <Route
+            path="/help"
+            element={   
+                <Help />
             }
           />
         </Routes>
