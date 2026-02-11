@@ -7,8 +7,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const CakeBuilder = () => {
-  const {url, generateImage, labour, addToCart,capitalize, token} = useContext(Context);
-  const navigate = useNavigate();
+  const {url, generateImage, labour, addToCart,capitalize, token, navigate} = useContext(Context);
 
   /* =======================
      STATE

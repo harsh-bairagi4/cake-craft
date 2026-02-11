@@ -53,12 +53,7 @@
   transition: all 0.25s ease;
 }
 
-/* OPTIONS */
-.cake-builder-left option,
-.cake-selector option {
-  background-color: #fff;
-  color: var(--text-primary);
-}
+
 
 /* FOCUS */
 .cake-builder-left select:focus,
@@ -113,10 +108,71 @@
   accent-color: var(--primary);
   cursor: pointer;
 }
-
 /* =========================
-   MOBILE POLISH
+   CUSTOM SELECT WRAPPER
 ========================= */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Remove native arrow */
+.select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 2.8rem;
+}
+
+/* Custom dropdown arrow */
+.select-wrapper::after {
+  content: "▾";
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--accent);
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+/* Hover effect */
+.select-wrapper:hover::after {
+  color: var(--primary);
+}
+
+/* Placeholder option */
+select option.placeholder {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+/* Default select look */
+select {
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+/* When value selected */
+select.has-value {
+  color: var(--text-primary);
+  border-color: var(--primary);
+  background-color: rgba(230, 57, 70, 0.05);
+}
+
+/* Highlight effect */
+select.has-value:focus {
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+}
+
+/* Slight lift animation */
+select.has-value {
+  transition: all 0.25s ease;
+}
+
+
+
 @media (max-width: 768px) {
   .cake-builder-left > div,
   .cake-selector {
@@ -135,6 +191,10 @@
   .toppings {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+   .select-wrapper::after {
+    right: 1rem;
+    font-size: 0.9rem;
   }
 }
 

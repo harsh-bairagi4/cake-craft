@@ -13,6 +13,9 @@
   gap: 8rem;
   align-items: center;
 }
+.cursor{
+  cursor: pointer;
+}
 
 
 .pricing-info {

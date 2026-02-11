@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Pricing.css";
 import CardSwap, { Card } from "../CardSwap/CardSwap";
 import { motion } from "framer-motion";
+import { Context } from "../../context/Context";
 
 const pricingPlans = [
   {
@@ -29,9 +30,22 @@ const pricingPlans = [
       "Free delivery",
     ],
   },
+  {
+    title: "Premium",
+    price: "₹1299",
+    subtitle: "For parties & gifting",
+    features: [
+      "Everything in Creator",
+      "Luxury decoration",
+      "Custom message on cake",
+      "Premium packaging",
+      "Best for gifting",
+    ],
+  },
 ];
 
 const Pricing = () => {
+  const {navigate} = useContext(Context);
   return (
     <section className="pricing">
       <div className="pricing-container">
@@ -89,7 +103,7 @@ const Pricing = () => {
             pauseOnHover={false}
           >
             {pricingPlans.map((plan, index) => (
-              <Card key={index}>
+              <Card key={index} className="cursor" onClick={()=> navigate("/subscription")}>
                 <div
                   className={`pricing-card ${
                     plan.highlight ? "highlight" : ""

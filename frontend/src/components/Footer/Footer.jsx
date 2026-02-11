@@ -1,8 +1,10 @@
+import { useContext } from "react";
 import "./Footer.css";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../../context/Context";
 
 const Footer = () => {
-  const navigate = useNavigate();
+  const {navigate} = useContext(Context);
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -21,7 +23,7 @@ const Footer = () => {
           <ul>
             <li>Create a Cake</li>
             <li>Cake Collection</li>
-            <li>Pricing</li>
+            <li onClick={() => navigate("/subscription")}>Pricing</li>
             <li>How It Works</li>
           </ul>
         </div>

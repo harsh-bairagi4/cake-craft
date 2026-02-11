@@ -11,6 +11,7 @@ import MyOrders from "./pages/MyOrders/MyOrders";
 import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import {Toaster} from 'sonner';
+import Subscription from "./components/Subscription/Subscription";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -57,6 +58,12 @@ const App = () => {
               <ProtectedRoute>
                 <MyOrders />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/subscription"
+            element={   
+                <Subscription />
             }
           />
         </Routes>
