@@ -7,6 +7,7 @@ import LoginPopUp from "./components/LoginPopUp/LoginPopUp";
 import CakeBuilder from "./pages/CakeBuilder/CakeBuilder";
 import Cart from "./pages/Cart/Cart";
 import PlaceOrder from "./pages/PlaceOrder/PlaceOrder";
+import Collections from "./pages/Collections/Collections"
 import MyOrders from "./pages/MyOrders/MyOrders";
 import Footer from "./components/Footer/Footer";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
@@ -61,7 +62,15 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
+          <Route 
+            path="/collections"
+            element={
+           
+                <Collections setShowLogin={setShowLogin}/>
+        
+            }
+          />
+          <Route 
             path="/subscription"
             element={   
                 <Subscription />

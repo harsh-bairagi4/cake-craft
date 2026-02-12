@@ -10,7 +10,7 @@ const ContextProvider = (props) => {
   const url = "http://localhost:4000";
   const labour = 100;
 
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const [cartItems, setCartItems] = useState({});
   const [cakeList, setCakeList] = useState([]);
 
@@ -35,7 +35,7 @@ const ContextProvider = (props) => {
       }
       if (data.creditBalance === 0) {
         toast("You don't have enough credits");
-        navigate("/buy");
+        navigate("/subscription");
       }
     } catch (error) {
       console.log(error);
@@ -50,7 +50,7 @@ const ContextProvider = (props) => {
     }));
     if (token) {
       try {
-        await axios.post(
+         await axios.post(
           url + "/api/cart/add",
           { itemId },
           { headers: { token } },
@@ -84,12 +84,34 @@ const ContextProvider = (props) => {
       }
     }
   };
-  /* ================= FETCH CAKES ================= */
+  const deleteFromCart = async (itemId) => {
+    setCartItems((prev) => {
+      const updated = {...prev};
+      delete updated[itemId];
+      return updated;
+    });
+
+    if(token){
+      try {
+        const response = await axios.post(url + "/api/cart/delete",
+          {itemId},
+          {headers: {token}}
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        toast.error(error.message);
+      }
+    }
+  }
+   /* ================= FETCH CAKES ================= */
   const fetchCakeList = async () => {
     try {
       const response = await axios.get(url + "/api/cake/list");
       if (response.data.success) {
         setCakeList(response.data.data);
+        console.log(response.data.data);
+        console.log(cakeList);
       } else {
         toast(response.data.message);
       }
@@ -136,14 +158,30 @@ const ContextProvider = (props) => {
     }, []);
   useEffect(()=>{
     fetchCakeList();
+    console.log(cakeList);
   }, []);
+
+
+  useEffect(() => {
+    console.log("COMPONENT RE=RENDER");
+    console.log(cakeList);
+
+    console.log("Component Re-render Cart Data");
+    console.log(cartItems);
+  })
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       setToken(token);
+      loadCartData(localStorage.getItem("token"));
     }
-  }, []);
+    console.log(token);
+    console.log(cakeList);
+    console.log(cartItems);
+  }, [token]);
 
   
 
@@ -155,6 +193,7 @@ const ContextProvider = (props) => {
     generateImage,
     addToCart,
     removeFromCart,
+    deleteFromCart,
     cakeList,
     cartItems,
     getTotalCartAmount,

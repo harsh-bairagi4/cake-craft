@@ -38,6 +38,8 @@ const Header = ({ setShowLogin }) => {
        navigate("/generate");
   };
 
+ 
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
@@ -96,7 +98,7 @@ const Header = ({ setShowLogin }) => {
             <button className="primary-btn" onClick={showLogin}>
               Start Designing
             </button>
-            <button className="secondary-btn">Explore Creations</button>
+            <button className="secondary-btn" onClick={()=> navigate("/collections")}>Explore Creations</button>
           </div>
         </div>
       </div>

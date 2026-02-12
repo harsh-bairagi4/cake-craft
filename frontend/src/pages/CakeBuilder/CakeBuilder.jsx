@@ -42,7 +42,8 @@ const CakeBuilder = () => {
       cakeData.layers &&
       cakeData.shape &&
       cakeData.frosting &&
-      cakeData.eggType
+      cakeData.eggType &&
+      cakeData.sweetness
     );
   };
 

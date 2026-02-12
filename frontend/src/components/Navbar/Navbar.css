@@ -50,7 +50,6 @@ top: 0;
 /* PROFILE */
 .user-profile {
   display: flex;
-  align-items: center;
   gap: 20px;
 
   
@@ -60,6 +59,8 @@ top: 0;
 }
 .cart-img {
   cursor: pointer;
+  width: 45px;
+  height: 45px;
 }
 
 /* PROFILE IMAGE */

@@ -13,12 +13,16 @@
   color: var(--text-primary);
 }
 
+.no-orders {
+  color: var(--text-secondary);
+}
+
 /* =========================
    GRID
 ========================= */
 .orders-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
 }
 
@@ -57,6 +61,12 @@
   font-weight: 600;
 }
 
+.order-date {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
 /* =========================
    STATUS BADGES
 ========================= */
@@ -65,6 +75,7 @@
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 500;
+  text-transform: capitalize;
 }
 
 /* Delivered */
@@ -74,6 +85,7 @@
 }
 
 /* Processing */
+.order-status.foodprocessing,
 .order-status.processing {
   background-color: rgba(251, 191, 36, 0.18);
   color: #b45309;
@@ -86,12 +98,27 @@
 }
 
 /* =========================
-   BODY
+   ITEMS
 ========================= */
-.order-body p {
-  font-size: 0.9rem;
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+  padding: 12px 0;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-item p {
+  font-size: 0.8rem;
   color: var(--text-secondary);
-  line-height: 1.5;
+  margin-top: 4px;
 }
 
 /* =========================
@@ -101,33 +128,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.6rem;
 }
 
-.order-price {
+.payment-info p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.order-total {
   font-size: 1.05rem;
   font-weight: 600;
   color: var(--primary);
-}
-
-/* =========================
-   BUTTON
-========================= */
-.order-btn {
-  padding: 0.45rem 1.3rem;
-  border-radius: 999px;
-  border: 1px solid var(--primary);
-  background: transparent;
-  color: var(--primary);
-  font-size: 0.8rem;
-  font-weight: 500;
-  transition: all 0.25s ease;
-}
-
-.order-btn:hover {
-  background-color: var(--primary);
-  color: #fff;
-  transform: translateY(-2px);
 }
 
 /* =========================
@@ -142,16 +153,10 @@
     font-size: 1.6rem;
   }
 
-  .orders-container {
-    gap: 1.4rem;
-  }
-
   .order-card {
     padding: 1.4rem;
   }
-}
 
-@media (max-width: 480px) {
   .order-header {
     flex-direction: column;
     align-items: flex-start;
@@ -162,10 +167,5 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.6rem;
-  }
-
-  .order-btn {
-    width: 100%;
-    text-align: center;
   }
 }

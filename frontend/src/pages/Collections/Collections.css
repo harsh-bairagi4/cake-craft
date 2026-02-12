@@ -1,0 +1,136 @@
+/* =========================
+   PAGE
+========================= */
+.collection-page {
+  padding: 3rem 5%;
+  min-height: calc(100vh - 80px);
+  background-color: var(--bg-main);
+}
+
+/* =========================
+   HEADER
+========================= */
+.collection-header {
+  margin-bottom: 2.5rem;
+}
+
+.collection-header h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.collection-header p {
+  color: var(--text-secondary);
+}
+
+/* =========================
+   GRID
+========================= */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* =========================
+   CARD
+========================= */
+.collection-card {
+  background-color: var(--bg-card);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-light);
+  transition: transform 0.3s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-5px);
+}
+
+/* IMAGE */
+.collection-image {
+  position: relative;
+}
+
+.collection-image img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* ADD / REMOVE BUTTON */
+.collection-action {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  color: #fff;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.collection-action:hover {
+  transform: scale(1.1);
+}
+
+.collection-action.remove {
+  background-color: #333;
+}
+
+/* INFO */
+.collection-info {
+  padding: 1.2rem;
+}
+
+.collection-info h4 {
+  margin-bottom: 0.8rem;
+}
+
+/* TAGS */
+.collection-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.collection-tags span {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background-color: var(--bg-section);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+/* FOOTER */
+.collection-footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.collection-price {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+  .collection-page {
+    padding: 2rem 4%;
+  }
+
+  .collection-image img {
+    height: 180px;
+  }
+}

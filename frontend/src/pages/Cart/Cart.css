@@ -40,7 +40,7 @@
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 
 /* =========================
@@ -73,13 +73,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  border: 2px solid purple;
+  /* border: 2px solid purple; */
 }
 
 .cake-info h4 {
   font-size: 1.2rem;
   color: var(--text-primary);
-  border: 2px solid brown;
+  /* border: 2px solid brown; */
 }
 
 /* TAGS */
@@ -87,7 +87,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 
 .cake-tags span {
@@ -98,6 +98,7 @@
   color: var(--text-secondary);
   border: 1px solid var(--border-light);
 }
+
 
 /* FOOTER */
 .cake-footer {
@@ -114,13 +115,46 @@
   color: var(--primary);
   border: 2px solid red;
 }
-
-.cake-qty {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  border: 2px solid red;
-  margin-top: 2rem;
+/* =========================
+   QUANTITY CONTROLS
+========================= */
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 2px solid yellow;
 }
+
+.qty-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.qty-btn:hover:not(:disabled) {
+  background-color: var(--primary);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qty-number {
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+  font-size: 1rem;
+}
+
 
 /* =========================
    RIGHT – SUMMARY
@@ -176,6 +210,17 @@
   transform: translateY(-2px);
 }
 
+
+.shake {
+  animation: shake 0.3s ease;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
 
 
 /* =========================
