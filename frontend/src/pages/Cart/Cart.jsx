@@ -21,7 +21,6 @@ const Cart = () => {
 
   useEffect(() => {
     loadCartData(localStorage.getItem("token"));
-    console.log(cakeList);
     console.log(cartItems);
   }, []);
 
