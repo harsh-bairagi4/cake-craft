@@ -17,9 +17,11 @@ const Cart = () => {
     removeFromCart,
     setCartItems,
     deleteFromCart,
+    loading
   } = useContext(Context);
 
   useEffect(() => {
+    fetchCakeList();
     loadCartData(localStorage.getItem("token"));
     console.log(cartItems);
   }, []);
@@ -34,7 +36,8 @@ const Cart = () => {
       <div className="cart-studio-layout">
         {/* LEFT: CAKE CARDS */}
         <div className="cart-cakes">
-          {cakeList.map((cake) => {
+          {
+          cakeList.map((cake) => {
             const qty = cartItems[cake._id] || 0;
             if (qty > 0) {
               return (

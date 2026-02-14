@@ -14,6 +14,8 @@ const ContextProvider = (props) => {
     return localStorage.getItem("token")});
   const [cartItems, setCartItems] = useState({});
   const [cakeList, setCakeList] = useState([]);
+  
+  const [loading, setLoading] = useState(true);
 
   /* =======================
      HELPERS
@@ -111,7 +113,7 @@ const ContextProvider = (props) => {
       const response = await axios.get(url + "/api/cake/list");
       if (response.data.success) {
         setCakeList(response.data.data);
-
+        setLoading(false);
       } else {
         toast(response.data.message);
       }
@@ -181,7 +183,9 @@ const ContextProvider = (props) => {
     capitalize,
     setCartItems,
     loadCartData,
-    navigate
+    navigate,
+    loading,
+    setLoading
   };
 
   return (

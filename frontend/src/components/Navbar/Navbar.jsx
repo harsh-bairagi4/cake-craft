@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 
 const Navbar = ({ setShowLogin }) => {
-  const navigate = useNavigate();
-  const { token, setToken } = useContext(Context);
+  const { token, setToken, navigate } = useContext(Context);
   const [openMenu, setOpenMenu] = useState(false);
 
   const logoutHandler = () => {
@@ -20,6 +19,7 @@ const Navbar = ({ setShowLogin }) => {
       <div onClick={() => navigate("/")} className="navbar-logo">
         Cake<span>Craft</span>
       </div>
+
 
       {/* RIGHT ACTION */}
       {!token ? (

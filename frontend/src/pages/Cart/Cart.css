@@ -221,6 +221,88 @@
   75% { transform: translateX(-3px); }
   100% { transform: translateX(0); }
 }
+/* =========================
+   PREMIUM CART SKELETON
+========================= */
+
+.skeleton-image-pic {
+  background: linear-gradient(
+    90deg,
+    #f4d4d4 25%,
+    #f9e6e6 50%,
+    #f4d4d4 75%
+  );
+  border: 2px solid red;
+    width: 300px;
+  height: 300px;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+/* TITLE */
+.skeleton-title-bar {
+  height: 22px;
+  width: 50%;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #f4d4d4 25%,
+    #f9e6e6 50%,
+    #f4d4d4 75%
+  );
+  background-size: 200% 100%;
+
+}
+
+/* CHIPS */
+.skeleton-chip {
+  height: 22px;
+  width: 80px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #f4d4d4 25%,
+    #f9e6e6 50%,
+    #f4d4d4 75%
+  );
+  background-size: 200% 100%;
+
+}
+
+.skeleton-chip.small {
+  width: 60px;
+}
+
+/* PRICE */
+.skeleton-price {
+  height: 24px;
+  width: 90px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    #f4d4d4 25%,
+    #f9e6e6 50%,
+    #f4d4d4 75%
+  );
+  background-size: 200% 100%;
+ 
+}
+
+/* QTY CONTROLS */
+.skeleton-qty {
+  height: 40px;
+  width: 120px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #f4d4d4 25%,
+    #f9e6e6 50%,
+    #f4d4d4 75%
+  );
+  background-size: 200% 100%;
+}
+
 
 
 /* =========================

@@ -65,6 +65,7 @@ const Header = ({ setShowLogin }) => {
       }}
     >
       <div className="hero-glow" />
+      
 
       <div className="hero-container center">
         <div className="hero-text">
@@ -95,6 +96,7 @@ const Header = ({ setShowLogin }) => {
           <p className="hero-subtext">{slides[current].text}</p>
 
           <div className="hero-actions">
+            
             <button className="primary-btn" onClick={showLogin}>
               Start Designing
             </button>

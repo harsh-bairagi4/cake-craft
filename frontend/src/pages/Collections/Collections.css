@@ -123,6 +123,73 @@
 }
 
 /* =========================
+   PREMIUM SKELETON (BAKERY STYLE)
+========================= */
+
+
+
+/* Shimmer Base */
+.skeleton-image,
+.skeleton-title,
+.skeleton-chip,
+.skeleton-price {
+  position: relative;
+  background: #f2e5dc;
+  overflow: hidden;
+}
+
+/* Image */
+.skeleton-image {
+  width: 100%;
+  height: 220px;
+}
+
+/* Title */
+.skeleton-title {
+  height: 18px;
+  width: 60%;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+/* Tag rows */
+.skeleton-tags-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* Chips */
+.skeleton-chip {
+  height: 22px;
+  width: 70px;
+  border-radius: 999px;
+}
+
+.skeleton-chip.small {
+  width: 90px;
+}
+
+/* Price */
+.skeleton-price {
+  height: 20px;
+  width: 80px;
+  border-radius: 6px;
+  margin-top: 12px;
+}
+
+/* Animation */
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+
+/* =========================
    MOBILE
 ========================= */
 @media (max-width: 768px) {
@@ -131,6 +198,7 @@
   }
 
   .collection-image img {
-    height: 180px;
+    height: 300px;
   }
+  
 }

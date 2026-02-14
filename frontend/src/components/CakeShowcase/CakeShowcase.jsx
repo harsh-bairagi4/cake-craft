@@ -8,7 +8,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 const CakeShowcase = () => {
-  const { cakeList, capitalize } = useContext(Context);
+  const { cakeList, capitalize , loading} = useContext(Context);
 
   return (
     <section className="cake-showcase">
@@ -27,7 +27,19 @@ const CakeShowcase = () => {
         grabCursor={true}
         className="cake-swiper"
       >
-        {cakeList.map((cake, index) => (
+        {loading ?
+        Array(5).fill(0)
+      .map((_, index) => (
+         <SwiperSlide key={index} className="card-cake">
+                  <div className="skeleton-img"></div>
+                  <div className="cake-information">
+                    <div className="skeleton-title"></div>
+                    <div className="skeleton-subtitle"></div>
+                  </div>
+          </SwiperSlide>
+      ))
+      :
+        cakeList.map((cake, index) => (
           <SwiperSlide key={index} className="card-cake">
             <img src={cake.image} alt={cake.name} />
             <div className="cake-information">
