@@ -70,7 +70,7 @@ Cake details:
 - Flavor: ${flavor}
 - Size: ${size}
 - Layers: ${layers}
-- Shape: ${shape}
+- Shape: ${shape} shaped
 - Frosting: ${frosting}
 - Egg preference: ${eggType}
 - Sweetness: ${sweetness || "medium"}
@@ -106,6 +106,7 @@ Ultra realistic food photography, no people, no hands.
   const frostingPriceMap = {
     "buttercream": 50,
     "whipped-cream": 100,
+    "fondant": 120,
     "cream-cheese": 150,
     "chocolate-ganache": 200,
   };
@@ -188,8 +189,8 @@ Ultra realistic food photography, no people, no hands.
     );
 
     if (response.data.success) {
-      toast("Cake added to cart successfully 🎉");
-      addToCart(response.data.cake._id)
+      toast("Cake added to cart 🍰");
+      addToCart(response.data.cake._id);
       navigate("/cart");
     } else {
       toast(response.data.message || "Failed to add cake");

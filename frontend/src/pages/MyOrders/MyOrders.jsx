@@ -47,7 +47,7 @@ const MyOrders = () => {
 
         {/* ================= SKELETON LOADING ================= */}
         {loading &&
-          Array(3)
+          Array(2)
             .fill(0)
             .map((_, i) => (
               <div className="order-card skeleton-card" key={i}>

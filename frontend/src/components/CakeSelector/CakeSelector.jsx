@@ -53,6 +53,8 @@ const CakeSelector = ({ cakeData, setCakeData }) => {
         <option value="red-velvet">Red Velvet</option>
         <option value="butterscotch">Butterscotch</option>
         <option value="strawberry">Strawberry</option>
+        <option value="mango">Mango</option>
+        <option value="black-forest">Black Forest</option>
       </>)}
 
       {renderSelect("size", cakeData.size, <>
@@ -83,6 +85,7 @@ const CakeSelector = ({ cakeData, setCakeData }) => {
         <option value="buttercream">Buttercream</option>
         <option value="whipped-cream">Whipped Cream</option>
         <option value="cream-cheese">Cream Cheese</option>
+        <option value="fondant">Fondant</option>
         <option value="chocolate-ganache">Chocolate Ganache</option>
       </>)}
 
@@ -103,7 +106,7 @@ const CakeSelector = ({ cakeData, setCakeData }) => {
       <div className="toppings">
         <p>Select Toppings</p>
 
-        {["choco-chips","sprinkles","nuts","strawberries","cherries"].map((item) => (
+        {["choco-chips","sprinkles","nuts","strawberries","cherries","caramel drizzle", "chocolate drizzle"].map((item) => (
           <label key={item}>
             <input
               type="checkbox"
