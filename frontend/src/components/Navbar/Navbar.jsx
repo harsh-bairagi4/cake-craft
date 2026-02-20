@@ -4,13 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 
 const Navbar = ({ setShowLogin }) => {
-  const { token, setToken, navigate } = useContext(Context);
+  const { token, setToken, navigate, setCartItems } = useContext(Context);
   const [openMenu, setOpenMenu] = useState(false);
 
   const logoutHandler = () => {
     setToken("");
     localStorage.removeItem("token");
     navigate("/");
+    setCartItems({});
+    
   };
 
   return (

@@ -17,7 +17,6 @@ const Cart = () => {
     removeFromCart,
     setCartItems,
     deleteFromCart,
-    loading
   } = useContext(Context);
 
   useEffect(() => {
