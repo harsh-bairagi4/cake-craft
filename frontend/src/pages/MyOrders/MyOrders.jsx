@@ -5,35 +5,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const MyOrders = () => {
-  const { token, url } = useContext(Context);
-  const [orderData, setOrderData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const loadOrderData = async () => {
-    try {
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-
-      setLoading(true);
-
-      const response = await axios.post(
-        url + "/api/order/userorders",
-        {},
-        { headers: { token } }
-      );
-
-      if (response.data.success) {
-        setOrderData(response.data.orders);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to load orders");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { token, url, orderData, loadOrderData, orderDataLoading } = useContext(Context);
 
   useEffect(() => {
     loadOrderData();
@@ -46,7 +18,7 @@ const MyOrders = () => {
       <div className="orders-container">
 
         {/* ================= SKELETON LOADING ================= */}
-        {loading &&
+        {orderDataLoading &&
           Array(2)
             .fill(0)
             .map((_, i) => (
@@ -63,12 +35,12 @@ const MyOrders = () => {
             ))}
 
         {/* ================= NO ORDERS ================= */}
-        {!loading && orderData.length === 0 && (
+        {!orderDataLoading && orderData.length === 0 && (
           <p className="no-orders">No orders found 🍰</p>
         )}
 
         {/* ================= REAL DATA ================= */}
-        {!loading &&
+        {!orderDataLoading &&
           orderData.map((order) => (
             <div className="order-card" key={order._id}>
               <div className="order-header">

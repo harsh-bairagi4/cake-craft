@@ -14,8 +14,10 @@ const ContextProvider = (props) => {
     return localStorage.getItem("token")});
   const [cartItems, setCartItems] = useState({});
   const [cakeList, setCakeList] = useState([]);
-  
-  const [loading, setLoading] = useState(true);
+    const [orderData, setOrderData] = useState([]);
+     const [loading, setLoading] = useState(true);
+    const [orderDataLoading, setorderDataLoading] = useState(true);
+    
 
   /* =======================
      HELPERS
@@ -152,6 +154,30 @@ const ContextProvider = (props) => {
       toast.error(error.message);
     }
   };
+    const loadOrderData = async () => {
+      try {
+        if (!token) {
+          setorderDataLoading(false);
+          return;
+        }
+  
+        const response = await axios.post(
+          url + "/api/order/userorders",
+          {},
+          { headers: { token } }
+        );
+  
+        if (response.data.success) {
+          setOrderData(response.data.orders);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Failed to load orders");
+      } finally {
+        setorderDataLoading(false);
+      }
+    };
+ 
 
   /* ================= INIT ================= */
   useEffect(()=>{
@@ -185,7 +211,10 @@ const ContextProvider = (props) => {
     loadCartData,
     navigate,
     loading,
-    setLoading
+    setLoading,
+    orderData,
+    loadOrderData,
+    orderDataLoading
   };
 
   return (

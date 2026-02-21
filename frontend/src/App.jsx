@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
@@ -14,6 +13,8 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import {Toaster} from 'sonner';
 import Subscription from "./components/Subscription/Subscription";
 import Help from "./components/Help/Help";
+import Contact from "./components/Contact/Contact";
+import About from "./components/About/About";
 
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -65,9 +66,7 @@ const App = () => {
           <Route 
             path="/collections"
             element={
-           
                 <Collections setShowLogin={setShowLogin}/>
-        
             }
           />
           <Route 
@@ -81,6 +80,16 @@ const App = () => {
             element={   
                 <Help />
             }
+          />
+          <Route
+          path="/contact"
+          element={<Contact/>
+          }
+          />
+          <Route
+          path="/about"
+          element={<About/>
+          }
           />
         </Routes>
         <Footer />

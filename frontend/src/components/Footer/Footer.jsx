@@ -21,8 +21,8 @@ const Footer = () => {
         <div className="footer-links">
           <h4>Explore</h4>
           <ul>
-            <li>Create a Cake</li>
-            <li>Cake Collection</li>
+            <li onClick={() => navigate("/")}>Home</li>
+            <li onClick={() => navigate("/collections")}>Cake Collection</li>
             <li onClick={() => navigate("/subscription")}>Pricing</li>
             <li onClick={() => navigate("/help")}>How It Works</li>
           </ul>
@@ -31,9 +31,9 @@ const Footer = () => {
         <div className="footer-links">
           <h4>Company</h4>
           <ul>
-            <li>About Us</li>
-            <li>Contact</li>
-            <li>FAQs</li>
+            <li onClick={() => navigate("/about")}>About Us</li>
+            <li onClick={() => navigate("/contact")}>Contact</li>
+            <li>Blog</li>
             <li>Privacy Policy</li>
           </ul>
         </div>

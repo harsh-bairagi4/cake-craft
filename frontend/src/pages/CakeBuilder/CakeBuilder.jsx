@@ -189,7 +189,7 @@ Ultra realistic food photography, no people, no hands.
     );
 
     if (response.data.success) {
-      toast("Cake added to cart 🍰");
+      toast("Cake added to cart successfully 🍰");
       addToCart(response.data.cake._id);
       navigate("/cart");
     } else {
