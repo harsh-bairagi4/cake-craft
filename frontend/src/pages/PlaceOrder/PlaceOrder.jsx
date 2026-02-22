@@ -16,6 +16,7 @@ const PlaceOrder = () => {
   } = useContext(Context);
 
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [isPlacing, setIsPlacing] = useState(false); // ← ADDED
 
   const [data, setData] = useState({
     fullName: "",
@@ -33,70 +34,72 @@ const PlaceOrder = () => {
     setData((prev) => ({ ...prev, [name]: value }));
   };
 
- const placeOrder = async (e) => {
-  e.preventDefault();
+  const placeOrder = async (e) => {
+    e.preventDefault();
 
-  if (!paymentMethod) {
-    toast.error("Please select a payment method");
-    return;
-  }
-
-  let orderItems = [];
-
-  cakeList.forEach((cake) => {
-    const qty = cartItems[cake._id];
-    if (qty > 0) {
-      orderItems.push({
-        cakeId: cake._id,
-        name: cake.name,
-        price: cake.price,
-        quantity: qty,
-        image: cake.image,
-        description: cake.description,
-      });
+    if (!paymentMethod) {
+      toast.error("Please select a payment method");
+      return;
     }
-  });
 
-  if (orderItems.length === 0) {
-    toast.error("Your cart is empty");
-    return;
-  }
+    let orderItems = [];
 
-  const payload = {
-    address: data,
-    items: orderItems,
-    amount: getTotalCartAmount() + 50,
-  };
-
-  try {
-    const endpoint =
-      paymentMethod === "stripe"
-        ? "/api/order/place"
-        : "/api/order/placecod";
-
-    const res = await axios.post(url + endpoint, payload, {
-      headers: { token },
+    cakeList.forEach((cake) => {
+      const qty = cartItems[cake._id];
+      if (qty > 0) {
+        orderItems.push({
+          cakeId: cake._id,
+          name: cake.name,
+          price: cake.price,
+          quantity: qty,
+          image: cake.image,
+          description: cake.description,
+        });
+      }
     });
 
-    if (res.data.success) {
-     
-
-      if (paymentMethod === "stripe") {
-        window.location.replace(res.data.session_url);
-      } else {
-        toast.success("🎉 Order placed (Cash on Delivery)");
-         setCartItems({});
-        navigate("/myorders");
-      }
-    } else {
-      toast.error(res.data.message || "Order failed");
+    if (orderItems.length === 0) {
+      toast.error("Your cart is empty");
+      return;
     }
-  } catch (err) {
-    console.log(err);
-    toast.error("Something went wrong");
-  }
-};
 
+    const payload = {
+      address: data,
+      items: orderItems,
+      amount: getTotalCartAmount() + 50,
+    };
+
+    setIsPlacing(true); // ← ADDED: lock button before async work starts
+    try {
+      const endpoint =
+        paymentMethod === "stripe"
+          ? "/api/order/place"
+          : "/api/order/placecod";
+
+      const res = await axios.post(url + endpoint, payload, {
+        headers: { token },
+      });
+
+      if (res.data.success) {
+        if (paymentMethod === "stripe") {
+          window.location.replace(res.data.session_url);
+          // ← No setIsPlacing(false) here intentionally — page is navigating away
+          // so keeping the button locked prevents any flicker or double clicks
+        } else {
+          toast.success("🎉 Order placed (Cash on Delivery)");
+          setCartItems({});
+          navigate("/myorders");
+        }
+      } else {
+        toast.error(res.data.message || "Order failed");
+        setIsPlacing(false); // ← ADDED: unlock only on failure so user can retry
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong");
+      setIsPlacing(false); // ← ADDED: unlock on error so user can retry
+    }
+  };
 
   return (
     <form className="order-page" onSubmit={placeOrder}>
@@ -163,11 +166,16 @@ const PlaceOrder = () => {
             </label>
           </div>
 
+          {/* ← CHANGED: added isPlacing to disabled and button text */}
           <button
             className="place-order-btn"
-            disabled={!paymentMethod || getTotalCartAmount() === 0}
+            disabled={!paymentMethod || getTotalCartAmount() === 0 || isPlacing}
           >
-            Place Order
+            {isPlacing
+              ? paymentMethod === "stripe"
+                ? "Redirecting to Stripe..."
+                : "Placing Order..."
+              : "Place Order"}
           </button>
         </div>
       </div>

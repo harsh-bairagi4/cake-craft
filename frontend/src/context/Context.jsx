@@ -52,11 +52,14 @@ const ContextProvider = (props) => {
 
       if (response.data.success) {
         setCartItems(response.data.cartData);
-        setCartDataLoading(false);
+        
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
+    }
+    finally{
+      setCartDataLoading(false);
     }
   };
 
@@ -136,29 +139,29 @@ const ContextProvider = (props) => {
     }
   }
 
-  const loadOrderData = async () => {
-      try {
-        if (!token) {
-          setorderDataLoading(false);
-          return;
-        }
-  
-        const response = await axios.post(
-          url + "/api/order/userorders",
-          {},
-          { headers: { token } }
-        );
-  
-        if (response.data.success) {
-          setOrderData(response.data.orders);
-        }
-      } catch (error) {
-        console.log(error);
-        toast.error("Failed to load orders");
-      } finally {
-        setorderDataLoading(false);
-      }
-    };
+const loadOrderData = async () => {
+  if (!token) {
+    setorderDataLoading(false);
+    return;
+  }
+
+  setorderDataLoading(true);
+  try {
+    const response = await axios.post(
+      url + "/api/order/userorders",
+      {},
+      { headers: { token } }
+    );
+    if (response.data.success) {
+      setOrderData(response.data.orders);
+    }
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to load orders");
+  } finally {
+    setorderDataLoading(false);
+  }
+};
 
   const generateImage = async (prompt) => {
     try {
@@ -181,14 +184,11 @@ const ContextProvider = (props) => {
   };
  
   useEffect(()=>{
-    console.log(cartItems);
     fetchCakeList();
   }, []);
 
   useEffect(()=>{
-    
     loadCartData(token);
-    console.log(cartItems);
   }, [token]);
   
 

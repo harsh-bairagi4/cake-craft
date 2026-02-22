@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const CakeBuilder = () => {
-  const {url, generateImage, labour, addToCart,capitalize, token, navigate} = useContext(Context);
+  const {url, generateImage, labour, addToCart, capitalize, token, navigate, fetchCakeList} = useContext(Context); // ← ADDED fetchCakeList
 
   /* =======================
      STATE
@@ -27,10 +27,7 @@ const CakeBuilder = () => {
   const [imageUrl, setImageUrl] = useState("/cakepic.jpg");
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
-  
-  
-
-  
+  const [isAddingToCart, setIsAddingToCart] = useState(false); // ← ADDED for loading state on button
 
   /* =======================
      VALIDATION
@@ -135,7 +132,7 @@ Ultra realistic food photography, no people, no hands.
   ======================= */
   const handleGenerate = async (e) => {
     e.preventDefault();
-    if(!token){
+    if (!token) {
       toast("Please signup first");
       return;
     }
@@ -143,7 +140,6 @@ Ultra realistic food photography, no people, no hands.
       toast("Please select all required cake options 🍰");
       return;
     }
-    
 
     setIsGenerating(true);
     try {
@@ -159,49 +155,56 @@ Ultra realistic food photography, no people, no hands.
   };
 
   const handleGenerateAnother = () => {
-    if(!token){
+    if (!token) {
       toast("Please signup first");
       return;
     }
     setHasGenerated(false);
     setImageUrl("/cakepic.jpg");
   };
- const handleAddToCart = async () => {
-   if(!token){
+
+  const handleAddToCart = async () => {
+    if (!token) {
       toast("Please signup first");
       return;
     }
-  try {
-    const payload = {
-      name: `${capitalize(cakeData.flavor)} Cake`,
-      price: calculateCakePrice(),
-      image: imageUrl,
-      description: cakeData,
-    };
 
-    const response = await axios.post(url + "/api/cake/custom",
-      payload,
-       {
+    setIsAddingToCart(true); // ← disable button while working
+    try {
+      const payload = {
+        name: `${capitalize(cakeData.flavor)} Cake`,
+        price: calculateCakePrice(),
+        image: imageUrl,
+        description: cakeData,
+      };
+
+      const response = await axios.post(url + "/api/cake/custom", payload, {
         headers: {
           token: localStorage.getItem("token"),
         },
+      });
+
+      if (response.data.success) {
+        const newCakeId = response.data.cake._id;
+
+        // ← KEY FIX: fetch updated cake list FIRST so the new cake
+        //   exists in cakeList before we navigate to Cart and render it
+        await fetchCakeList();
+
+        addToCart(newCakeId);
+        toast.success("Cake added to cart successfully 🍰");
+        navigate("/cart");
+      } else {
+        toast(response.data.message || "Failed to add cake");
       }
-    );
-
-    if (response.data.success) {
-      toast("Cake added to cart successfully 🍰");
-      addToCart(response.data.cake._id);
-      navigate("/cart");
-    } else {
-      toast(response.data.message || "Failed to add cake");
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong while adding cake");
+    } finally {
+      setIsAddingToCart(false);
     }
-  } catch (error) {
-    console.error(error);
-    toast.error("Something went wrong while adding cake");
-  }
-};
+  };
 
-  
   /* =======================
      JSX
   ======================= */
@@ -243,7 +246,6 @@ Ultra realistic food photography, no people, no hands.
                 >
                   Generate Another Cake
                 </button>
-               
               </>
             )}
           </div>
@@ -279,7 +281,15 @@ Ultra realistic food photography, no people, no hands.
                 Total Price:
                 <span> ₹{calculateCakePrice()}</span>
               </div>
-               <button className="primary-btn" onClick={handleAddToCart}>Add to Cart</button>
+
+              {/* ← ADDED disabled + loading text so user knows it's working */}
+              <button
+                className="primary-btn"
+                onClick={handleAddToCart}
+                disabled={isAddingToCart}
+              >
+                {isAddingToCart ? "Adding..." : "Add to Cart"}
+              </button>
             </div>
           )}
         </div>

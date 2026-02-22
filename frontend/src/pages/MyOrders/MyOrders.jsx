@@ -7,9 +7,13 @@ import { toast } from "sonner";
 const MyOrders = () => {
   const { token, url, orderData, loadOrderData, orderDataLoading } = useContext(Context);
 
-  useEffect(() => {
+ useEffect(() => {
+  if (orderData.length === 0) {  // ← only fetch if no data yet
     loadOrderData();
-  }, [token]);
+  }
+}, [token]);
+
+const sortedOrders = [...orderData].reverse();
 
   return (
     <section className="orders-page">
@@ -35,13 +39,13 @@ const MyOrders = () => {
             ))}
 
         {/* ================= NO ORDERS ================= */}
-        {!orderDataLoading && orderData.length === 0 && (
+        {!orderDataLoading && sortedOrders.length === 0 && (
           <p className="no-orders">No orders found 🍰</p>
         )}
 
         {/* ================= REAL DATA ================= */}
         {!orderDataLoading &&
-          orderData.map((order) => (
+          sortedOrders.map((order) => ( // ← CHANGED: orderData → sortedOrders
             <div className="order-card" key={order._id}>
               <div className="order-header">
                 <div>

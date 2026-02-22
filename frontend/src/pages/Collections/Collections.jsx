@@ -11,7 +11,6 @@ const Collections = () => {
     setShowLogin,
     cakeList,
     cartItems,
-    loadCartData,
     addToCart,
     deleteFromCart,
     capitalize,
