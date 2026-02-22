@@ -1,53 +1,77 @@
-import axios from "axios";
-import React, { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {toast} from "sonner";
 
 export const Context = createContext(null);
 
 const ContextProvider = (props) => {
-  const navigate = useNavigate();
+
   const url = "http://localhost:4000";
   const labour = 100;
 
-  const [token, setToken] = useState(() => {
-    return localStorage.getItem("token")});
-  const [cartItems, setCartItems] = useState({});
-  const [cakeList, setCakeList] = useState([]);
-    const [orderData, setOrderData] = useState([]);
-     const [loading, setLoading] = useState(true);
-    const [orderDataLoading, setorderDataLoading] = useState(true);
-    
+  const navigate = useNavigate();
 
-  /* =======================
-     HELPERS
-  ======================= */
+  const [showLogin, setShowLogin] = useState(false);
+  const [token, setToken] = useState(() => { return localStorage.getItem("token")});
+  const [cakeList, setCakeList] = useState([]);
+  const [cartItems, setCartItems] = useState({});
+  const [orderData, setOrderData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [cartDataLoading, setCartDataLoading] = useState(true);
+  const [orderDataLoading, setorderDataLoading] = useState(true);
+
   const capitalize = (text) => {
     if (!text) return "";
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
 
-  /* ================= IMAGE GENERATION ================= */
-  const generateImage = async (prompt) => {
+
+  const fetchCakeList = async () => {
     try {
-      const { data } = await axios.post(
-        url + "/api/image/generate-image",
-        { prompt },
-        { headers: { token } },
-      );
-      if (data.success) {
-        return data.resultImage;
-      }
-      if (data.creditBalance === 0) {
-        toast("You don't have enough credits");
-        navigate("/subscription");
+      const response = await axios.get(url + "/api/cake/list");
+      if (response.data.success) {
+        setCakeList(response.data.data);
+        setLoading(false);
+      } else {
+        toast(response.data.message);
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
   };
-  /* ================= CART ACTIONS ================= */
+
+  const loadCartData = async (token) => {
+    try {
+      const response = await axios.post(
+        url + "/api/cart/get",
+        {},
+        { headers: { token } },
+      );
+
+      if (response.data.success) {
+        setCartItems(response.data.cartData);
+        setCartDataLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  const getTotalCartAmount = () => {
+    let total = 0;
+
+    for (const id in cartItems) {
+      const cake = cakeList.find((item) => item._id === id);
+      if (cake) {
+        total += cake.price * cartItems[id];
+      }
+    }
+    return total;
+  };
+  
   const addToCart = async (itemId, customData = null) => {
     setCartItems((prev) => ({
       ...prev,
@@ -66,6 +90,7 @@ const ContextProvider = (props) => {
       }
     }
   };
+
   const removeFromCart = async (itemId) => {
     setCartItems((prev) => {
       const updated = { ...prev };
@@ -89,6 +114,7 @@ const ContextProvider = (props) => {
       }
     }
   };
+
   const deleteFromCart = async (itemId) => {
     setCartItems((prev) => {
       const updated = {...prev};
@@ -109,52 +135,8 @@ const ContextProvider = (props) => {
       }
     }
   }
-   /* ================= FETCH CAKES ================= */
-  const fetchCakeList = async () => {
-    try {
-      const response = await axios.get(url + "/api/cake/list");
-      if (response.data.success) {
-        setCakeList(response.data.data);
-        setLoading(false);
-      } else {
-        toast(response.data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  };
-  /* ================= TOTAL ================= */
-  const getTotalCartAmount = () => {
-    let total = 0;
 
-    for (const id in cartItems) {
-      const cake = cakeList.find((item) => item._id === id);
-      if (cake) {
-        total += cake.price * cartItems[id];
-      }
-    }
-    return total;
-  };
-
-  /* ================= LOAD CART ================= */
-  const loadCartData = async (token) => {
-    try {
-      const response = await axios.post(
-        url + "/api/cart/get",
-        {},
-        { headers: { token } },
-      );
-
-      if (response.data.success) {
-        setCartItems(response.data.cartData);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  };
-    const loadOrderData = async () => {
+  const loadOrderData = async () => {
       try {
         if (!token) {
           setorderDataLoading(false);
@@ -177,44 +159,71 @@ const ContextProvider = (props) => {
         setorderDataLoading(false);
       }
     };
- 
 
-  /* ================= INIT ================= */
+  const generateImage = async (prompt) => {
+    try {
+      const { data } = await axios.post(
+        url + "/api/image/generate-image",
+        { prompt },
+        { headers: { token } },
+      );
+      if (data.success) {
+        return data.resultImage;
+      }
+      if (data.creditBalance === 0) {
+        toast("You don't have enough credits");
+        navigate("/subscription");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+ 
   useEffect(()=>{
+    console.log(cartItems);
     fetchCakeList();
   }, []);
 
-  useEffect(() => {
-    if (token) {
-      loadCartData(localStorage.getItem("token"));
-      console.log(cartItems);
-    }
+  useEffect(()=>{
+    
+    loadCartData(token);
+    console.log(cartItems);
   }, [token]);
-
   
 
   const contextValue = {
     url,
-    token,
     labour,
+    showLogin,
+    setShowLogin,
+    token,
     setToken,
-    generateImage,
+    cakeList,
+    cartItems,
+    orderData,
+    loading,
+    cartDataLoading,
+    orderDataLoading,
+
+    capitalize,
+
     addToCart,
     removeFromCart,
     deleteFromCart,
-    cakeList,
-    cartItems,
     getTotalCartAmount,
+
+    generateImage,
+    
     fetchCakeList,
-    capitalize,
-    setCartItems,
+
     loadCartData,
+    
+    setCartItems,
+    
     navigate,
-    loading,
     setLoading,
-    orderData,
     loadOrderData,
-    orderDataLoading
   };
 
   return (

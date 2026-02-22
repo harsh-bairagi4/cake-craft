@@ -60,7 +60,6 @@ const Pricing = () => {
           }}>Simple & Transparent Pricing</motion.h2>
         </div>
 
-        {/* LEFT CONTENT */}
         <motion.div
           className="pricing-info"
           initial={{ opacity: 0, x: -80 }}
@@ -84,7 +83,6 @@ const Pricing = () => {
           </p>
         </motion.div>
 
-        {/* RIGHT CONTENT */}
         <motion.div
           className="pricing-cards-wrapper"
           initial={{ opacity: 0, x: 80 }}

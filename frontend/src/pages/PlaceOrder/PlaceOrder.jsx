@@ -79,13 +79,14 @@ const PlaceOrder = () => {
     });
 
     if (res.data.success) {
-      setCartItems({});
+     
 
       if (paymentMethod === "stripe") {
         window.location.replace(res.data.session_url);
       } else {
         toast.success("🎉 Order placed (Cash on Delivery)");
-        navigate("/my-orders");
+         setCartItems({});
+        navigate("/myorders");
       }
     } else {
       toast.error(res.data.message || "Order failed");

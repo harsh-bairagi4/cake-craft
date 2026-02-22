@@ -3,8 +3,8 @@ import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 
-const Navbar = ({ setShowLogin }) => {
-  const { token, setToken, navigate, setCartItems } = useContext(Context);
+const Navbar = () => {
+  const {setShowLogin, token, setToken, navigate, setCartItems } = useContext(Context);
   const [openMenu, setOpenMenu] = useState(false);
 
   const logoutHandler = () => {
@@ -12,7 +12,6 @@ const Navbar = ({ setShowLogin }) => {
     localStorage.removeItem("token");
     navigate("/");
     setCartItems({});
-    
   };
 
   return (

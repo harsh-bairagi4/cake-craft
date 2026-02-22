@@ -5,12 +5,11 @@ import Pricing from "../../components/Pricing/Pricing";
 import Faq from "../../components/Faq/Faq";
 import DemoVideo from "../../components/DemoVideo/DemoVideo";
 import HowItWorks from "../../components/HowItWorks/HowItWorks";
-const Home = ({ setShowLogin }) => {
+const Home = () => {
   
   return (
     <div>
-     
-      <Header setShowLogin={setShowLogin} />
+      <Header/>
       <DemoVideo />
       <CakeShowcase />
       <HowItWorks/>

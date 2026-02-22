@@ -5,9 +5,10 @@ import { toast } from "sonner";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-const Collections = ({ setShowLogin }) => {
+const Collections = () => {
   const {
     token,
+    setShowLogin,
     cakeList,
     cartItems,
     loadCartData,
@@ -17,11 +18,6 @@ const Collections = ({ setShowLogin }) => {
     loading
   } = useContext(Context);
 
-
-  /* ================= LOGIN GUARD ================= */
- useEffect(() => {
-      loadCartData(token);
-  }, []);
 
   return (
     <section className="collection-page">

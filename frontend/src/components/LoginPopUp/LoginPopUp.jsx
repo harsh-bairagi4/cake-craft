@@ -1,13 +1,12 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import "./LoginPopUp.css";
 import { Context } from "../../context/Context";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-const LoginPopUp = ({ setShowLogin }) => {
-  const navigate = useNavigate();
-  const { url, setToken } = useContext(Context);
+const LoginPopUp = () => {
+
+  const { url, setShowLogin, setToken, navigate} = useContext(Context);
   const [isLogin, setIsLogin] = useState(false);
 
   const [data, setData] = useState({
@@ -35,6 +34,7 @@ const LoginPopUp = ({ setShowLogin }) => {
       localStorage.setItem("token", response.data.token);
       setShowLogin(false);
       navigate("/generate");
+
     } else {
       toast(response.data.message);
     }

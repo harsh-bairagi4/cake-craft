@@ -10,26 +10,15 @@ const Cart = () => {
     cakeList,
     cartItems,
     getTotalCartAmount,
-    fetchCakeList,
+    token,
     capitalize,
     loadCartData,
     addToCart,
     removeFromCart,
     deleteFromCart,
+    cartDataLoading,
   } = useContext(Context);
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      await fetchCakeList();
-      await loadCartData(localStorage.getItem("token"));
-      setLoading(false);
-    };
-
-    loadData();
-  }, []);
 
   return (
     <section className="cart-studio">
@@ -44,8 +33,7 @@ const Cart = () => {
         <div className="cart-cakes">
 
           {/* SKELETON LOADER */}
-          {loading &&
-            Array(2)
+          {cartDataLoading ?  Array(2)
               .fill(0)
               .map((_, i) => (
                 <div key={i} className="cake-card skeleton-card">
@@ -60,10 +48,7 @@ const Cart = () => {
                     <div className="skeleton skeleton-footer"></div>
                   </div>
                 </div>
-              ))}
-
-          {/* REAL DATA */}
-          {!loading &&
+              )) :   
             cakeList.map((cake) => {
               const qty = cartItems[cake._id] || 0;
               if (qty > 0) {
@@ -140,12 +125,13 @@ const Cart = () => {
                 );
               }
               return null;
-            })}
+            })
+            }
         </div>
 
         {/* ================= RIGHT SIDE ================= */}
         <div className="checkout-panel">
-          {loading ? (
+          {cartDataLoading ? (
             <>
               <div className="skeleton skeleton-summary-title"></div>
               <div className="skeleton skeleton-summary-line"></div>

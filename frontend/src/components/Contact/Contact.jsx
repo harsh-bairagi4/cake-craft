@@ -8,7 +8,7 @@ const Contact = () => {
       <div className="contact-canvas" />
 
       <div className="contact-container">
-        {/* LEFT SIDE - IMAGE */}
+      
         <div className="contact-left">
           <div className="contact-image-wrapper">
             <div className="image-glow" />
@@ -18,7 +18,6 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* RIGHT SIDE - INFO */}
         <div className="contact-right">
           <div className="greeting-badge">Available for work</div>
           <h2 className="contact-name">

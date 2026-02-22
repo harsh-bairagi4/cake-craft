@@ -27,8 +27,8 @@ const slides = [
   ];
 
 
-const Header = ({ setShowLogin }) => {
-  const { token ,navigate} = useContext(Context);
+const Header = () => {
+  const { token ,navigate, setShowLogin} = useContext(Context);
  
   const [current, setCurrent] = useState(0);
 

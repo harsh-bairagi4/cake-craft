@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
@@ -15,12 +15,15 @@ import Subscription from "./components/Subscription/Subscription";
 import Help from "./components/Help/Help";
 import Contact from "./components/Contact/Contact";
 import About from "./components/About/About";
+import Verify from "./components/Verify/Verify";
+import { Context } from "./context/Context";
 
 const App = () => {
-  const [showLogin, setShowLogin] = useState(false);
+  const {showLogin} = useContext(Context);
+ 
   return (
     <>
-      {showLogin ? <LoginPopUp setShowLogin={setShowLogin} /> : <></>}
+      {showLogin ? <LoginPopUp/> : <></>}
       <Toaster
         position="top-center"
         richColors
@@ -28,9 +31,15 @@ const App = () => {
       />
       <div className="app">
          
-        <Navbar setShowLogin={setShowLogin} />
+        <Navbar/>
         <Routes>
-          <Route path="/" element={<Home setShowLogin={setShowLogin} />} />
+          <Route path="/" element={<Home/>} />
+          <Route 
+            path="/collections"
+            element={
+                <Collections/>
+            }
+          />
           <Route
             path="/generate"
             element={
@@ -56,17 +65,19 @@ const App = () => {
             }
           />
           <Route
+            path="/verify"
+            element={
+              <ProtectedRoute>
+                <Verify />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/myorders"
             element={
               <ProtectedRoute>
                 <MyOrders />
               </ProtectedRoute>
-            }
-          />
-          <Route 
-            path="/collections"
-            element={
-                <Collections setShowLogin={setShowLogin}/>
             }
           />
           <Route 
