@@ -8,14 +8,13 @@
   color: var(--text-primary);
 }
 
-/* MAIN LAYOUT */
+
 .order-container {
   display: grid;
   grid-template-columns: 60% 40%;
   gap: 2.5rem;
 }
 
-/* FORM */
 .order-form {
   background-color: var(--bg-card);
   padding: 2rem;
@@ -31,7 +30,6 @@
   color: var(--text-primary);
 }
 
-/* INPUTS */
 .order-form input,
 .order-form textarea {
   padding: 0.75rem 1rem;
@@ -54,7 +52,7 @@
    color: var(--text-primary);
 }
 
-/* FOCUS */
+
 .order-form input:focus,
 .order-form textarea:focus {
   outline: none;
@@ -62,7 +60,7 @@
   box-shadow: 0 0 0 2px rgba(225, 29, 72, 0.25);
 }
 
-/* SUMMARY */
+
 .order-summary {
     background-color: var(--bg-section);
   padding: 2rem;
@@ -76,7 +74,7 @@
   color: var(--text-primary);
 }
 
-/* SUMMARY ROWS */
+
 .summary-row {
   display: flex;
   justify-content: space-between;
@@ -91,7 +89,6 @@
   color: #E63946;
 }
 
-/* PLACE ORDER BUTTON */
 .place-order-btn {
   margin-top: 1.5rem;
   width: 100%;
@@ -194,8 +191,6 @@
   }
 }
 
-
-/* MOBILE VIEW */
 @media (max-width: 900px) {
   .order-container {
     grid-template-columns: 1fr;

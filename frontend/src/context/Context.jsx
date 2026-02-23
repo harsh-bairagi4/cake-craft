@@ -1,30 +1,36 @@
 import { useState, useEffect, createContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {toast} from "sonner";
+import { toast } from "sonner";
 
 export const Context = createContext(null);
 
 const ContextProvider = (props) => {
-
   const url = "http://localhost:4000";
   const labour = 100;
 
   const navigate = useNavigate();
 
   const [showLogin, setShowLogin] = useState(false);
-  const [token, setToken] = useState(() => { return localStorage.getItem("token")});
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
   const [cakeList, setCakeList] = useState([]);
   const [cartItems, setCartItems] = useState({});
   const [orderData, setOrderData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cartDataLoading, setCartDataLoading] = useState(true);
-  const [orderDataLoading, setorderDataLoading] = useState(true);
+  const [orderDataLoading, setOrderDataLoading] = useState(true);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  const copyCakeList = [...cakeList].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   const capitalize = (text) => {
     if (!text) return "";
     return text.charAt(0).toUpperCase() + text.slice(1);
   };
+
+  const handleComplete = () => setHasAnimated(true);
 
 
   const fetchCakeList = async () => {
@@ -47,25 +53,21 @@ const ContextProvider = (props) => {
       const response = await axios.post(
         url + "/api/cart/get",
         {},
-        { headers: { token } },
+        { headers: { token } }
       );
-
       if (response.data.success) {
         setCartItems(response.data.cartData);
-        
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
-    }
-    finally{
+    } finally {
       setCartDataLoading(false);
     }
   };
 
   const getTotalCartAmount = () => {
     let total = 0;
-
     for (const id in cartItems) {
       const cake = cakeList.find((item) => item._id === id);
       if (cake) {
@@ -74,18 +76,27 @@ const ContextProvider = (props) => {
     }
     return total;
   };
-  
-  const addToCart = async (itemId, customData = null) => {
+
+  const addToCart = async (itemId, customCakeData = null) => {
     setCartItems((prev) => ({
       ...prev,
       [itemId]: (prev[itemId] || 0) + 1,
     }));
+
+    if (customCakeData) {
+      setCakeList((prev) => {
+        const exists = prev.find((c) => c._id === itemId);
+        if (!exists) return [...prev, customCakeData];
+        return prev;
+      });
+    }
+
     if (token) {
       try {
-         await axios.post(
+        await axios.post(
           url + "/api/cart/add",
           { itemId },
-          { headers: { token } },
+          { headers: { token } }
         );
       } catch (error) {
         console.log(error);
@@ -104,12 +115,13 @@ const ContextProvider = (props) => {
       }
       return updated;
     });
+
     if (token) {
       try {
         await axios.post(
           url + "/api/cart/remove",
           { itemId },
-          { headers: { token } },
+          { headers: { token } }
         );
       } catch (error) {
         console.log(error);
@@ -120,55 +132,55 @@ const ContextProvider = (props) => {
 
   const deleteFromCart = async (itemId) => {
     setCartItems((prev) => {
-      const updated = {...prev};
+      const updated = { ...prev };
       delete updated[itemId];
       return updated;
     });
 
-    if(token){
+    if (token) {
       try {
-        const response = await axios.post(url + "/api/cart/delete",
-          {itemId},
-          {headers: {token}}
+        await axios.post(
+          url + "/api/cart/delete",
+          { itemId },
+          { headers: { token } }
         );
-        console.log(response);
       } catch (error) {
         console.log(error);
         toast.error(error.message);
       }
     }
-  }
+  };
 
-const loadOrderData = async () => {
-  if (!token) {
-    setorderDataLoading(false);
-    return;
-  }
-
-  setorderDataLoading(true);
-  try {
-    const response = await axios.post(
-      url + "/api/order/userorders",
-      {},
-      { headers: { token } }
-    );
-    if (response.data.success) {
-      setOrderData(response.data.orders);
+  const loadOrderData = async () => {
+    if (!token) {
+      setOrderDataLoading(false);
+      return;
     }
-  } catch (error) {
-    console.log(error);
-    toast.error("Failed to load orders");
-  } finally {
-    setorderDataLoading(false);
-  }
-};
+
+    setOrderDataLoading(true);
+    try {
+      const response = await axios.post(
+        url + "/api/order/userorders",
+        {},
+        { headers: { token } }
+      );
+      if (response.data.success) {
+        setOrderData(response.data.orders);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to load orders");
+    } finally {
+      setOrderDataLoading(false);
+    }
+  };
 
   const generateImage = async (prompt) => {
     try {
       const { data } = await axios.post(
         url + "/api/image/generate-image",
         { prompt },
-        { headers: { token } },
+        { headers: { token } }
       );
       if (data.success) {
         return data.resultImage;
@@ -182,15 +194,14 @@ const loadOrderData = async () => {
       toast.error(error.message);
     }
   };
- 
-  useEffect(()=>{
+
+  useEffect(() => {
     fetchCakeList();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     loadCartData(token);
   }, [token]);
-  
 
   const contextValue = {
     url,
@@ -214,16 +225,23 @@ const loadOrderData = async () => {
     getTotalCartAmount,
 
     generateImage,
-    
-    fetchCakeList,
 
+    fetchCakeList,
     loadCartData,
-    
-    setCartItems,
-    
-    navigate,
-    setLoading,
     loadOrderData,
+
+    setCartItems,
+    setLoading,
+
+    setCartDataLoading,
+
+    navigate,
+
+    hasAnimated,
+    handleComplete,
+    setHasAnimated,
+
+    copyCakeList,
   };
 
   return (

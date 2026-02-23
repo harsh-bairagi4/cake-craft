@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./CakeBuilder.css";
 import CakeSelector from "../../components/CakeSelector/CakeSelector";
 import { Context } from "../../context/Context";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "sonner";
 
 const CakeBuilder = () => {
-  const {url, generateImage, labour, addToCart, capitalize, token, navigate, fetchCakeList} = useContext(Context); // ← ADDED fetchCakeList
+  const { url, generateImage, labour, addToCart, capitalize, token, navigate } =
+    useContext(Context);
 
-  /* =======================
-     STATE
-  ======================= */
   const [cakeData, setCakeData] = useState({
     flavor: "",
     size: "",
@@ -27,38 +24,21 @@ const CakeBuilder = () => {
   const [imageUrl, setImageUrl] = useState("/cakepic.jpg");
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
-  const [isAddingToCart, setIsAddingToCart] = useState(false); // ← ADDED for loading state on button
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
-  /* =======================
-     VALIDATION
-  ======================= */
-  const isCakeDataValid = () => {
-    return (
-      cakeData.flavor &&
-      cakeData.size &&
-      cakeData.layers &&
-      cakeData.shape &&
-      cakeData.frosting &&
-      cakeData.eggType &&
-      cakeData.sweetness
-    );
-  };
 
-  /* =======================
-     PROMPT BUILDER
-  ======================= */
+  const isCakeDataValid = () =>
+    cakeData.flavor &&
+    cakeData.size &&
+    cakeData.layers &&
+    cakeData.shape &&
+    cakeData.frosting &&
+    cakeData.eggType &&
+    cakeData.sweetness;
+
   const buildCakePrompt = (cakeData) => {
-    const {
-      flavor,
-      size,
-      layers,
-      frosting,
-      shape,
-      eggType,
-      sweetness,
-      toppings,
-      message,
-    } = cakeData;
+    const { flavor, size, layers, frosting, shape, eggType, sweetness, toppings, message } =
+      cakeData;
 
     return `
 A high-quality, ultra realistic bakery-style cake.
@@ -89,31 +69,17 @@ Ultra realistic food photography, no people, no hands.
 `.trim();
   };
 
-  /* =======================
-     PRICE LOGIC
-  ======================= */
-  const basePriceMap = {
-    "0.5kg": 400,
-    "1kg": 700,
-    "2kg": 1300,
-    "3kg": 1800,
-  };
-
+  const basePriceMap = { "0.5kg": 400, "1kg": 700, "2kg": 1300, "3kg": 1800 };
   const layerPriceMap = { "1": 0, "2": 150, "3": 300 };
   const frostingPriceMap = {
-    "buttercream": 50,
+    buttercream: 50,
     "whipped-cream": 100,
-    "fondant": 120,
+    fondant: 120,
     "cream-cheese": 150,
     "chocolate-ganache": 200,
   };
-  const shapePriceMap = {
-    "round": 50,
-    "square": 100,
-    "heart": 150,
-    "custom": 300,
-  };
-  const eggPriceMap = { "with-egg": 100, "eggless": 0 };
+  const shapePriceMap = { round: 50, square: 100, heart: 150, custom: 300 };
+  const eggPriceMap = { "with-egg": 100, eggless: 0 };
 
   const calculateCakePrice = () => {
     let price = 0;
@@ -127,19 +93,11 @@ Ultra realistic food photography, no people, no hands.
     return price;
   };
 
-  /* =======================
-     ACTIONS
-  ======================= */
+
   const handleGenerate = async (e) => {
     e.preventDefault();
-    if (!token) {
-      toast("Please signup first");
-      return;
-    }
-    if (!isCakeDataValid()) {
-      toast("Please select all required cake options 🍰");
-      return;
-    }
+    if (!token) return toast("Please signup first");
+    if (!isCakeDataValid()) return toast("Please select all required cake options 🍰");
 
     setIsGenerating(true);
     try {
@@ -155,21 +113,12 @@ Ultra realistic food photography, no people, no hands.
   };
 
   const handleGenerateAnother = () => {
-    if (!token) {
-      toast("Please signup first");
-      return;
-    }
     setHasGenerated(false);
     setImageUrl("/cakepic.jpg");
   };
 
   const handleAddToCart = async () => {
-    if (!token) {
-      toast("Please signup first");
-      return;
-    }
-
-    setIsAddingToCart(true); // ← disable button while working
+    setIsAddingToCart(true);
     try {
       const payload = {
         name: `${capitalize(cakeData.flavor)} Cake`,
@@ -179,21 +128,14 @@ Ultra realistic food photography, no people, no hands.
       };
 
       const response = await axios.post(url + "/api/cake/custom", payload, {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
+        headers: { token },
       });
 
       if (response.data.success) {
-        const newCakeId = response.data.cake._id;
-
-        // ← KEY FIX: fetch updated cake list FIRST so the new cake
-        //   exists in cakeList before we navigate to Cart and render it
-        await fetchCakeList();
-
-        addToCart(newCakeId);
+        const newCake = response.data.cake;
+        await addToCart(newCake._id, newCake);
         toast.success("Cake added to cart successfully 🍰");
-        navigate("/cart");
+        setTimeout(() => navigate("/cart"), 100);
       } else {
         toast(response.data.message || "Failed to add cake");
       }
@@ -205,17 +147,13 @@ Ultra realistic food photography, no people, no hands.
     }
   };
 
-  /* =======================
-     JSX
-  ======================= */
+
   return (
     <section className="cake-builder-page">
-      {/* LEFT */}
       <div className="cake-builder-left">
         <CakeSelector cakeData={cakeData} setCakeData={setCakeData} />
       </div>
 
-      {/* RIGHT */}
       <div className="cake-builder-right">
         <div className="preview-box">
           <h3>Your Cake Preview</h3>
@@ -228,7 +166,6 @@ Ultra realistic food photography, no people, no hands.
             )}
           </div>
 
-          {/* BUTTONS */}
           <div className="preview-actions">
             {!hasGenerated ? (
               <button
@@ -239,18 +176,12 @@ Ultra realistic food photography, no people, no hands.
                 {isGenerating ? "Generating..." : "Generate Cake"}
               </button>
             ) : (
-              <>
-                <button
-                  className="secondary-btn"
-                  onClick={handleGenerateAnother}
-                >
-                  Generate Another Cake
-                </button>
-              </>
+              <button className="secondary-btn" onClick={handleGenerateAnother}>
+                Generate Another Cake
+              </button>
             )}
           </div>
 
-          {/* DETAILS CARD */}
           {hasGenerated && !isGenerating && (
             <div className="cake-info-card">
               <h4>🍰 Cake Details</h4>
@@ -260,29 +191,19 @@ Ultra realistic food photography, no people, no hands.
                 <li><strong>Size:</strong> {cakeData.size}</li>
                 <li><strong>Layers:</strong> {cakeData.layers}</li>
                 <li><strong>Shape:</strong> {capitalize(cakeData.shape)}</li>
-                <li>
-                  <strong>Frosting:</strong>{" "}
-                  {capitalize(cakeData.frosting.replace("-", " "))}
-                </li>
-                <li>
-                  <strong>Egg Type:</strong>{" "}
-                  {capitalize(cakeData.eggType.replace("-", " "))}
-                </li>
-
+                <li><strong>Frosting:</strong> {capitalize(cakeData.frosting.replace("-", " "))}</li>
+                <li><strong>Egg Type:</strong> {capitalize(cakeData.eggType.replace("-", " "))}</li>
                 {cakeData.toppings.length > 0 && (
                   <li>
-                    <strong>Toppings:</strong>{" "}
-                    {cakeData.toppings.map(capitalize).join(", ")}
+                    <strong>Toppings:</strong> {cakeData.toppings.map(capitalize).join(", ")}
                   </li>
                 )}
               </ul>
 
               <div className="cake-price">
-                Total Price:
-                <span> ₹{calculateCakePrice()}</span>
+                Total Price: <span>₹{calculateCakePrice()}</span>
               </div>
 
-              {/* ← ADDED disabled + loading text so user knows it's working */}
               <button
                 className="primary-btn"
                 onClick={handleAddToCart}

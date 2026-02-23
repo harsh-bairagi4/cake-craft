@@ -8,7 +8,7 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 
 const CakeShowcase = () => {
-  const { cakeList, capitalize , loading} = useContext(Context);
+  const { cakeList, capitalize , loading, hasAnimated} = useContext(Context);
 
   return (
     <section className="cake-showcase">

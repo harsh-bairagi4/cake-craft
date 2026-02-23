@@ -16,7 +16,7 @@ const PlaceOrder = () => {
   } = useContext(Context);
 
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [isPlacing, setIsPlacing] = useState(false); // ← ADDED
+  const [isPlacing, setIsPlacing] = useState(false);
 
   const [data, setData] = useState({
     fullName: "",
@@ -42,21 +42,16 @@ const PlaceOrder = () => {
       return;
     }
 
-    let orderItems = [];
-
-    cakeList.forEach((cake) => {
-      const qty = cartItems[cake._id];
-      if (qty > 0) {
-        orderItems.push({
-          cakeId: cake._id,
-          name: cake.name,
-          price: cake.price,
-          quantity: qty,
-          image: cake.image,
-          description: cake.description,
-        });
-      }
-    });
+    const orderItems = cakeList
+      .filter((cake) => cartItems[cake._id] > 0)
+      .map((cake) => ({
+        cakeId: cake._id,
+        name: cake.name,
+        price: cake.price,
+        quantity: cartItems[cake._id],
+        image: cake.image,
+        description: cake.description,
+      }));
 
     if (orderItems.length === 0) {
       toast.error("Your cart is empty");
@@ -69,12 +64,10 @@ const PlaceOrder = () => {
       amount: getTotalCartAmount() + 50,
     };
 
-    setIsPlacing(true); // ← ADDED: lock button before async work starts
+    setIsPlacing(true);
     try {
       const endpoint =
-        paymentMethod === "stripe"
-          ? "/api/order/place"
-          : "/api/order/placecod";
+        paymentMethod === "stripe" ? "/api/order/place" : "/api/order/placecod";
 
       const res = await axios.post(url + endpoint, payload, {
         headers: { token },
@@ -83,21 +76,20 @@ const PlaceOrder = () => {
       if (res.data.success) {
         if (paymentMethod === "stripe") {
           window.location.replace(res.data.session_url);
-          // ← No setIsPlacing(false) here intentionally — page is navigating away
-          // so keeping the button locked prevents any flicker or double clicks
         } else {
-          toast.success("🎉 Order placed (Cash on Delivery)");
+         
           setCartItems({});
+          toast.success("Order placed successfully 🎉");
           navigate("/myorders");
         }
       } else {
-        toast.error(res.data.message || "Order failed");
-        setIsPlacing(false); // ← ADDED: unlock only on failure so user can retry
+        toast.error("Order failed. Please try again.");
+        setIsPlacing(false);
       }
     } catch (err) {
       console.log(err);
       toast.error("Something went wrong");
-      setIsPlacing(false); // ← ADDED: unlock on error so user can retry
+      setIsPlacing(false);
     }
   };
 
@@ -106,10 +98,9 @@ const PlaceOrder = () => {
       <h2>🍰 Place Your Order</h2>
 
       <div className="order-container">
-        {/* LEFT */}
+
         <div className="order-form">
           <h3>Delivery Details</h3>
-
           <input name="fullName" required onChange={onChangeHandler} placeholder="Full Name" />
           <input name="phone" required onChange={onChangeHandler} placeholder="Mobile Number" />
           <input name="email" required onChange={onChangeHandler} placeholder="Email Address" />
@@ -117,7 +108,6 @@ const PlaceOrder = () => {
           <input name="city" required onChange={onChangeHandler} placeholder="City" />
           <input name="state" required onChange={onChangeHandler} placeholder="State" />
           <input name="pincode" required onChange={onChangeHandler} placeholder="Pincode" />
-
           <textarea
             name="instructions"
             rows="3"
@@ -126,7 +116,6 @@ const PlaceOrder = () => {
           />
         </div>
 
-        {/* RIGHT */}
         <div className="order-summary">
           <h3>Order Summary</h3>
 
@@ -145,7 +134,6 @@ const PlaceOrder = () => {
             <span>₹{getTotalCartAmount() ? getTotalCartAmount() + 50 : 0}</span>
           </div>
 
-          {/* PAYMENT */}
           <div className="payment-methods">
             <label className={paymentMethod === "stripe" ? "active" : ""}>
               <input
@@ -166,7 +154,6 @@ const PlaceOrder = () => {
             </label>
           </div>
 
-          {/* ← CHANGED: added isPlacing to disabled and button text */}
           <button
             className="place-order-btn"
             disabled={!paymentMethod || getTotalCartAmount() === 0 || isPlacing}

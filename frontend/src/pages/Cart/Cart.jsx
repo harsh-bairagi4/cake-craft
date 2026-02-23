@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Cart.css";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
@@ -11,13 +11,26 @@ const Cart = () => {
     cartItems,
     getTotalCartAmount,
     capitalize,
+    loadCartData,
     addToCart,
     removeFromCart,
     deleteFromCart,
     cartDataLoading,
-    loading,        
+    setCartDataLoading,
+    loading,
   } = useContext(Context);
 
+useEffect(() => {
+ 
+  if (Object.keys(cartItems).length === 0) {
+    loadCartData(localStorage.getItem("token"));
+  } else {
+    setCartDataLoading(false);
+  }
+}, []);
+
+  const cartCakes = [...cakeList]
+    .filter((cake) => cartItems[cake._id] > 0);
 
   return (
     <section className="cart-studio">
@@ -29,102 +42,80 @@ const Cart = () => {
       <div className="cart-studio-layout">
 
         <div className="cart-cakes">
-
-          {cartDataLoading || loading 
+          {cartDataLoading || loading
             ? Array(2)
-              .fill(0)
-              .map((_, i) => (
-                <div key={i} className="cake-card skeleton-card">
-                  <div className="skeleton skeleton-image"></div>
+                .fill(0)
+                .map((_, i) => (
+                  <div key={i} className="cake-card skeleton-card">
+                    <div className="skeleton skeleton-image"></div>
+                    <div className="cake-info">
+                      <div className="skeleton skeleton-title"></div>
+                      <div className="skeleton skeleton-tags"></div>
+                      <div className="skeleton skeleton-tags small"></div>
+                      <div className="skeleton skeleton-footer"></div>
+                    </div>
+                  </div>
+                ))
+            : cartCakes.map((cake) => (
+                <div key={cake._id} className="cake-card">
+                  <div className="cake-image">
+                    <img src={cake.image} alt={cake.name} />
+                  </div>
 
                   <div className="cake-info">
-                    <div className="skeleton skeleton-title"></div>
+                    <h4>{cake.name}</h4>
 
-                    <div className="skeleton skeleton-tags"></div>
-                    <div className="skeleton skeleton-tags small"></div>
+                    <div className="cake-tags">
+                      <span>{capitalize(cake.description.flavor)}</span>
+                      <span>{cake.description.size}</span>
+                      <span>{capitalize(cake.description.frosting)}</span>
+                      <span>{cake.description.layers} Layers</span>
+                      <span>{capitalize(cake.description.shape)}</span>
+                      <span>{capitalize(cake.description.eggType)}</span>
+                      <span>Sweetness- {capitalize(cake.description.sweetness)}</span>
+                    </div>
 
-                    <div className="skeleton skeleton-footer"></div>
-                  </div>
-                </div>
-              ))
-            : [...cakeList].filter((cake) => cartItems[cake._id] > 0).reverse().map((cake) => {
-                const qty = cartItems[cake._id] || 0;
-                if (qty > 0) {
-                  return (
-                    <div key={cake._id} className="cake-card">
-                      <div className="cake-image">
-                        <img src={cake.image} alt={cake.name} />
-                      </div>
+                    <div className="cake-footer">
+                      <span className="cake-price">₹{cake.price}</span>
 
-                      <div className="cake-info">
-                        <h4>{cake.name}</h4>
+                      <div className="qty-controls">
+                        <button
+                          className="qty-btn"
+                          onClick={() => {
+                            if (cartItems[cake._id] === 1) {
+                              toast("Remove this cake from cart?", {
+                                action: {
+                                  label: "Yes, Remove",
+                                  onClick: () => deleteFromCart(cake._id),
+                                },
+                              });
+                            } else {
+                              removeFromCart(cake._id);
+                            }
+                          }}
+                        >
+                          {cartItems[cake._id] === 1 ? "×" : "−"}
+                        </button>
 
-                        <div className="cake-tags">
-                          <span>{capitalize(cake.description.flavor)}</span>
-                          <span>{cake.description.size}</span>
-                          <span>{capitalize(cake.description.frosting)}</span>
-                          <span>{cake.description.layers} Layers</span>
-                          <span>{capitalize(cake.description.shape)}</span>
-                          <span>{capitalize(cake.description.eggType)}</span>
-                          <span>
-                            Sweetness- {capitalize(cake.description.sweetness)}
-                          </span>
-                        </div>
+                        <span className="qty-number">{cartItems[cake._id]}</span>
 
-                        <div className="cake-footer">
-                          <span className="cake-price">₹{cake.price}</span>
-
-                          <div className="qty-controls">
-                            <button
-                              className="qty-btn"
-                              onClick={() => {
-                                if (cartItems[cake._id] === 1) {
-                                  toast("Remove this cake from cart?", {
-                                    action: {
-                                      label: "Yes, Remove",
-                                      onClick: () =>
-                                        deleteFromCart(cake._id),
-                                    },
-                                  });
-                                } else {
-                                  removeFromCart(cake._id);
-                                }
-                              }}
-                            >
-                              {cartItems[cake._id] === 1 ? "×" : "−"}
-                            </button>
-
-                            <span className="qty-number">
-                              {cartItems[cake._id]}
-                            </span>
-
-                            <button
-                              className={`qty-btn ${
-                                cartItems[cake._id] >= 8
-                                  ? "shake"
-                                  : ""
-                              }`}
-                              onClick={() => {
-                                if (cartItems[cake._id] < 8) {
-                                  addToCart(cake._id);
-                                } else {
-                                  toast(
-                                    "Maximum 8 cakes allowed per item 🍰"
-                                  );
-                                }
-                              }}
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
+                        <button
+                          className={`qty-btn ${cartItems[cake._id] >= 8 ? "shake" : ""}`}
+                          onClick={() => {
+                            if (cartItems[cake._id] < 8) {
+                              addToCart(cake._id);
+                            } else {
+                              toast("Maximum 8 cakes allowed per item 🍰");
+                            }
+                          }}
+                        >
+                          +
+                        </button>
                       </div>
                     </div>
-                  );
-                }
-                return null;
-              })
-          }
+                  </div>
+                </div>
+              ))}
         </div>
 
         <div className="checkout-panel">
@@ -147,18 +138,13 @@ const Cart = () => {
 
               <div className="bill-line">
                 <span>Delivery</span>
-                <span>
-                  ₹{getTotalCartAmount() === 0 ? 0 : 50}
-                </span>
+                <span>₹{getTotalCartAmount() === 0 ? 0 : 50}</span>
               </div>
 
               <div className="bill-line total">
                 <span>Total</span>
                 <span>
-                  ₹
-                  {getTotalCartAmount() === 0
-                    ? 0
-                    : getTotalCartAmount() + 50}
+                  ₹{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 50}
                 </span>
               </div>
 
@@ -172,6 +158,7 @@ const Cart = () => {
             </>
           )}
         </div>
+
       </div>
     </section>
   );

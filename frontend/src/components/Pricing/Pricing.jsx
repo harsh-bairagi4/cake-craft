@@ -45,13 +45,13 @@ const pricingPlans = [
 ];
 
 const Pricing = () => {
-  const {navigate} = useContext(Context);
+  const {navigate, hasAnimated} = useContext(Context);
   return (
     <section className="pricing">
       <div className="pricing-container">
 
         <div className="showmobile">
-          <motion.h2 className="pricing-title" initial={{ opacity: 0, x: -80 }}
+          <motion.h2 className="pricing-title" initial={!hasAnimated?{ opacity: 0, x: -80 }: false}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{
@@ -62,7 +62,7 @@ const Pricing = () => {
 
         <motion.div
           className="pricing-info"
-          initial={{ opacity: 0, x: -80 }}
+          initial={!hasAnimated?{ opacity: 0, x: -80 }: false}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{
@@ -85,7 +85,7 @@ const Pricing = () => {
 
         <motion.div
           className="pricing-cards-wrapper"
-          initial={{ opacity: 0, x: 80 }}
+          initial={!hasAnimated?{ opacity: 0, x: 80 }: false}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{

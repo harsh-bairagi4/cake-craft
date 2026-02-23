@@ -1,6 +1,4 @@
-/* =========================
-   PAGE
-========================= */
+
 .about-page {
   padding: 3rem 5%;
   min-height: calc(100vh - 80px);
@@ -14,9 +12,7 @@
   max-width: 1100px;
 }
 
-/* =========================
-   HEADER
-========================= */
+
 .about-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -36,17 +32,12 @@
   font-size: 0.95rem;
 }
 
-/* =========================
-   CONTENT GRID
-========================= */
+
 .about-content {
   display: grid;
   gap: 2rem;
 }
 
-/* =========================
-   CARD
-========================= */
 .about-card {
   background-color: var(--bg-card);
   padding: 2rem;
@@ -78,9 +69,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* =========================
-   NOTE SECTION
-========================= */
 .about-note {
   margin-top: 2rem;
   padding: 2rem;
@@ -100,9 +88,7 @@
   line-height: 1.6;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+
 @media (max-width: 768px) {
   .about-page {
     padding: 2rem 1.2rem;

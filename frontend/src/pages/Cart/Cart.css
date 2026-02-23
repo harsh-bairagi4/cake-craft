@@ -1,15 +1,10 @@
-/* =========================
-   PAGE
-========================= */
+
 .cart-studio {
   padding: 3rem 5%;
   min-height: calc(100vh - 80px);
   background-color: var(--bg-main);
 }
 
-/* =========================
-   HEADER
-========================= */
 .cart-header {
   margin-bottom: 2.5rem;
 }
@@ -24,28 +19,20 @@
   color: var(--text-secondary);
 }
 
-/* =========================
-   LAYOUT
-========================= */
 .cart-studio-layout {
   display: grid;
   grid-template-columns: 65% 31%;
   gap: 3rem;
 }
 
-/* =========================
-   LEFT – CAKE LIST
-========================= */
+
 .cart-cakes {
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
-  /* border: 2px solid red; */
 }
 
-/* =========================
-   CAKE CARD
-========================= */
+
 .cake-card {
   display: flex;
   gap: 1.3rem;
@@ -56,8 +43,6 @@
   border: 1px solid var(--border-light);
 }
 
-/* IMAGE */
-
 .cake-image img {
   width: 300px;
   height: 300px;
@@ -65,29 +50,23 @@
   object-fit: cover;
 }
 
-/* =========================
-   CAKE INFO
-========================= */
 .cake-info {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  /* border: 2px solid purple; */
+
 }
 
 .cake-info h4 {
   font-size: 1.2rem;
   color: var(--text-primary);
-  /* border: 2px solid brown; */
 }
 
-/* TAGS */
 .cake-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  /* border: 2px solid blue; */
 }
 
 .cake-tags span {
@@ -99,30 +78,24 @@
   border: 1px solid var(--border-light);
 }
 
-
-/* FOOTER */
 .cake-footer {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   margin-top: auto;
-  border: 2px solid blue;
+
 }
 
 .cake-price {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--primary);
-  border: 2px solid red;
 }
-/* =========================
-   QUANTITY CONTROLS
-========================= */
+
 .qty-controls {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  border: 2px solid yellow;
 }
 
 .qty-btn {
@@ -155,10 +128,6 @@
   font-size: 1rem;
 }
 
-
-/* =========================
-   RIGHT – SUMMARY
-========================= */
 .checkout-panel {
   background-color: var(--bg-card);
   padding: 2rem;
@@ -175,7 +144,6 @@
   color: var(--text-primary);
 }
 
-/* BILL */
 .bill-line {
   display: flex;
   justify-content: space-between;
@@ -193,7 +161,6 @@
   color: var(--text-primary);
 }
 
-/* BUTTON */
 .checkout-btn {
   margin-top: 1.6rem;
   width: 100%;
@@ -214,9 +181,7 @@
 .shake {
   animation: shake 0.3s ease;
 }
-/* =========================
-   CART SKELETON LOADER
-========================= */
+
 
 .skeleton {
   background: linear-gradient(
@@ -263,7 +228,6 @@
   margin-top: 12px;
 }
 
-/* SUMMARY SKELETON */
 .skeleton-summary-title {
   width: 50%;
   height: 22px;
@@ -288,7 +252,6 @@
   border-radius: 999px;
 }
 
-/* SHIMMER ANIMATION */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -304,9 +267,7 @@
   75% { transform: translateX(-3px); }
   100% { transform: translateX(0); }
 }
-/* =========================
-   PREMIUM CART SKELETON
-========================= */
+
 
 .skeleton-image-pic {
   background: linear-gradient(
@@ -315,14 +276,12 @@
     #f9e6e6 50%,
     #f4d4d4 75%
   );
-  border: 2px solid red;
     width: 300px;
   height: 300px;
   border-radius: 18px;
   object-fit: cover;
 }
 
-/* TITLE */
 .skeleton-title-bar {
   height: 22px;
   width: 50%;
@@ -338,7 +297,6 @@
 
 }
 
-/* CHIPS */
 .skeleton-chip {
   height: 22px;
   width: 80px;
@@ -357,7 +315,6 @@
   width: 60px;
 }
 
-/* PRICE */
 .skeleton-price {
   height: 24px;
   width: 90px;
@@ -372,7 +329,6 @@
  
 }
 
-/* QTY CONTROLS */
 .skeleton-qty {
   height: 40px;
   width: 120px;
@@ -388,9 +344,6 @@
 
 
 
-/* =========================
-   MOBILE
-========================= */
 @media (max-width: 1024px) {
   .cart-studio-layout {
     grid-template-columns: 1fr;

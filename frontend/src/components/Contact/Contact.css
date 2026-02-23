@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 
-/* =========================
-   PAGE
-========================= */
 .contact-page {
   padding: 3rem 5%;
   min-height: calc(100vh - 80px);
@@ -17,7 +14,6 @@
   font-family: 'DM Sans', sans-serif;
 }
 
-/* Animated canvas for particles */
 .contact-canvas {
   position: absolute;
   inset: 0;
@@ -27,9 +23,6 @@
   opacity: 0.6;
 }
 
-/* =========================
-   CONTAINER
-========================= */
 .contact-container {
   width: 100%;
   max-width: 1100px;
@@ -57,9 +50,6 @@
 }
 
 
-/* =========================
-   LEFT SIDE - IMAGE
-========================= */
 .contact-left {
   display: flex;
   justify-content: center;
@@ -82,7 +72,6 @@
   justify-content: center;
 }
 
-/* Outer rotating gradient ring */
 .image-ring {
   position: absolute;
   inset: -2px;
@@ -99,7 +88,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Glow behind image */
 .image-glow {
   position: absolute;
   inset: -20px;
@@ -130,7 +118,6 @@
   transform: scale(1.03);
 }
 
-/* Shine overlay on hover */
 .image-shine {
   position: absolute;
   inset: 0;
@@ -145,9 +132,7 @@
   pointer-events: none;
 }
 
-/* =========================
-   RIGHT SIDE
-========================= */
+
 .contact-right {
   display: flex;
   flex-direction: column;
@@ -161,7 +146,6 @@
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Available badge */
 .greeting-badge {
   display: inline-flex;
   align-items: center;
@@ -240,9 +224,6 @@
   margin-bottom: 1.4rem;
 }
 
-/* =========================
-   CONTACT INFO
-========================= */
 .contact-info {
   display: flex;
   flex-direction: column;
@@ -308,9 +289,7 @@
   transform: translateX(0);
 }
 
-/* =========================
-   BUTTONS
-========================= */
+
 .contact-actions {
   display: flex;
   gap: 0.75rem;
@@ -330,9 +309,7 @@
   transition: all 0.3s ease;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+
 @media (max-width: 900px) {
   .contact-container {
     display: flex;

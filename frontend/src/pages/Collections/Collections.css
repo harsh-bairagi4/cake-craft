@@ -1,15 +1,10 @@
-/* =========================
-   PAGE
-========================= */
+
 .collection-page {
   padding: 3rem 5%;
   min-height: calc(100vh - 80px);
   background-color: var(--bg-main);
 }
 
-/* =========================
-   HEADER
-========================= */
 .collection-header {
   margin-bottom: 2.5rem;
 }
@@ -23,18 +18,12 @@
   color: var(--text-secondary);
 }
 
-/* =========================
-   GRID
-========================= */
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
 }
 
-/* =========================
-   CARD
-========================= */
 .collection-card {
   background-color: var(--bg-card);
   border-radius: 22px;
@@ -48,7 +37,6 @@
   transform: translateY(-5px);
 }
 
-/* IMAGE */
 .collection-image {
   position: relative;
 }
@@ -59,7 +47,6 @@
   object-fit: cover;
 }
 
-/* ADD / REMOVE BUTTON */
 .collection-action {
   position: absolute;
   top: 12px;
@@ -84,7 +71,6 @@
   background-color: #333;
 }
 
-/* INFO */
 .collection-info {
   padding: 1.2rem;
 }
@@ -93,7 +79,6 @@
   margin-bottom: 0.8rem;
 }
 
-/* TAGS */
 .collection-tags {
   display: flex;
   flex-wrap: wrap;
@@ -109,7 +94,6 @@
   border: 1px solid var(--border-light);
 }
 
-/* FOOTER */
 .collection-footer {
   margin-top: 1rem;
   display: flex;
@@ -122,13 +106,6 @@
   color: var(--primary);
 }
 
-/* =========================
-   PREMIUM SKELETON (BAKERY STYLE)
-========================= */
-
-
-
-/* Shimmer Base */
 .skeleton-image,
 .skeleton-title,
 .skeleton-chip,
@@ -138,13 +115,11 @@
   overflow: hidden;
 }
 
-/* Image */
 .skeleton-image {
   width: 100%;
   height: 220px;
 }
 
-/* Title */
 .skeleton-title {
   height: 18px;
   width: 60%;
@@ -152,14 +127,13 @@
   margin-bottom: 14px;
 }
 
-/* Tag rows */
+
 .skeleton-tags-row {
   display: flex;
   gap: 8px;
   margin-bottom: 10px;
 }
 
-/* Chips */
 .skeleton-chip {
   height: 22px;
   width: 70px;
@@ -170,7 +144,6 @@
   width: 90px;
 }
 
-/* Price */
 .skeleton-price {
   height: 20px;
   width: 80px;
@@ -178,7 +151,6 @@
   margin-top: 12px;
 }
 
-/* Animation */
 @keyframes shimmer {
   0% {
     left: -150%;
@@ -189,9 +161,7 @@
 }
 
 
-/* =========================
-   MOBILE
-========================= */
+
 @media (max-width: 768px) {
   .collection-page {
     padding: 2rem 4%;

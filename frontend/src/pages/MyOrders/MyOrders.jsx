@@ -1,19 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import "./MyOrders.css";
 import { Context } from "../../context/Context";
-import axios from "axios";
-import { toast } from "sonner";
 
 const MyOrders = () => {
-  const { token, url, orderData, loadOrderData, orderDataLoading } = useContext(Context);
+  const { token, orderData, loadOrderData, orderDataLoading } = useContext(Context);
 
- useEffect(() => {
-  if (orderData.length === 0) {  // ← only fetch if no data yet
+  useEffect(() => {
+   
     loadOrderData();
-  }
-}, [token]);
-
-const sortedOrders = [...orderData].reverse();
+  }, [token]);
 
   return (
     <section className="orders-page">
@@ -21,7 +16,6 @@ const sortedOrders = [...orderData].reverse();
 
       <div className="orders-container">
 
-        {/* ================= SKELETON LOADING ================= */}
         {orderDataLoading &&
           Array(2)
             .fill(0)
@@ -29,36 +23,37 @@ const sortedOrders = [...orderData].reverse();
               <div className="order-card skeleton-card" key={i}>
                 <div className="skeleton skeleton-title"></div>
                 <div className="skeleton skeleton-status"></div>
-
                 <div className="skeleton skeleton-item"></div>
                 <div className="skeleton skeleton-item"></div>
-
                 <div className="skeleton skeleton-address"></div>
                 <div className="skeleton skeleton-footer"></div>
               </div>
             ))}
 
-        {/* ================= NO ORDERS ================= */}
-        {!orderDataLoading && sortedOrders.length === 0 && (
-          <p className="no-orders">No orders found 🍰</p>
+        {!orderDataLoading && orderData.length === 0 && (
+          <p className="no-orders">No orders yet 🍰 Start building your cake!</p>
         )}
 
-        {/* ================= REAL DATA ================= */}
+       
         {!orderDataLoading &&
-          sortedOrders.map((order) => ( // ← CHANGED: orderData → sortedOrders
+          orderData.map((order) => (
             <div className="order-card" key={order._id}>
               <div className="order-header">
                 <div>
-                  <h4>Order #{order._id.slice(-6)}</h4>
+                  <h4>Order #{order._id.slice(-6).toUpperCase()}</h4>
                   <p className="order-date">
-                    {new Date(order.date).toLocaleDateString()}
+                    {new Date(order.date).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}
                   </p>
                 </div>
 
                 <span
                   className={`order-status ${order.status
                     ?.toLowerCase()
-                    .replace(/\s/g, "")}`}
+                    .replace(/\s/g, "-")}`}
                 >
                   {order.status}
                 </span>
@@ -80,13 +75,10 @@ const sortedOrders = [...orderData].reverse();
                           {item.description?.layers} Layers •{" "}
                           {item.description?.eggType}
                         </p>
-                        <p>Quantity: {item.quantity}</p>
+                        <p>Qty: {item.quantity}</p>
                       </div>
                     </div>
-
-                    <div className="order-item-price">
-                      ₹{item.price}
-                    </div>
+                    <div className="order-item-price">₹{item.price}</div>
                   </div>
                 ))}
               </div>
@@ -98,13 +90,13 @@ const sortedOrders = [...orderData].reverse();
                   {order.address.city}, {order.address.state} -{" "}
                   {order.address.pincode}
                 </p>
-                <p>Phone: {order.address.phone}</p>
+                <p>📞 {order.address.phone}</p>
               </div>
 
               <div className="order-footer">
                 <div className="payment-info">
                   <p>
-                    Payment Status:{" "}
+                    Payment:{" "}
                     <strong>
                       {order.payment ? "Paid ✅" : "Pending 💰"}
                     </strong>
@@ -113,10 +105,7 @@ const sortedOrders = [...orderData].reverse();
                     Method: <strong>{order.paymentMethod}</strong>
                   </p>
                 </div>
-
-                <div className="order-total">
-                  Total: ₹{order.amount}
-                </div>
+                <div className="order-total">Total: ₹{order.amount}</div>
               </div>
             </div>
           ))}

@@ -1,7 +1,8 @@
 import "./HowItWorks.css";
 import BounceCards from "../BounceCards/BounceCards";
 import { motion, useInView } from "framer-motion";
-import {useRef} from 'react';
+import {useContext, useRef} from 'react';
+import { Context } from "../../context/Context";
 
 const images = ["works1.png", "works2.png", "works3.png", "works4.png"];
 
@@ -15,6 +16,7 @@ const transformStyles = [
 
 const HowItWorks = () => {
   const ref = useRef(null);
+  const {hasAnimated} = useContext(Context);
   const isInView = useInView(ref, {
     once: true,
   });
@@ -23,7 +25,7 @@ const HowItWorks = () => {
     <section className="how">
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, y: 70 }}
+        initial={!hasAnimated ?{ opacity: 0, y: 70 }: false}
         animate ={isInView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="how-bounce-wrapper"

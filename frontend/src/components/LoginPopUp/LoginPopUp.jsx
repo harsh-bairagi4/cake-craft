@@ -15,6 +15,15 @@ const LoginPopUp = () => {
     password: "",
   });
 
+  const changeState = () =>{
+     setIsLogin(!isLogin);
+    setData({
+        name: "",
+    email: "",
+    password: "",
+    })
+  }
+
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
@@ -99,7 +108,7 @@ const LoginPopUp = () => {
 
         <div className="auth-footer">
           {isLogin ? "New here?" : "Already have an account?"}
-          <span onClick={() => setIsLogin(!isLogin)}>
+          <span onClick={() => changeState()}>
             {isLogin ? " Sign up" : " Login"}
           </span>
         </div>

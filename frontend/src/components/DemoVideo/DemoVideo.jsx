@@ -1,19 +1,34 @@
-
+import { useRef } from "react";
 import "./DemoVideo.css";
 
 const DemoVideo = () => {
+  const videoRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    videoRef.current?.play();
+  };
+
+  const handleMouseLeave = () => {
+    videoRef.current?.pause();
+  };
+
   return (
     <section className="demo">
       <div className="demo-container">
-        <div className="video-wrapper">
+        <div
+          className="video-wrapper"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <video
-            controls
+            ref={videoRef}
             preload="metadata"
-            poster="/video-poster.jpg"
-            src="/veloria.mp4"
+            poster="/poster.png"
+            muted
+            loop
+            playsInline
           >
-            <source src="/demo-video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
+            <source src="/demo.mp4" type="video/mp4" />
           </video>
         </div>
       </div>

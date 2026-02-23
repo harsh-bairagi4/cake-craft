@@ -15,7 +15,6 @@ const Home = () => {
       <HowItWorks/>
       <Faq />
       <Pricing />
-        
     </div>
   );
 };

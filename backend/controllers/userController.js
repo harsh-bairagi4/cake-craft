@@ -37,17 +37,16 @@ const registerUser = async (req, res) => {
         if(!validator.isEmail(email)){
             return res.json({success: false, message: "Invalid email!"});
         }
-        // if(!validator.isStrongPassword(password, {
-        //     minLength: 8,
-        //     minUppercase: 1,
-        //     minNumbers: 1,
-        //     minSymbols: 1,
-        // })){
-        //     return res.json({
-        //         success: false,
-        //         message: "Please enter a strong password!",
-        //     });
-        // }
+        if(!validator.isStrongPassword(password, {
+            minLength: 8,
+            minNumbers: 1,
+            minSymbols: 1,
+        })){
+            return res.json({
+                success: false,
+                message: "Please enter a strong password!",
+            });
+        }
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);

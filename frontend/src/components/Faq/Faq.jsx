@@ -1,7 +1,8 @@
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Faq.css";
 import { motion } from "framer-motion";
+import { Context } from "../../context/Context";
 
 const faqs = [
   {
@@ -33,6 +34,7 @@ const faqs = [
 
 const Faq = () => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const { hasAnimated } = useContext(Context);
 
   const toggleFaq = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
@@ -44,7 +46,7 @@ const Faq = () => {
      >
       <h2 className="faq-title">Frequently Asked Questions</h2>
 
-      <motion.div className="faq-list"  initial={{ opacity: 0, y: 70 }}
+      <motion.div className="faq-list"  initial={!hasAnimated?{ opacity: 0, y: 70 }: false}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}>

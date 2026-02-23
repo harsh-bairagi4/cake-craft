@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    default: "Food Processing",
+    default: "Order Received",
   },
   paymentMethod: {
     type: String,
@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   payment: {
     type: Boolean,

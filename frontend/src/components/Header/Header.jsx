@@ -28,7 +28,7 @@ const slides = [
 
 
 const Header = () => {
-  const { token ,navigate, setShowLogin} = useContext(Context);
+  const { token ,navigate, setShowLogin, hasAnimated, handleComplete} = useContext(Context);
  
   const [current, setCurrent] = useState(0);
 
@@ -51,10 +51,10 @@ const Header = () => {
   return (
     <motion.section
       className="hero"
-      initial={{
+      initial={!hasAnimated ? {
         opacity: 0,
         filter: "blur(2px)",
-      }}
+      }:false}
       animate={{
         opacity: 1,
         filter: "blur(0px)",
@@ -63,6 +63,7 @@ const Header = () => {
         duration: 1.1,
         ease: "easeOut",
       }}
+      onAnimationComplete={handleComplete}
     >
       <div className="hero-glow" />
       
@@ -73,11 +74,11 @@ const Header = () => {
 
           <motion.h1
             className="hero-title"
-            initial={{
+            initial={!hasAnimated ?{
               opacity: 0,
               scale: 0.96,
               filter: "blur(2px)",
-            }}
+            }: false}
             animate={{
               opacity: 1,
               scale: 1,
