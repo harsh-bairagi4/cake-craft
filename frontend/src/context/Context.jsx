@@ -6,7 +6,7 @@ import { toast } from "sonner";
 export const Context = createContext(null);
 
 const ContextProvider = (props) => {
-  const url = "http://localhost:4000";
+  const url =import.meta.env.VITE_BACKEND_URL;
   const labour = 100;
 
   const navigate = useNavigate();
