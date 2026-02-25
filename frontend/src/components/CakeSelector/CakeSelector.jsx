@@ -1,7 +1,7 @@
 import React from "react";
 import "./CakeSelector.css";
 
-const CakeSelector = ({ cakeData, setCakeData }) => {
+const CakeSelector = ({ cakeData, setCakeData, disabled }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +36,7 @@ const CakeSelector = ({ cakeData, setCakeData }) => {
         value={value}
         onChange={handleChange}
         className={value ? "has-value" : ""}
+        disabled={disabled}
       >
         {children}
       </select>
@@ -82,11 +83,11 @@ const CakeSelector = ({ cakeData, setCakeData }) => {
 
       {renderSelect("frosting", cakeData.frosting, <>
         <option value="" disabled className="placeholder">Select Frosting</option>
-        <option value="buttercream">Buttercream</option>
         <option value="whipped-cream">Whipped Cream</option>
-        <option value="cream-cheese">Cream Cheese</option>
-        <option value="fondant">Fondant</option>
         <option value="chocolate-ganache">Chocolate Ganache</option>
+        <option value="buttercream">Buttercream</option>
+        <option value="fondant">Fondant</option>
+        <option value="cream-cheese">Cream Cheese</option>
       </>)}
 
       {renderSelect("eggType", cakeData.eggType, <>
@@ -113,6 +114,7 @@ const CakeSelector = ({ cakeData, setCakeData }) => {
               value={item}
               checked={cakeData.toppings.includes(item)}
               onChange={handleToppingChange}
+              disabled = {disabled}
             />
             {item.replace("-", " ")}
           </label>

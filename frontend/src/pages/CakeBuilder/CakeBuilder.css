@@ -65,6 +65,43 @@
   box-shadow: 0 18px 35px rgba(74, 44, 42, 0.25);
   background-color: #fff;
 }
+.zoom-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.zoom-container img {
+  width: 100%;
+  display: block;
+  border-radius: 20px;
+}
+
+.zoom-lens {
+  position: absolute;
+  inset: 0;
+  display: none;
+  background-repeat: no-repeat;
+  background-size: 200%;
+  border-radius: 20px;
+  cursor: zoom-in;
+}
+
+@media (min-width: 769px) {
+  .zoom-container:hover .zoom-lens {
+    display: block;
+  }
+}
+
+@media (max-width: 768px) {
+  .zoom-lens {
+    display: none !important;
+  }
+
+  .zoom-container {
+    pointer-events: none;
+  }
+}
 
 .image-loader {
   color: var(--accent);
@@ -157,6 +194,19 @@
 .cake-info-card .primary-btn:hover {
   background-color: #cf2f3c;
   transform: translateY(-2px);
+}
+.global-loader {
+  width: 200px;
+  height: 200px;
+}
+
+.global-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  background: rgba(0, 0, 0, 0.11);
+  pointer-events: all;
 }
 
 @keyframes fadeUp {

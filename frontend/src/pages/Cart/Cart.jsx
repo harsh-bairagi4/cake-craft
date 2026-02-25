@@ -18,19 +18,18 @@ const Cart = () => {
     cartDataLoading,
     setCartDataLoading,
     loading,
+    token,
   } = useContext(Context);
 
-useEffect(() => {
- 
-  if (Object.keys(cartItems).length === 0) {
-    loadCartData(localStorage.getItem("token"));
-  } else {
-    setCartDataLoading(false);
-  }
-}, []);
+  useEffect(() => {
+    if (Object.keys(cartItems).length === 0) {
+      loadCartData(token);
+    } else {
+      setCartDataLoading(false);
+    }
+  }, []);
 
-  const cartCakes = [...cakeList]
-    .filter((cake) => cartItems[cake._id] > 0);
+  const cartCakes = [...cakeList].filter((cake) => cartItems[cake._id] > 0);
 
   return (
     <section className="cart-studio">
@@ -40,7 +39,6 @@ useEffect(() => {
       </div>
 
       <div className="cart-studio-layout">
-
         <div className="cart-cakes">
           {cartDataLoading || loading
             ? Array(2)
@@ -72,7 +70,9 @@ useEffect(() => {
                       <span>{cake.description.layers} Layers</span>
                       <span>{capitalize(cake.description.shape)}</span>
                       <span>{capitalize(cake.description.eggType)}</span>
-                      <span>Sweetness- {capitalize(cake.description.sweetness)}</span>
+                      <span>
+                        Sweetness- {capitalize(cake.description.sweetness)}
+                      </span>
                     </div>
 
                     <div className="cake-footer">
@@ -97,7 +97,9 @@ useEffect(() => {
                           {cartItems[cake._id] === 1 ? "×" : "−"}
                         </button>
 
-                        <span className="qty-number">{cartItems[cake._id]}</span>
+                        <span className="qty-number">
+                          {cartItems[cake._id]}
+                        </span>
 
                         <button
                           className={`qty-btn ${cartItems[cake._id] >= 8 ? "shake" : ""}`}
@@ -158,7 +160,6 @@ useEffect(() => {
             </>
           )}
         </div>
-
       </div>
     </section>
   );

@@ -16,13 +16,11 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      {/* LOGO */}
+
       <div onClick={() => navigate("/")} className="navbar-logo">
         Cake<span>Craft</span>
       </div>
 
-
-      {/* RIGHT ACTION */}
       {!token ? (
         <button className="nav-btn" onClick={() => setShowLogin(true)}>
           Sign In

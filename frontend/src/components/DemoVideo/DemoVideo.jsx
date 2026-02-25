@@ -1,32 +1,25 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import "./DemoVideo.css";
 
 const DemoVideo = () => {
   const videoRef = useRef(null);
 
-  const handleMouseEnter = () => {
+  useEffect(() => {
     videoRef.current?.play();
-  };
-
-  const handleMouseLeave = () => {
-    videoRef.current?.pause();
-  };
+  }, []);
 
   return (
     <section className="demo">
       <div className="demo-container">
-        <div
-          className="video-wrapper"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
+        <div className="video-wrapper">
           <video
             ref={videoRef}
-            preload="metadata"
-            poster="/poster.png"
+            autoPlay
             muted
             loop
             playsInline
+            preload="auto"
+            poster="/poster.png"
           >
             <source src="/demo.mp4" type="video/mp4" />
           </video>

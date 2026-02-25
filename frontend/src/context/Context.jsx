@@ -20,6 +20,7 @@ const ContextProvider = (props) => {
   const [cartDataLoading, setCartDataLoading] = useState(true);
   const [orderDataLoading, setOrderDataLoading] = useState(true);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [generatedCake, setGeneratedCake] = useState(null);
 
   const copyCakeList = [...cakeList].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -157,7 +158,7 @@ const ContextProvider = (props) => {
       return;
     }
 
-    setOrderDataLoading(true);
+    // setOrderDataLoading(true);
     try {
       const response = await axios.post(
         url + "/api/order/userorders",
@@ -242,6 +243,8 @@ const ContextProvider = (props) => {
     setHasAnimated,
 
     copyCakeList,
+    generatedCake,
+    setGeneratedCake
   };
 
   return (

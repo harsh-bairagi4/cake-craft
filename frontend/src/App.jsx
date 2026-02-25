@@ -35,7 +35,7 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <CakeBuilder />
-              </ProtectedRoute>
+             </ProtectedRoute>
             }
           />
           <Route

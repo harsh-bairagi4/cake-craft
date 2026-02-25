@@ -1,4 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import Lottie from "lottie-react";
+import cakeLoading from "../../assets/cakeLoading.json";
 import "./CakeBuilder.css";
 import CakeSelector from "../../components/CakeSelector/CakeSelector";
 import { Context } from "../../context/Context";
@@ -6,7 +8,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const CakeBuilder = () => {
-  const { url, generateImage, labour, addToCart, capitalize, token, navigate } =
+  const { url, generateImage, labour, addToCart, capitalize, token, navigate, generatedCake, setGeneratedCake } =
     useContext(Context);
 
   const [cakeData, setCakeData] = useState({
@@ -18,14 +20,33 @@ const CakeBuilder = () => {
     eggType: "",
     sweetness: "",
     toppings: [],
-    message: "",
   });
+  const [dbCakeData, setDbCakeData] = useState(cakeData);
+  console.log("CakeData", cakeData);
+  console.log("DbCakeData", dbCakeData);
+  console.log("Generated CAKE: ", generatedCake);
 
   const [imageUrl, setImageUrl] = useState("/cakepic.jpg");
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [zoomStyle, setZoomStyle] = useState({});
 
+  const handleZoom = (e) => {
+    const { left, top, width, height } =
+      e.currentTarget.getBoundingClientRect();
+
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+
+    const xPercent = (x / width) * 100;
+    const yPercent = (y / height) * 100;
+
+    setZoomStyle({
+      display: "block",
+      backgroundPosition: `${xPercent}% ${yPercent}%`,
+    });
+  };
 
   const isCakeDataValid = () =>
     cakeData.flavor &&
@@ -37,8 +58,16 @@ const CakeBuilder = () => {
     cakeData.sweetness;
 
   const buildCakePrompt = (cakeData) => {
-    const { flavor, size, layers, frosting, shape, eggType, sweetness, toppings, message } =
-      cakeData;
+    const {
+      flavor,
+      size,
+      layers,
+      frosting,
+      shape,
+      eggType,
+      sweetness,
+      toppings,
+    } = cakeData;
 
     return `
 A high-quality, ultra realistic bakery-style cake.
@@ -63,68 +92,90 @@ Design:
 - Premium cake stand
 - Plain background
 
-${message ? `Text on cake: "${message}"` : ""}
-
 Ultra realistic food photography, no people, no hands.
 `.trim();
   };
 
   const basePriceMap = { "0.5kg": 400, "1kg": 700, "2kg": 1300, "3kg": 1800 };
-  const layerPriceMap = { "1": 0, "2": 150, "3": 300 };
+  const layerPriceMap = { 1: 0, 2: 100, 3: 200 };
   const frostingPriceMap = {
-    buttercream: 50,
-    "whipped-cream": 100,
-    fondant: 120,
+    "whipped-cream": 50,
+    "chocolate-ganache": 80,
+    buttercream: 100,
+    fondant: 130,
     "cream-cheese": 150,
-    "chocolate-ganache": 200,
   };
-  const shapePriceMap = { round: 50, square: 100, heart: 150, custom: 300 };
   const eggPriceMap = { "with-egg": 100, eggless: 0 };
 
   const calculateCakePrice = () => {
     let price = 0;
-    price += basePriceMap[cakeData.size] || 0;
-    price += layerPriceMap[cakeData.layers] || 0;
-    price += frostingPriceMap[cakeData.frosting] || 0;
-    price += shapePriceMap[cakeData.shape] || 0;
-    price += eggPriceMap[cakeData.eggType] || 0;
-    price += cakeData.toppings.length * 50;
+    price += basePriceMap[dbCakeData.size] || 0;
+    price += layerPriceMap[dbCakeData.layers] || 0;
+    price += frostingPriceMap[dbCakeData.frosting] || 0;
+    price += eggPriceMap[dbCakeData.eggType] || 0;
+    price += dbCakeData.toppings.length * 50;
     price += labour;
     return price;
   };
 
-
   const handleGenerate = async (e) => {
     e.preventDefault();
     if (!token) return toast("Please signup first");
-    if (!isCakeDataValid()) return toast("Please select all required cake options 🍰");
+    if (!isCakeDataValid())
+      return toast("Please select all required cake options 🍰");
 
     setIsGenerating(true);
+    setDbCakeData(cakeData);
     try {
       const img = await generateImage(buildCakePrompt(cakeData));
       setImageUrl(img);
       setHasGenerated(true);
+      setGeneratedCake({
+        imageUrl: img,
+        cakeData,
+      });
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
     } finally {
       setIsGenerating(false);
+      setCakeData({
+        flavor: "",
+        size: "",
+        layers: "",
+        frosting: "",
+        shape: "",
+        eggType: "",
+        sweetness: "",
+        toppings: [],
+      });
     }
   };
 
   const handleGenerateAnother = () => {
     setHasGenerated(false);
     setImageUrl("/cakepic.jpg");
+    setDbCakeData({
+      flavor: "",
+      size: "",
+      layers: "",
+      frosting: "",
+      shape: "",
+      eggType: "",
+      sweetness: "",
+      toppings: [],
+    });
+    setGeneratedCake(null);
   };
 
   const handleAddToCart = async () => {
     setIsAddingToCart(true);
     try {
       const payload = {
-        name: `${capitalize(cakeData.flavor)} Cake`,
+        name: `${capitalize(dbCakeData.flavor)} Cake`,
         price: calculateCakePrice(),
         image: imageUrl,
-        description: cakeData,
+        description: dbCakeData,
       };
 
       const response = await axios.post(url + "/api/cake/custom", payload, {
@@ -136,6 +187,7 @@ Ultra realistic food photography, no people, no hands.
         await addToCart(newCake._id, newCake);
         toast.success("Cake added to cart successfully 🍰");
         setTimeout(() => navigate("/cart"), 100);
+        setGeneratedCake(null);
       } else {
         toast(response.data.message || "Failed to add cake");
       }
@@ -144,14 +196,34 @@ Ultra realistic food photography, no people, no hands.
       toast.error("Something went wrong while adding cake");
     } finally {
       setIsAddingToCart(false);
+      setDbCakeData({
+        flavor: "",
+        size: "",
+        layers: "",
+        frosting: "",
+        shape: "",
+        eggType: "",
+        sweetness: "",
+        toppings: [],
+      });
     }
   };
-
+  useEffect(() => {
+  if (generatedCake) {
+    setImageUrl(generatedCake.imageUrl);
+    setDbCakeData(generatedCake.cakeData);
+    setHasGenerated(true);
+  }
+}, [generatedCake]);
 
   return (
     <section className="cake-builder-page">
       <div className="cake-builder-left">
-        <CakeSelector cakeData={cakeData} setCakeData={setCakeData} />
+        <CakeSelector
+          cakeData={cakeData}
+          setCakeData={setCakeData}
+          disabled={isGenerating}
+        />
       </div>
 
       <div className="cake-builder-right">
@@ -160,7 +232,29 @@ Ultra realistic food photography, no people, no hands.
 
           <div className="preview-image">
             {isGenerating ? (
-              <div className="image-loader">Generating...</div>
+              <div className="global-loader">
+                <Lottie
+                  animationData={cakeLoading}
+                  loop
+                />
+                <div className="image-loader">Generating...</div>
+              </div>
+            ) : hasGenerated ? (
+              <div
+                className="zoom-container"
+                onMouseMove={handleZoom}
+                onMouseLeave={() => setZoomStyle({})}
+              >
+                <img src={imageUrl} alt="Cake Preview" />
+
+                <div
+                  className="zoom-lens"
+                  style={{
+                    backgroundImage: `url(${imageUrl})`,
+                    ...zoomStyle,
+                  }}
+                />
+              </div>
             ) : (
               <img src={imageUrl} alt="Cake Preview" />
             )}
@@ -173,7 +267,7 @@ Ultra realistic food photography, no people, no hands.
                 onClick={handleGenerate}
                 disabled={isGenerating}
               >
-                {isGenerating ? "Generating..." : "Generate Cake"}
+                {isGenerating ? "Generating" : "Generate Cake"}
               </button>
             ) : (
               <button className="secondary-btn" onClick={handleGenerateAnother}>
@@ -185,17 +279,32 @@ Ultra realistic food photography, no people, no hands.
           {hasGenerated && !isGenerating && (
             <div className="cake-info-card">
               <h4>🍰 Cake Details</h4>
-              <h3>{capitalize(cakeData.flavor) + " Cake"}</h3>
+              <h3>{capitalize(dbCakeData.flavor) + " Cake"}</h3>
               <ul>
-                <li><strong>Flavor:</strong> {capitalize(cakeData.flavor)}</li>
-                <li><strong>Size:</strong> {cakeData.size}</li>
-                <li><strong>Layers:</strong> {cakeData.layers}</li>
-                <li><strong>Shape:</strong> {capitalize(cakeData.shape)}</li>
-                <li><strong>Frosting:</strong> {capitalize(cakeData.frosting.replace("-", " "))}</li>
-                <li><strong>Egg Type:</strong> {capitalize(cakeData.eggType.replace("-", " "))}</li>
-                {cakeData.toppings.length > 0 && (
+                <li>
+                  <strong>Flavor:</strong> {capitalize(dbCakeData.flavor)}
+                </li>
+                <li>
+                  <strong>Size:</strong> {dbCakeData.size}
+                </li>
+                <li>
+                  <strong>Layers:</strong> {dbCakeData.layers}
+                </li>
+                <li>
+                  <strong>Shape:</strong> {capitalize(dbCakeData.shape)}
+                </li>
+                <li>
+                  <strong>Frosting:</strong>{" "}
+                  {capitalize(dbCakeData.frosting.replace("-", " "))}
+                </li>
+                <li>
+                  <strong>Egg Type:</strong>{" "}
+                  {capitalize(dbCakeData.eggType.replace("-", " "))}
+                </li>
+                {dbCakeData.toppings.length > 0 && (
                   <li>
-                    <strong>Toppings:</strong> {cakeData.toppings.map(capitalize).join(", ")}
+                    <strong>Toppings:</strong>{" "}
+                    {dbCakeData.toppings.map(capitalize).join(", ")}
                   </li>
                 )}
               </ul>
@@ -215,6 +324,10 @@ Ultra realistic food photography, no people, no hands.
           )}
         </div>
       </div>
+      {isGenerating && (
+  <div className="global-overlay">
+  </div>
+)}
     </section>
   );
 };
