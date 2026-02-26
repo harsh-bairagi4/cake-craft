@@ -3,11 +3,16 @@ import "./LoginPopUp.css";
 import { Context } from "../../context/Context";
 import axios from "axios";
 import { toast } from "sonner";
+import { assets } from "../../assets/assets.js";
 
 const LoginPopUp = () => {
-
-  const { url, setShowLogin, setToken, navigate} = useContext(Context);
+  const { url, setShowLogin, setToken, navigate } = useContext(Context);
   const [isLogin, setIsLogin] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const [data, setData] = useState({
     name: "",
@@ -15,14 +20,15 @@ const LoginPopUp = () => {
     password: "",
   });
 
-  const changeState = () =>{
-     setIsLogin(!isLogin);
+  const changeState = () => {
+    setIsLogin(!isLogin);
     setData({
-        name: "",
-    email: "",
-    password: "",
-    })
-  }
+      name: "",
+      email: "",
+      password: "",
+    });
+    setShowPassword(false);
+  };
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -31,27 +37,22 @@ const LoginPopUp = () => {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    
-    const endpoint = isLogin
-      ? "/api/user/login"
-      : "/api/user/register";
-    try{
- const response = await axios.post(url + endpoint, data);
 
-    if (response.data.success) {
-      setToken(response.data.token);
-      localStorage.setItem("token", response.data.token);
-      setShowLogin(false);
-      navigate("/generate");
+    const endpoint = isLogin ? "/api/user/login" : "/api/user/register";
+    try {
+      const response = await axios.post(url + endpoint, data);
 
-    } else {
-      toast(response.data.message);
-    }
-    }
-    catch(error){
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        setShowLogin(false);
+        navigate("/generate");
+      } else {
+        toast(response.data.message);
+      }
+    } catch (error) {
       toast.error("Something went wrong");
     }
-   
   };
 
   return (
@@ -62,7 +63,9 @@ const LoginPopUp = () => {
         </button>
 
         <div className="auth-header">
-          <span className="auth-badge"><span className="black">🍰 Cake</span>Craft</span>
+          <span className="auth-badge">
+            <span className="black">🍰 Cake</span>Craft
+          </span>
           <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
           <p>
             {isLogin
@@ -91,15 +94,21 @@ const LoginPopUp = () => {
             onChange={onChangeHandler}
             required
           />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={data.password}
-            onChange={onChangeHandler}
-            required
-          />
+          <div>
+            <input
+              type={showPassword? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={data.password}
+              onChange={onChangeHandler}
+              required
+            />
+            <img
+              onClick={() => togglePassword()}
+              src={showPassword ? assets.view : assets.hide}
+              alt=""
+            />
+          </div>
 
           <button type="submit" className="submit-btn">
             {isLogin ? "Login" : "Create Account"}

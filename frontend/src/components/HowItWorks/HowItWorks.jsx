@@ -3,8 +3,9 @@ import BounceCards from "../BounceCards/BounceCards";
 import { motion, useInView } from "framer-motion";
 import {useContext, useRef} from 'react';
 import { Context } from "../../context/Context";
+import { assets } from "../../assets/assets";
 
-const images = ["works1.png", "works2.png", "works3.png", "works4.png"];
+const images = [assets.works1, assets.works2, assets.works3, assets.works4];
 
 const transformStyles = [
   "rotate(4deg) translate(-140px)",

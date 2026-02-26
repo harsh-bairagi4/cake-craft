@@ -1,10 +1,8 @@
-/* =========================
-   OVERLAY
-========================= */
+
 .auth-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(255, 246, 234, 0.7); /* vanilla blur */
+  background: rgba(255, 246, 234, 0.7); 
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -13,9 +11,6 @@
   height: 100vh;
 }
 
-/* =========================
-   MODAL
-========================= */
 .auth-modal {
   background-color: var(--bg-card);
   width: 100%;
@@ -27,9 +22,6 @@
   animation: fadeUp 0.35s ease;
 }
 
-/* =========================
-   CLOSE BUTTON
-========================= */
 .close-btn {
   position: absolute;
   top: 16px;
@@ -44,9 +36,6 @@
   color: var(--primary);
 }
 
-/* =========================
-   HEADER
-========================= */
 .auth-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -75,9 +64,6 @@
   color: var(--text-secondary);
 }
 
-/* =========================
-   FORM
-========================= */
 .auth-form {
   display: flex;
   flex-direction: column;
@@ -101,10 +87,36 @@
   outline: none;
   border-color: var(--accent);
 }
+.auth-form div{
+  position: relative;
+  width: 100%;
+}
+.auth-form div input {
+  width: 100%;
+  padding-right: 42px; 
+}
 
-/* =========================
-   SUBMIT BUTTON
-========================= */
+.auth-form div img {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: 
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+.auth-form div img:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+.auth-form div img:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
 .submit-btn {
   margin-top: 0.8rem;
   padding: 0.8rem;
@@ -121,9 +133,6 @@
   transform: translateY(-2px);
 }
 
-/* =========================
-   FOOTER
-========================= */
 .auth-footer {
   margin-top: 1.5rem;
   text-align: center;
@@ -137,9 +146,6 @@
   font-weight: 500;
 }
 
-/* =========================
-   ANIMATION
-========================= */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -151,9 +157,6 @@
   }
 }
 
-/* =========================
-   MOBILE
-========================= */
 @media (max-width: 480px) {
   .auth-modal {
     padding: 2rem 1.6rem;

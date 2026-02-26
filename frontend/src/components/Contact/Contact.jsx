@@ -1,5 +1,6 @@
 
 import "./Contact.css";
+import { assets } from "../../assets/assets";
 
 const Contact = () => {
  
@@ -13,7 +14,7 @@ const Contact = () => {
           <div className="contact-image-wrapper">
             <div className="image-glow" />
             <div className="image-ring" />
-            <img src="/img2.jpeg" alt="Harsh Bairagi" />
+            <img src={assets.img2} alt="Harsh Bairagi" />
             <div className="image-shine" />
           </div>
         </div>

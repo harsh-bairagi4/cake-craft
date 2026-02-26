@@ -6,6 +6,7 @@ import CakeSelector from "../../components/CakeSelector/CakeSelector";
 import { Context } from "../../context/Context";
 import axios from "axios";
 import { toast } from "sonner";
+import { assets } from "../../assets/assets";
 
 const CakeBuilder = () => {
   const { url, generateImage, labour, addToCart, capitalize, token, navigate, generatedCake, setGeneratedCake } =
@@ -26,7 +27,7 @@ const CakeBuilder = () => {
   console.log("DbCakeData", dbCakeData);
   console.log("Generated CAKE: ", generatedCake);
 
-  const [imageUrl, setImageUrl] = useState("/cakepic.jpg");
+  const [imageUrl, setImageUrl] = useState(assets.cakepic);
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
   const [isAddingToCart, setIsAddingToCart] = useState(false);

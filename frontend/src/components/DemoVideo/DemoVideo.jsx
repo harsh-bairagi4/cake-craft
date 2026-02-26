@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
 import "./DemoVideo.css";
+import { assets } from "../../assets/assets";
 
 const DemoVideo = () => {
   const videoRef = useRef(null);
@@ -19,9 +20,9 @@ const DemoVideo = () => {
             loop
             playsInline
             preload="auto"
-            poster="/poster.png"
+            poster={assets.poster}
           >
-            <source src="/demo.mp4" type="video/mp4" />
+            <source src={assets.demo} type="video/mp4" />
           </video>
         </div>
       </div>

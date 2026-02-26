@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "./Footer.css";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
+import { assets } from "../../assets/assets";
 
 const Footer = () => {
   const { navigate } = useContext(Context);
@@ -42,13 +42,13 @@ const Footer = () => {
           <h4>Socials</h4>
           <div className="social-icons">
             <a href="https://github.com/harsh-bairagi4/" target="_blank">
-              <img src="/github.png" alt="" />
+              <img src={assets.github} alt="" />
             </a>
             <a href="https://linkedin.com/in/harshbairagi" target="_blank">
-               <img src="/linkedin.png" alt="" />
+               <img src={assets.linkedin} alt="" />
             </a>
             <a href="https://x.com/harskpw592" target="_blank">
-              <img src="/x.png" alt="" />
+              <img src={assets.x} alt="" />
             </a>
           </div>
         </div>
