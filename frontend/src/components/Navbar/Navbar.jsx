@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import "./Navbar.css";
-import { useNavigate } from "react-router-dom";
 import { Context } from "../../context/Context";
 
 const Navbar = () => {
@@ -28,7 +27,7 @@ const Navbar = () => {
       ) : (
         <div className="user-profile">
             <div onClick={() => navigate("/cart")} className="cart-img">
-              <img src="/cart.png" alt="" />
+              <img src="favicon.png" alt="Cart" />
             </div>
             <div
               className="profile-wrapper"
@@ -42,7 +41,7 @@ const Navbar = () => {
               />
               {openMenu && (
               <div className="profile-dropdown">
-                <p onClick={() => navigate("/myorders")}>My Cakes</p>
+                <p onClick={() => navigate("/myorders")}>My Orders</p>
                 <p onClick={logoutHandler}>Logout</p>
               </div>
             )}

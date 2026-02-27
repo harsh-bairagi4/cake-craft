@@ -23,10 +23,6 @@ const CakeBuilder = () => {
     toppings: [],
   });
   const [dbCakeData, setDbCakeData] = useState(cakeData);
-  console.log("CakeData", cakeData);
-  console.log("DbCakeData", dbCakeData);
-  console.log("Generated CAKE: ", generatedCake);
-
   const [imageUrl, setImageUrl] = useState(assets.cakepic);
   const [isGenerating, setIsGenerating] = useState(false);
   const [hasGenerated, setHasGenerated] = useState(false);
@@ -129,12 +125,15 @@ Ultra realistic food photography, no people, no hands.
     setDbCakeData(cakeData);
     try {
       const img = await generateImage(buildCakePrompt(cakeData));
-      setImageUrl(img);
+      if(img){
+         setImageUrl(img);
       setHasGenerated(true);
       setGeneratedCake({
         imageUrl: img,
         cakeData,
       });
+      }
+     
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
@@ -155,7 +154,7 @@ Ultra realistic food photography, no people, no hands.
 
   const handleGenerateAnother = () => {
     setHasGenerated(false);
-    setImageUrl("/cakepic.jpg");
+    setImageUrl(assets.cakepic);
     setDbCakeData({
       flavor: "",
       size: "",

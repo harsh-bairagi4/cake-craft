@@ -158,7 +158,6 @@ const ContextProvider = (props) => {
       return;
     }
 
-    // setOrderDataLoading(true);
     try {
       const response = await axios.post(
         url + "/api/order/userorders",
@@ -183,13 +182,14 @@ const ContextProvider = (props) => {
         { prompt },
         { headers: { token } }
       );
-      if (data.success) {
-        return data.resultImage;
-      }
       if (data.creditBalance === 0) {
         toast("You don't have enough credits");
         navigate("/subscription");
+        setGeneratedCake(null);
+        return;
       }
+      return data.resultImage;
+ 
     } catch (error) {
       console.log(error);
       toast.error(error.message);
