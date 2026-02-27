@@ -1,136 +1,101 @@
-🍰 CakeCraft – AI Powered Custom Cake Builder (MERN Stack)
+# 🍰 CakeCraft – AI Powered Custom Cake Builder
 
-A full-stack AI-powered cake customization and ordering platform built using the MERN stack.
+> A full-stack AI-powered cake customization and ordering platform built using the MERN stack.
 
 CakeCraft allows users to generate unique AI-based cake designs, add to cart, place secure orders, and see their creations featured in the community collection.
 
-This project demonstrates real-world full-stack architecture including authentication, database relationships, cart management, AI image generation, payments, and production-ready API design.
+---
 
-✨ Highlights
+## ✨ Highlights
 
-AI-powered custom cake image generation
+- 🤖 AI-powered custom cake image generation
+- 🛒 Full cart & order workflow
+- 🔐 JWT authentication & protected routes
+- ♾️ Infinite auto-scroll cake showcase
+- 💀 Skeleton loading UI
+- 🎞️ Smooth animations (Framer Motion + GSAP)
+- 🎠 Interactive UI components (Swiper, Lottie)
+- 💳 Stripe payment integration
+- ☁️ Cloudinary image storage
+- 🗃️ MongoDB relational population
+- 🔌 Production-style REST APIs
 
-Full cart & order workflow
+---
 
-JWT authentication & protected routes
+## 🚀 Features
 
-Infinite auto-scroll cake showcase
+### 👤 User Side
 
-Skeleton loading UI
+- Design your own cake using AI
+- Select flavor, size, shape, layers, frosting, sweetness, toppings, egg type
+- Add to cart with quantity control (max limit validation)
+- Real-time toast notifications (Sonner)
+- Secure login & authentication using JWT
+- Place orders via Stripe payment gateway
+- View order history
+- Explore cakes designed by community members
+- Smooth loading skeletons for premium UX
+- Responsive modern UI with animations
 
-Smooth animations (Framer Motion + GSAP)
+### 🧠 AI Workflow
 
-Interactive UI components (Swiper, Lottie)
+1. User selects cake configuration
+2. Backend generates AI image
+3. Custom cake stored in database
+4. User can order as well as publish to community collection
 
-Stripe payment integration
+### 🛠️ Admin / Backend Capabilities
 
-Cloudinary image storage
+- RESTful APIs using Express 5
+- JWT authentication & route protection
+- Cart add / remove / delete APIs
+- Order creation & status management
+- MongoDB relational references
+- Stripe Payment Intent integration
+- Cloudinary for image storage
+- Environment-based secure configuration
 
-MongoDB relational population
+---
 
-Production-style REST APIs
+## ⚙️ Tech Stack
 
-🚀 Features
-👤 User Side
+### 🎨 Frontend
 
-Design your own cake using AI prompt generation
+| Tech | Purpose |
+|------|---------|
+| React 19 (Vite) | UI Framework |
+| React Router DOM | Client-side routing |
+| Framer Motion | Animations |
+| GSAP | Advanced animations |
+| Swiper.js | Carousels |
+| Three.js | 3D effects |
+| Lottie React | Lottie animations |
+| Sonner | Toast notifications |
+| Axios | HTTP client |
 
-Select flavor, size, shape, layers, frosting, sweetness, toppings, egg type
+### 🖥️ Backend
 
-Add to cart with quantity control (max limit validation)
+| Tech | Purpose |
+|------|---------|
+| Node.js | Runtime |
+| Express.js (v5) | Web framework |
+| MongoDB + Mongoose | Database & ODM |
+| JWT | Authentication |
+| Bcrypt | Password hashing |
+| Stripe | Payments |
+| Cloudinary | Image storage |
+| Validator | Input validation |
+| CORS + Dotenv | Config & security |
 
-Real-time toast notifications (Sonner)
+### 🗄️ Database
 
-Secure login & authentication using JWT
+- **MongoDB Atlas** – Cloud-hosted database
 
-Place orders via Stripe payment gateway
+---
 
-View order history
+## 📁 Project Structure
 
-Explore cakes designed by community members
-
-Smooth loading skeletons for premium UX
-
-Responsive modern UI with animations
-
-🧠 AI Workflow
-
-User selects cake configuration
-
-Backend generates AI image
-
-Custom cake stored in database
-
-User can order as well as publish to community collection
-
-🛠 Admin / Backend Capabilities
-
-RESTful APIs using Express 5
-
-JWT authentication & route protection
-
-Cart add / remove / delete APIs
-
-Order creation & status management
-
-MongoDB relational references 
-
-Stripe Payment Intent integration
-
-Cloudinary for image storage
-
-Environment-based secure configuration
-
-⚙️ Tech Stack
-🎨 Frontend
-
-React 19 (Vite)
-
-React Router DOM
-
-Framer Motion
-
-GSAP
-
-Swiper.js
-
-Three.js
-
-Lottie React
-
-Sonner (Toast notifications)
-
-Axios
-
-🖥 Backend
-
-Node.js
-
-Express.js (v5)
-
-MongoDB
-
-Mongoose
-
-JWT (jsonwebtoken)
-
-Bcrypt
-
-Stripe
-
-Cloudinary
-
-Validator
-
-Dotenv
-
-CORS
-
-🗄 Database
-
-MongoDB Atlas
-
-📁 Project Structure
+```
 root/
 │
 ├── frontend/          # React client (Vite)
@@ -139,96 +104,97 @@ root/
 ├── .env
 ├── package.json
 └── README.md
-🔐 Authentication Flow
+```
 
-User registers or logs in
+---
 
-Backend generates JWT
+## 🔐 Authentication Flow
 
-Token stored in frontend
+1. User registers or logs in
+2. Backend generates JWT
+3. Token stored in frontend
+4. Protected routes verified using middleware
+5. Cart & order routes require authentication
 
-Protected routes verified using middleware
+---
 
-Cart & order routes require authentication
+## 🛒 Cart System
 
-🛒 Cart System
+- Add to cart
+- Remove quantity
+- Delete item completely
+- Max quantity validation (8 per item)
+- Persistent cart storage (backend synced)
 
-Add to cart
+---
 
-Remove quantity
+## 💳 Payment Integration
 
-Delete item completely
+- Stripe Payment Intent API
+- Secure checkout flow
+- Cash on Delivery option
+- Order stored after successful payment
+- Order status updates supported
 
-Max quantity validation (8 per item)
+---
 
-Persistent cart storage (backend synced)
+## 🌍 Deployment
 
-💳 Payment Integration
+| Layer | Service |
+|-------|---------|
+| Frontend | Vercel |
+| Backend | Railway |
+| Database | MongoDB Atlas |
+| Images | Cloudinary |
+| Payments | Stripe |
 
-Stripe Payment Intent API
+> All sensitive data managed via environment variables.
 
-Secure checkout flow
+---
 
-Cash on Delivery Feature
+## 🧪 Development Scripts
 
-Order stored after successful payment
+### Frontend
 
-Order status updates supported
+```bash
+npm run dev       # Start dev server
+npm run build     # Production build
+npm run preview   # Preview build
+```
 
-🌍 Deployment
+### Backend
 
-Frontend deployed using Vercel
+```bash
+npm run server    # Dev mode (nodemon)
+npm start         # Production mode
+```
 
-Backend deployed using Railway
+---
 
-MongoDB hosted on MongoDB Atlas
+## 🎯 What This Project Demonstrates
 
-Cloudinary for image hosting
+- Full-stack MERN architecture
+- Secure authentication & middleware
+- API design best practices
+- Database relationship handling
+- Real-time UI updates
+- Payment gateway integration
+- Scalable project structure
+- Production-level UX design
 
-Stripe for secure payments
+---
 
-Environment variables for sensitive data
+## 📌 Future Improvements
 
-🧪 Development Scripts
-Frontend
-npm run dev
-npm run build
-npm run preview
-Backend
-npm run server   # nodemon
-npm start        # production
-🎯 What This Project Demonstrates
+- [ ] Wishlist feature
+- [ ] Advanced filtering & search
+- [ ] Admin dashboard
+- [ ] AI style presets
+- [ ] Email notifications
+- [ ] Performance optimization & caching
 
-Full-stack MERN architecture
+---
 
-Secure authentication & middleware
+## 🙌 Author
 
-API design best practices
-
-Database relationship handling
-
-Real-time UI updates
-
-Payment gateway integration
-
-Scalable project structure
-
-Production-level UX design
-
-📌 Future Improvements
-
-Wishlist feature
-
-Advanced filtering & search
-
-Admin dashboard
-
-AI style presets
-
-Email notifications
-
-Performance optimization & caching
-
-🙌 Author
-
-Built with ❤️ by Harsh Bairagi
+Built with ❤️ by **Harsh Bairagi**
