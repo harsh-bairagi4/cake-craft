@@ -13,7 +13,7 @@ CakeCraft allows users to generate unique AI-based cake designs, add to cart, pl
 - 🔐 JWT authentication & protected routes
 - ♾️ Infinite auto-scroll cake showcase
 - 💀 Skeleton loading UI
-- 🎞️ Smooth animations (Framer Motion + GSAP)
+- 🎞️ Smooth animations (Framer Motion)
 - 🎠 Interactive UI components (Swiper, Lottie)
 - 💳 Stripe payment integration
 - ☁️ Cloudinary image storage
